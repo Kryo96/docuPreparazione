@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Definisci le proprietà di file -->
+    <property name="fileName" value="/tmp/logs" />
+    <property name="fileGz" value="/tmp/logs/7z" />
+
+    <!-- Console Appender -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} %L %M - %msg%xEx%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling File Appender per info -->
+    <appender name="rollingInfoFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${fileName}/springboot-info.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${fileGz}/%d{yyyy-MM}/app-%d{MM-dd-yyyy}.springboot-info.gz</fileNamePattern>
+            <maxHistory>50</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap> <!-- Limita la dimensione totale dei file di log -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Rolling File Appender per errori -->
+    <appender name="rollingErrorFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${fileName}/springboot-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${fileGz}/%d{yyyy-MM}/app-%d{MM-dd-yyyy}.springboot-error.gz</fileNamePattern>
+            <maxHistory>50</maxHistory>
+            <totalSizeCap>1GB</totalSizeCap> <!-- Limita la dimensione totale dei file di log -->
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd 'at' HH:mm:ss z} [%t] %-5level %logger{36} %L %M - %msg%xEx%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger root -->
+    <root level="INFO">
+        <appender-ref ref="console" />
+        <appender-ref ref="rollingInfoFile" />
+        <appender-ref ref="rollingErrorFile" />
+    </root>
+
+</configuration>
