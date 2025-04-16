@@ -187,4 +187,134 @@ GO
 (evito di riscrivere argomenti banali che sappiamo già)
 
 
+### Spring Core Annotations – Mappa Mentale
+
+#### Bean Management
+
+- **@Component**
+  - Marca una classe come bean da gestire nel context di Spring.
+  - Viene rilevata automaticamente tramite component scanning.
+  - Varianti:
+    - `@Service` → semantica per i servizi.
+    - `@Repository` → semantica per i DAO.
+    - `@Controller` → semantica per i controller web.
+
+- **@Bean**
+  - Marca un metodo che restituisce un oggetto da registrare come bean.
+  - Deve essere dentro una classe con `@Configuration`.
+
+- **@Configuration**
+  - Indica che la classe contiene definizioni di bean (Java-based config).
+  - I metodi annotati con `@Bean` verranno eseguiti per istanziare i bean.
+
+- **@Lazy**
+  - Ritarda l'istanziazione del bean fino a quando non viene richiesto.
+
+- **@Primary**
+  - Specifica quale bean usare come default in caso di ambiguità.
+
+#### Dependency Injection
+
+- **@Autowired**
+  - Inietta automaticamente un bean nel punto indicato (costruttore, field, setter).
+  - Funziona per tipo (by type).
+  - Può essere opzionale: `@Autowired(required = false)`
+
+- **@Qualifier**
+  - Specifica esattamente quale bean iniettare (by name).
+  - Usato con `@Autowired` per risolvere conflitti.
+
+#### Web e REST (Spring MVC)
+
+- **@Controller**
+  - Marca una classe come controller MVC (restituisce una view).
+  
+- **@RestController**
+  - È un mix di `@Controller` + `@ResponseBody` (restituisce JSON/XML).
+
+- **@RequestMapping**
+  - Mappa richieste HTTP a metodi.
+  - Varianti:
+    - `@GetMapping`, `@PostMapping`, `@PutMapping`, `@DeleteMapping`
+
+- **@PathVariable**
+  - Estrae valori dinamici dal path dell’URL.
+  
+- **@RequestParam**
+  - Estrae parametri della query string (`?id=123`).
+  
+- **@RequestBody**
+  - Mappa il body della richiesta HTTP a un oggetto Java.
+
+#### Altre utili
+
+- **@Value**
+  - Inietta valori da `application.properties` o `application.yml`.
+
+- **@PostConstruct / @PreDestroy**
+  - Metodi eseguiti subito dopo l’inizializzazione / prima della distruzione del bean.
+
+- **@Profile**
+  - Definisce bean che devono essere attivi solo in certi profili (`dev`, `prod`, etc).
+
+### ActiveMQ 
+
+Apache ActiveMQ è un message broker open-source, scritto in Java, che implementa il protocollo JMS (Java Message Service). E' quindi un sistema di messaggistica che permette a più applicazioni o servizi di cominicare tra loro in modo asincrono, disaccoppiato, e affidabile. 
+
+![[Pasted image 20250416154350.png]]
+##### Come funziona ? 
+
+si basa su un architettura producer/consumer e point-to-point (P2P), il producer che si può considerare e astrarre come se fosse un servizio esterno, invia un messaggio (o notifica, o update, o semplice testo...ecc.). Il **Broker (ActiveMQ)** riceve il messaggio, lo tiene in coda e lo inoltra quando è possibile. Il consumatore ovviamente riceve il messaggio e lo consuma. 
+
+##### Modalità di comunicazione 
+
+| Modalità      | Descrizione                                                                  |
+| ------------- | ---------------------------------------------------------------------------- |
+| Queue P2P     | 1 producer, 1 consumer. Una volta ricevuto, il messaggio sparisce dalla coda |
+| Topic pub/sub | 1 producer, N consumer. Tutti ricevono il messaggio                          |
+_Nota: il tutto avviene in modo asincrono, il producer non aspetta che il consumer riceva il messaggio. Il broker in ogni caso garantisce la consegna anche se il consumer non è attivo al momento._
+
+##### Modelli di comunicazione ActiveMQ
+
+supporta diversi protocolli di trasporto, tra cui **TCP** che è quello di default e **OpenWire** che è proprietario di ActiveMQ 
+
+**OpenWire** é un protocollo binario per ottimizzare la comunicazione tra i client e il broker di messaggi. Offre alta efficienza in termini di prestazioni, supporto completo a tutte le funzionalità di activeMQ e una comunicazione persistente e affidabile.
+
+Funziona strutturando ogni messaggio come una sequenza di comandi (Command-based Protocol). Ogni comando ha un identificatore ('MessageSend', 'MessageAck','ConnectionInfo'), viene serializzato e inviato tramite canale TCP
+
+#### Applicazione pratica 
+
+Un utilizzo pratico in java, usando la libreria JMS di ActiveMQ: 
+
+```java
+ActiveMQConnectionFactory connectionFactory =
+  new ActiveMQConnectionFactory("tcp://localhost:61616");
+
+Connection connection = connectionFactory.createConnection();
+Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+Destination destination = session.createQueue("test-queue");
+MessageProducer producer = session.createProducer(destination);
+TextMessage message = session.createTextMessage("Hello, OpenWire!");
+producer.send(message);
+```
+
+La connessione in questo caso è fatta tramite OpenWire sulla porta 61616
+
+Invece utilizzando Spring come nel codice fornito da Lukas la connessione avviene tramite la creazione di un @Bean
+
+```java 
+@Bean  
+public ActiveMQConnectionFactory activeMQConnectionFactory() {  
+    ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory();  
+    connectionFactory.setBrokerURL("tcp://localhost:61616"); // Inserisci l'URL del broker ActiveMQ  
+    connectionFactory.setUserName("admin"); // Se necessario  
+    connectionFactory.setPassword("admin"); // Se necessario  
+    return connectionFactory;  
+}
+```
+
+
+##### Sintesi consumer codice Lukas 
+
+Questo codice configura una connessione a un broker ActiveMQ, definisce una coda da cui consumare i messaggi, configura un adattatore per ascoltare i messaggi in arrivo e definisce un contenitore di ascoltatori che gestisce la concorrenza per l'elaborazione dei messaggi. L'architettura è orientata alla gestione di più consumatori di messaggi in modo efficiente, con l'uso di una connessione cache e un numero di thread variabile.
 
