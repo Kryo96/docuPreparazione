@@ -86,13 +86,13 @@ ActiveMQ è un broker di messaggi che si integra perfettamente con l'architettur
 
 1. **E-commerce**:
     - In un sistema di e-commerce, ActiveMQ può gestire eventi come ordini, pagamenti e spedizioni. Quando un cliente effettua un ordine, il sistema di gestione degli ordini invia un messaggio a ActiveMQ. I sistemi di fatturazione e di gestione delle spedizioni possono quindi ricevere questo messaggio e avviare i loro processi, garantendo che tutte le parti coinvolte siano aggiornate e che l'ordine venga elaborato senza ritardi.
-    - 
+
 2. **IoT (Internet of Things)**:
     - In un'architettura IoT, i dispositivi possono generare eventi in tempo reale, come la registrazione di dati da sensori. ActiveMQ può fungere da broker per questi eventi, consentendo ai sistemi di analisi e monitoraggio di ricevere e elaborare i dati in tempo reale. Ad esempio, un sensore di temperatura può inviare un messaggio a ActiveMQ ogni volta che la temperatura supera una certa soglia, attivando automaticamente un sistema di allerta.
-    - 
+
 3. **Sistemi di Monitoraggio**:
     - In un sistema di monitoraggio delle prestazioni, ActiveMQ può essere utilizzato per inviare eventi riguardanti le metriche delle prestazioni delle applicazioni. Quando un'applicazione supera una soglia di utilizzo delle risorse, un messaggio viene inviato a ActiveMQ, che lo distribuisce ai sistemi di monitoraggio e ai team di sviluppo, consentendo loro di intervenire rapidamente.
-    - 
+
 4. **Gestione degli Incidenti**:
     - In un contesto di gestione degli incidenti, ActiveMQ può facilitare la comunicazione tra diversi sistemi e team. Quando un incidente viene segnalato, il sistema di gestione degli incidenti invia un messaggio a ActiveMQ, che viene poi ricevuto dai team di supporto e dai sistemi di reporting. Questo consente una risposta rapida e coordinata all'incidente.
  
