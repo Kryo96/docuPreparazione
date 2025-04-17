@@ -71,7 +71,7 @@ ORDER BY LastName;
 | ---------------------------- | -------------------------------- | ---------------------------------------------------------- | --- | ------- |
 | **Seleziona primi N record** | `SELECT TOP 10 * FROM tabella`   | `SELECT * FROM tabella LIMIT 10`                           |     |         |
 | **Database corrente**        | `USE nome_db` + `GO`             | `\c nome_db` nel terminale, oppure con connessione diretta |     |         |
-| **Separatore batch**         | `GO`                             | ❌ (non usato)                                              |     |         |
+| **Separatore batch**         | `GO`                             | (non usato)                                                |     |         |
 | **Data/Ora corrente**        | `GETDATE()`                      | `NOW()`                                                    |     |         |
 | **Lunghezza stringa**        | `LEN(campo)`                     | `LENGTH(campo)`                                            |     |         |
 | **Null check con fallback**  | `ISNULL(campo, valore)`          | `COALESCE(campo, valore)`                                  |     |         |
