@@ -318,3 +318,177 @@ public ActiveMQConnectionFactory activeMQConnectionFactory() {
 
 Questo codice configura una connessione a un broker ActiveMQ, definisce una coda da cui consumare i messaggi, configura un adattatore per ascoltare i messaggi in arrivo e definisce un contenitore di ascoltatori che gestisce la concorrenza per l'elaborazione dei messaggi. L'architettura è orientata alla gestione di più consumatori di messaggi in modo efficiente, con l'uso di una connessione cache e un numero di thread variabile.
 
+### Maven (dallo yiddish "esperto" o "accumulatore di conoscenza)
+
+Maven è un progetto open-source per l'organizzazione di progetti java. Può benissimo essere paragonato ad ant, ma offre funzionalità più avanzate come ad esempio :
+
+- Standardizzazione della struttura di un progetto compilazione;
+- test ed esportazione automatizzate 
+- gestione e download auto delle librerie per il progetto
+- creazione auto di un sito di gestione progetto contenente infos 
+
+#### Scope 
+
+Il goal principale di Maven è provvedere a:
+
+ - Un modello per progetti facile da comprendere, che sia ri-usabile e mantenibile
+ - Plugins o tools che interagiscano con questo modello dichiarativo 
+
+La struttura progetto di Maven e i contenuti sono dichiarati nel file _pom.xml_
+che si riferisce a Project Object Model (POM), che è l'unità fondamentale dell'intero sistema maven. 
+
+#### Convention Vs. Configuration 
+
+Maven preferisce utilizzare le convenzioni invece che le configurazioni, questo vuol dire che al programmatore verrà richiesto il minimo numero di configurazioni. Maven fornisce infatti, dei default behavior per i progetti. Quando un progetto viene creato maven crea una struttura di default, richiedendo al programmatore di inserire i file nelle posizioni suggerite. 
+
+Un esempio dei valori di default per la project structure: 
+
+| Item               | Default                       |
+| ------------------ | ----------------------------- |
+| source code        | ${basedir}/src/main/java<br>  |
+| Resources          | ${basedir}/src/main/resources |
+| Compiled Byte code | ${basedir}/target             |
+ecc..
+
+#### Maven Feature 
+
+- project setup semplice che segue le best practices
+- Uso consistente tra i progetti 
+- Gestione delle dipendenze includendo l'update auto 
+- Un largo e crescente bacino di librerie 
+- Estendibile, con l'abilità di scrivere facilmente plugins in java o script lang 
+- Accesso istante a nuove feature con piccola o nessuna configurazione 
+- **Model-based builds** - Maven è abilitato a produrre qualsiasi numero di progetti in un tipo di output predefinito come jar,war,metadata.
+- **Coherent site of project information** - Usando gli stessi metadata per il build process, maven è in grado di generare un sito e un PDF includendo la documentazione completa. 
+- **Release management and distribution publication** - Senza configurazioni aggiuntive, maven si integrerà con il tuo source control system come CSV (credo che si intenda a detta di vava control system versioning o comunque qualcosa riferito a quello) e gestirà la release del progetto. 
+- **Backward Compatibility** - Puoi facilmente portare i moduli di un progetto a Maven 3 da una vecchia versione.
+- **Automatic parent versioning** - Non necessario specificare il parent nel sub module per la manutenzione 
+- **Parallel  builds** - analizza il grafo delle dipendenze di progetto e ti abilita a build schedule modules in parallelo. 
+- **Better Error e Integrity Reporting** 
+
+#### POM Project Object Model 
+
+E' una parte fondamentale di Maven che merita di essere visto in modo approfondito. Il POM contiene tutte le informazioni riguardante il progetto e i vari dettagli di configurazione usati da Maven per buildare il progetto.
+
+POM contiene anche i goals e i plugins. Mentre esegue un task o un goal, Maven cerca il POM nella directory corrente, legge il POM e prende le informazioni di configurazioni necessarie, successivamente esegue il task o il goal.
+
+Prima di creare un POM, dobbiamo decidere un project group _groupId_, il suo nome _artifactId_ e la versione 
+
+Esempio di POM : 
+
+```xml
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.companyname.project-group</groupId>
+    <artifactId>project</artifactId>
+    <version>1.0</version>
+</project>
+```
+
+
+**TUTTI** i file POM richiedo il project element e i 3 campi obbligatori: groupId, artifactId, version. 
+
+##### Super POM 
+
+il super POM è il POM di default di maven, ogni POMs eredita da un default, in questo caso dal super POM, e contiene dei valori ereditati di default. 
+
+### Cos'è il Build Lifecycle? 
+
+Un Build Lifecycle è una sequenza ben definita di fasi, che definiscono l'ordine in cui i goals vengono eseguiti. Ma come potrebbe essere un un tipico build lifecycle di maven? 
+
+| Phase             | Handles                    | Description                                                                                  |
+| ----------------- | -------------------------- | -------------------------------------------------------------------------------------------- |
+| prepare-resources | resource copying           | il resource copying può essere personalizzato in questa fase                                 |
+| validate          | validating the information | Validazione se il progetto è corretto e se tutte le informazioni necessarie sono disponibili |
+| compile           | compilation                | il codice sorgente compilato è pronto in questa fase                                         |
+| test              | testing                    | test il codice sorgente compilato adatto per il testing framework                            |
+| package           | packaging                  | questa fase crea il JAR/WAR package come menzionato nel 'packaging' nel file POM.xml         |
+| install           | installation               | questa fase installa i package nel local/remote maven repository                             |
+| deploy            | deploying                  | copia il package finale nella repository remota                                              |
+Ci sono sempre fasi **pre** e **post** per registrare i **goals**, che devono essere eseguiti prima di, o dopo una fase particolare. 
+
+##### Un goal :
+rappresenta uno specifico task che contribuisce al building e alla gestione del progetto. Un goal non è legato ad uno specifico lifecycle potrebbe benissimo essere eseguito al di fuori con una invocazione diretta. 
+
+#### Maven Default (or Build) lifecycle 
+
+|Sr.No.|Lifecycle Phase & Description|
+|---|---|
+|1|**validate**<br><br>Validates whether project is correct and all necessary information is available to complete the build process.|
+|2|**initialize**<br><br>Initializes build state, for example set properties.|
+|3|**generate-sources**<br><br>Generate any source code to be included in compilation phase.|
+|4|**process-sources**<br><br>Process the source code, for example, filter any value.|
+|5|**generate-resources**<br><br>Generate resources to be included in the package.|
+|6|**process-resources**<br><br>Copy and process the resources into the destination directory, ready for packaging phase.|
+|7|**compile**<br><br>Compile the source code of the project.|
+|8|**process-classes**<br><br>Post-process the generated files from compilation, for example to do bytecode enhancement/optimization on Java classes.|
+|9|**generate-test-sources**<br><br>Generate any test source code to be included in compilation phase.|
+|10|**process-test-sources**<br><br>Process the test source code, for example, filter any values.|
+|11|**test-compile**<br><br>Compile the test source code into the test destination directory.|
+|12|**process-test-classes**<br><br>Process the generated files from test code file compilation.|
+|13|**test**<br><br>Run tests using a suitable unit testing framework (Junit is one).|
+|14|**prepare-package**<br><br>Perform any operations necessary to prepare a package before the actual packaging.|
+|15|**package**<br><br>Take the compiled code and package it in its distributable format, such as a JAR, WAR, or EAR file.|
+|16|**pre-integration-test**<br><br>Perform actions required before integration tests are executed. For example, setting up the required environment.|
+|17|**integration-test**<br><br>Process and deploy the package if necessary into an environment where integration tests can be run.|
+|18|**post-integration-test**<br><br>Perform actions required after integration tests have been executed. For example, cleaning up the environment.|
+|19|**verify**<br><br>Run any check-ups to verify the package is valid and meets quality criteria.|
+|20|**install**<br><br>Install the package into the local repository, which can be used as a dependency in other projects locally.|
+|21|**deploy**<br><br>Copies the final package to the remote repository for sharing with other developers and projects.|
+Possiamo anche pensare di attaccare un plugin ad una delle fasi come ad esempio _maven-antrun-plugin:run goal_, questo ci permetterà di visualizzare tramite echo text i messaggi a schermo delle fasi nel lifecycle. 
+
+### Build Profile 
+
+Un build profile è un set di valori di configurazione, che possono essere usati per impostare o overridare valori di default del maven build. Puoi quindi personalizzare le build per ambienti differenti come produzione v/s development.
+
+##### Tipi di Build Profile 
+|Type|Where it is defined|
+|---|---|
+|Per Project|Defined in the project POM file, pom.xml|
+|Per User|Defined in Maven settings xml file (%USER_HOME%/.m2/settings.xml)|
+|Global|Defined in Maven global settings xml file (%M2_HOME%/conf/settings.xml)|
+##### Profile Activation 
+
+Un maven build profile può essere attivato in modi differenti:
+- esplicitamente usando un comando da shell
+- attraverso i maven settings 
+- basandoci sulle variabili d'ambiente (User/System)
+- OS setting 
+- file presenti/mancanti 
+
+### Repositories 
+
+Nella terminologia Maven un repository è una directory dove tutte le jars, library jar, plugins o qualsiasi altro artefatto è salvato e può essere usato da Maven facilmente. 
+
+Possono essere ti 3 tipi 
+
+- locale
+- centrale
+- remota
+
+### Plug-in Maven 
+
+Maven è un plugin execution framework dove ogni task è attualmente fatta da plugin. I plugin in ogni caso vengono generalmente usati per 
+
+- Creare file jar
+- Creare file war 
+- Compilare files di codice 
+- Unit testing del codice
+- Creare documentazione del progetto 
+- Creare reports del progetto 
+
+I plugin generalmente forniscono un set di goals, che possono essere eseguiti con la seguente sintassi 
+
+```shell
+mvn [plugin-name]:[goal-name]
+```
+
+##### Plugin Types 
+|Sr.No.|Type & Description|
+|---|---|
+|1|**Build plugins**<br><br>They execute during the build process and should be configured in the <build/> element of pom.xml.|
+|2|**Reporting plugins**<br><br>They execute during the site generation process and they should be configured in the <reporting/> element of the pom.xml.|
