@@ -145,8 +145,8 @@ In Maven esistono **tre life cycle principali**:
  
   ***La maggior parte delle nostre operazioni avverrà all’interno del default life cycle.***  I plugin si agganciano a fasi specifiche di questo ciclo: ad esempio, durante la fase `compile`, Maven attiverà il goal di compilazione del codice sorgente.
  
- ^^^È importante sapere che quando eseguiamo una ^^^^^^ ***fase specifica del life cycle *** ^^^^^^(ad esempio ^^^^^^`install`^^^^^^), Maven esegue ^^^^^^**tutte le fasi precedenti**^^^^^^ in sequenza. ^^^ 
- ^^^Quindi, chiamare ^^^^^^`deploy`^^^^^^ significa anche eseguire ^^^^^^`compile`^^^^^^, ^^^^^^`test`^^^^^^, ^^^^^^`package`^^^^^^, ^^^^^^`install`^^^^^^ e così via, fino ad arrivare a ^^^^^^`deploy`^^^^^^.^^^ 
+ È importante sapere che quando eseguiamo una ***fase specifica del life cycle *** (ad esempio `install`), Maven esegue **tutte le fasi precedenti** in sequenza.  
+ Quindi, chiamare `deploy` significa anche eseguire `compile` , `test` , `package` , `install` e così via, fino ad arrivare a `deploy` . 
  
  In sostanza, Maven è composto da diversi elementi: il `pom.xml`, le dipendenze, i plugin, e i life cycle. La vera potenza dello strumento emerge dal modo in cui questi componenti interagiscono per completare il processo di build e produrre artefatti utilizzabili.
  
@@ -161,8 +161,7 @@ Per recuperare le dipendenze e i plugin, Maven utilizza il suo  ***dependency ma
  
  ### Spiegiamo meglio Convetion Over Configuration!
  Partiamo con un esempio concreto. Apriamo il terminale e lanciamo il comando:
- .
-    ```
+    ``` bash
     mvn compile
     ```
  
@@ -186,12 +185,11 @@ Ecco alcune delle directory più comuni:
  Ora dobbiamo istruire Maven a cercare i sorgenti in questa cartella. 
  Apriamo il `pom.xml` e aggiungiamo una sezione `<build>` in cui specifichiamo:
  
- .
-    ```
+    ``` xml
     <build>
-  <sourceDirectory>src/non-standard/java</sourceDirectory>
-  <outputDirectory>my-target</outputDirectory>
-</build>
+      <sourceDirectory>src/non-standard/java</sourceDirectory>
+      <outputDirectory>my-target</outputDirectory>
+    </build>
     ```
  Questo dice a Maven di cercare i file `.java` nella nuova directory e di posizionare i `.class` in una cartella `my-target`.
  
@@ -208,9 +206,8 @@ Ecco alcune delle directory più comuni:
      - configurazioni di report e profili
  
  Possiamo visualizzare il POM finale — cioè quello con tutte le configurazioni ereditate dal super POM — usando:
- .
-    ```
-    mvn help:effective-pom
+    ``` bash
+      mvn help:effective-pom
     ```
  
  ### Ma il mio personale POM?
@@ -218,9 +215,8 @@ Ecco alcune delle directory più comuni:
  
  Per farlo:
      - creiamo un nuovo progetto Maven che funge da genitore e lo installiamo nel repository locale con:
- .
-    ```
-    mvn install 
+    ``` bash
+      mvn install 
     ```
      - nei progetti figli, aggiungiamo la sezione `<parent>` al `pom.xml`, specificando `groupId`, `artifactId` e `version` del POM genitore.
      - rimuoviamo dal POM figlio i tag già ereditati dal padre (es. `groupId`, `version`).
@@ -231,23 +227,21 @@ Ecco alcune delle directory più comuni:
  Infine, parliamo di un’altra caratteristica fondamentale: i **profili** (`profiles`). Nella realtà lavoriamo spesso con più ambienti: sviluppo, test, produzione… e ognuno ha bisogno di configurazioni specifiche.
  
  Con i profili possiamo  ***personalizzare dinamicamente il comportamento del build***  in base all’ambiente. Per esempio, possiamo definire un profilo con ID “production” nel nostro `pom.xml`:
- .
-    ```
+    ``` xml
     <profiles>
-  <profile>
-    <id>production</id>
-    <build>
-      <directory>/path/to/production/output</directory>
-    </build>
-  </profile>
-</profiles>
+      <profile>
+        <id>production</id>
+        <build>
+          <directory>/path/to/production/output</directory>
+        </build>
+      </profile>
+    </profiles>
     ```
  
  Questo profilo sovrascrive la cartella di output predefinita solo quando viene attivato. 
  Per attivarlo:
- .
-    ```
-    mvn package -P production
+    ``` bash
+      mvn package -P production
     ```
  
  ### Perchè usare Archetypes su Maven?
