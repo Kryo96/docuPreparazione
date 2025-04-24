@@ -492,3 +492,80 @@ mvn [plugin-name]:[goal-name]
 |---|---|
 |1|**Build plugins**<br><br>They execute during the build process and should be configured in the <build/> element of pom.xml.|
 |2|**Reporting plugins**<br><br>They execute during the site generation process and they should be configured in the <reporting/> element of the pom.xml.|
+### Progetto Spring + JPA + SQL server connection
+
+##### Come setuppare connessione SQL Server
+
+Per connettersi al db di sql server ci basterà inserire nel _application.properties_ il datasource url, che in questo caso farà riferimento al DB che abbiamo sul localhost 
+
+```properties 
+
+spring.datasource.url=jdbc:sqlserver://localhost:1433;databaseName=testcodestorm;encrypt=true;trustServerCertificate=true;loginTimeout=30;
+
+```
+
+così potremo connetterci al nostro sql server (al momento hostato in un container docker)
+
+Saranno poi necessarie le dipendenze per la connessione al database, in questo caso avremo : 
+
+```xml
+<dependency>  
+    <groupId>com.microsoft.sqlserver</groupId>  
+    <artifactId>mssql-jdbc</artifactId>  
+    <version>12.8.1.jre11</version>  
+    <scope>compile</scope>  
+</dependency>
+```
+
+```xml
+<dependency>  
+    <groupId>com.azure.spring</groupId>  
+    <artifactId>spring-cloud-azure-starter</artifactId>  
+    <version>5.20.1</version>  
+</dependency>
+```
+
+(non ho capito se servano entrambe)
+
+##### Classi JPA 
+
+Bisognerà semplicemente creare una classe che abbia come annotation @Entity, se si è con una versione di spring superiore a 2.3, bisognerà usare jakarta.persistence.
+
+```java
+@Entity
+public class pincopallino{
+}
+```
+
+Creare poi un interfaccia che faccia da repository e si allacci al db estendendo la classe JPA 
+
+```java
+public interface WebsiteUserRepository extends JpaRepository<WebsiteUser, Long> {  
+}
+```
+
+### Spring Batch Introduzione
+
+Molte applicazioni nel dominio enterprise richiedono bulk processing (traducibile come processazione di massa) per eseguire operazioni aziendali in mission-critical environments. Queste operazioni aziendali includono: 
+
+- Automatizzando, processi complessi di grossi volumi di informazioni per cui è più efficiente il NON coinvolgimento dell'utente. Queste ops tipicamente includono eventi basati sul tempo (come calcoli basati sulla fine del mese, notices, o corrispondenza)
+- Applicazione periodica di regole aziendali complesse processate ripetutamente attraverso data sets molto grandi (e.g., insurance benefit determination o aggiustamento rate)
+- Integrazione di infos che vengono ricevute da sistemi interni o esterni che richiedono tipicamente una formattazione, validazione, e processazione in un maniera transazionale nei sistemi di salvataggio. La processazione Batch biene utilizzata per processare milioni di transazioni ogni giorno dalle aziende.
+
+### Architettura Spring Batch 
+
+```mermaid
+flowchart TD
+
+    A[Application] --> B[Batch Core]
+    B -->C[Batch Infrastructure]
+    C -->A
+    B -->A
+    C -->B
+    A -->C
+    
+    
+```
+
+Questa architettura a livelli mette in luce tre componenti fondamentali: Application, Core, e infrastructure. L'_applicazione_ contiene tutti i batch jobs e i codici custom scritti. Il _Batch Core_ contiene le principali classi runtime necessarie per lanciare e controllare il batch job. Questo include implementazioni per _JobLauncher_, _Job_, e _Step_. Sia l'application che il Core sono costruiti sulla stessa infrastruttura. Questa Infrastruttura contiene readers e writers e servizi comuni (come RetryTemplate), entrambi vengono poi usati dai developers dell'applicazione (readers e writers come ad esempio ItemReader e ItemWriter), e anche dal framework core.
+
