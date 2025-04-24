@@ -8,6 +8,7 @@ import org.springframework.batch.core.configuration.annotation.EnableBatchProces
 import org.springframework.batch.core.configuration.support.DefaultBatchConfiguration;
 import org.springframework.batch.core.job.builder.JobBuilder;
 import org.springframework.batch.core.repository.JobRepository;
+import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
 import org.springframework.batch.core.step.builder.StepBuilder;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
@@ -20,8 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableBatchProcessing(dataSourceRef = "batchDataSource", transactionManagerRef = "batchTransactionManager")
@@ -31,49 +36,44 @@ public class BatchConfig extends DefaultBatchConfiguration {
     @Autowired
     private WebsiteUserRepository websiteUserRepository;
 
-    @Autowired
-    private WebsiteUser websiteUser;
-
-    @Autowired
-    private JobRepository jobRepository;
-
-    @Autowired
-    private ItemReader<WebsiteUser> websiteUserItemReader;
-
-    @Autowired
-    private PlatformTransactionManager transactionManager;
 
     @Bean
-    public WebsiteUser websiteUser(){
-        return new WebsiteUser();
+    public JobRepository jobRepository(DataSource dataSource, TransactionManager transactionManager) throws Exception {
+        JobRepositoryFactoryBean factory = new JobRepositoryFactoryBean();
+        factory.setDataSource(dataSource);
+        factory.setTransactionManager((PlatformTransactionManager) transactionManager);
+        factory.setDatabaseType("SQLSERVER");
+        factory.afterPropertiesSet();
+        return factory.getObject();
     }
 
     @Bean
-    public Job importWebsiteUserJob (){
+    public Job importWebsiteUserJob (Step websiteUserStep, JobRepository jobRepository){
         return new JobBuilder("importWebsiteUserJob", jobRepository)
-                .start(websiteUserStep(jobRepository, websiteUser,transactionManager))
+                .start(websiteUserStep)
                 .build();
     }
 
     @Bean
-    private Step websiteUserStep(JobRepository jobRepository, WebsiteUser websiteUser, PlatformTransactionManager transactionManager) {
+    public Step websiteUserStep(JobRepository jobRepository, PlatformTransactionManager transactionManager, FlatFileItemReader<WebsiteUser> reader) {
         return new StepBuilder("importWebsiteUserStep", jobRepository)
                 .<WebsiteUser, WebsiteUser>chunk(100, transactionManager)
-                .reader(websiteUserItemReader)
+                .reader(reader)
                 .writer(writer())
                 .build();
     }
+
     @Bean
-    private ItemWriter<WebsiteUser> writer() {
+    public ItemWriter<WebsiteUser> writer() {
         return websiteUserRepository::saveAll;
     }
 
     @Bean
-    public FlatFileItemReader<WebsiteUser> flatFileItemReader(@Value("${inputFile}") Resource inputFile){
+    public FlatFileItemReader<WebsiteUser> flatFileItemReader(){
         FlatFileItemReader<WebsiteUser> flatFileItemReader = new FlatFileItemReader<>();
         flatFileItemReader.setName("csvReader");
         flatFileItemReader.setLinesToSkip(1);
-        flatFileItemReader.setResource(inputFile);
+        flatFileItemReader.setResource(new ClassPathResource("boh-data.csv"));
         flatFileItemReader.setLineMapper(linMappe());
         return flatFileItemReader;
     }
