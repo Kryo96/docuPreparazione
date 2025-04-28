@@ -1,6 +1,8 @@
 package com.preparazione.preparazione.config;
 
 import com.preparazione.preparazione.security.JwtFilter;
+import com.preparazione.preparazione.security.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,10 +17,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 
-    private final JwtFilter jwtFilter;
+    private final JwtUtil jwtUtil;
 
-    public SecurityConfig(JwtFilter jwtFilter) {
-        this.jwtFilter = jwtFilter;
+    public SecurityConfig(JwtUtil jwtUtil){
+        this.jwtUtil = jwtUtil;
+    }
+
+    @Bean
+    public JwtFilter jwtFilter(){
+        return new JwtFilter(jwtUtil);
     }
 
     @Bean
@@ -30,7 +37,7 @@ public class SecurityConfig {
                 .requestMatchers("/auth/*").permitAll()
                 .anyRequest().authenticated();
 
-        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 

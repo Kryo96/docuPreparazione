@@ -20,6 +20,7 @@ public class WebsiteUser {
     private String email;
     private String user;
     private String password;
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 
