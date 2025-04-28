@@ -25,11 +25,6 @@ public class UserController {
         return websiteUser.findById(id).orElseThrow(Exception::new);
     }
 
-    @PostMapping("/users")
-    WebsiteUser newWebsiteUser(@RequestBody WebsiteUser user){
-        return websiteUser.save(user);
-    }
-
     @PutMapping("/users/{id}")
     WebsiteUser replaceUser(@RequestBody WebsiteUser newUser, @PathVariable Long id){
         return websiteUser.findById(id).map( user -> {
