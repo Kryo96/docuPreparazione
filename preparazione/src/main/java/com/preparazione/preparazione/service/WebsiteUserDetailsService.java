@@ -6,7 +6,9 @@ import com.preparazione.preparazione.security.WebsiteUserDetails;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
 public class WebsiteUserDetailsService implements UserDetailsService {
 
     private final WebsiteUserRepository userRepository;
@@ -17,7 +19,7 @@ public class WebsiteUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        WebsiteUser user = userRepository.findByUser(username)
+        WebsiteUser user = userRepository.findByUsername(username)
                 .orElseThrow(
                         ()-> new UsernameNotFoundException("User not found"));
         return new WebsiteUserDetails(user);

@@ -1,6 +1,7 @@
 package com.preparazione.preparazione.security;
 
 import io.jsonwebtoken.JwtException;
+import jakarta.servlet.DispatcherType;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +24,15 @@ public class JwtFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
     }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        // Se la request è un dispatch di errore, bypassa il filtro
+        if (DispatcherType.ERROR.equals(request.getDispatcherType())) {
+            return true;
+        }
+        String path = request.getServletPath();
+        return path.startsWith("/auth/");
+    }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

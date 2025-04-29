@@ -7,7 +7,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 
 public class WebsiteUserDetails implements UserDetails {
 
@@ -29,7 +28,7 @@ public class WebsiteUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return websiteUser.getUser();
+        return websiteUser.getUsername();
     }
 
     @Override

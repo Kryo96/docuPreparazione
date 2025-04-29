@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
 public class ControllerAut {
 
     @Autowired
@@ -33,10 +32,11 @@ public class ControllerAut {
     private JwtUtil jwtUtil;
 
 
+    @Autowired
     private  WebsiteUserRepository websiteUserRepository;
 
 
-    @PostMapping("/login")
+    @PostMapping("/auth/login")
     public LoginResponse loginUser(@RequestBody LoginRequest loginRequest){
         try{
             Authentication authentication = authManager.authenticate(
@@ -51,13 +51,13 @@ public class ControllerAut {
         }
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/auth/signup")
     public ResponseEntity<?> registerUser(@RequestBody WebsiteUserDTO user){
         WebsiteUser websiteUser = new WebsiteUser();
 
         websiteUser.setName(user.getName());
         websiteUser.setEmail(user.getEmail());
-        websiteUser.setUser(user.getUser());
+        websiteUser.setUsername(user.getUsername());
         websiteUser.setPassword(passwordEncoder.encode(user.getPassword()));
         websiteUser.setRole(Role.USER);
 

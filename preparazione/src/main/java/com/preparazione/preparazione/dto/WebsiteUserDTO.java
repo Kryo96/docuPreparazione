@@ -1,6 +1,5 @@
 package com.preparazione.preparazione.dto;
 
-import com.preparazione.preparazione.entities.WebsiteUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,7 +8,7 @@ import lombok.Setter;
 public class WebsiteUserDTO {
 
 
-    private String user;
+    private String username;
     private String password;
     private String email;
     private String name;
