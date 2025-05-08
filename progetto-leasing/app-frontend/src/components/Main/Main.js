@@ -1,14 +1,20 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Form from './MainElements/Form';
 import FastSearch from './MainElements/FastSearch';
+import LoginForm from "./MainElements/LoginForm";
+import RegistrationForm from "./MainElements/RegistrationForm";
 
 function Main() {
     return (
         <main className="container my-4">
             <div className="row">
-            <Form />
+            <LoginForm />
             <FastSearch />
+            </div>
+
+            <div className="row">
+                <RegistrationForm />
+
             </div>
         </main>
 
