@@ -27,7 +27,6 @@ function Form() {
             })
             .then((data) => {
                 console.log("Login riuscito:", data);
-                // qui puoi salvare il token, fare redirect, ecc.
             })
             .catch((error) => {
                 console.error("Errore nel login:", error);
