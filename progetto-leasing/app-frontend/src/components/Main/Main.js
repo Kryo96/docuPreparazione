@@ -3,9 +3,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FastSearch from './MainElements/FastSearch';
 import LoginForm from "./MainElements/LoginForm";
 import RegistrationForm from "./MainElements/RegistrationForm";
-import ContractFastSearch from "./MainElements/ContractFastSearch";
-import AdvancedCarContractSearch from "./MainElements/AdvancedCarContractSearch";
-import AdvancedContractSearch from "./MainElements/AdvancedContractSearch";
+import ContractFastSearch from "./MainElements/ContractSearchForm/ContractFastSearch";
+import AdvancedCarContractSearch from "./MainElements/ContractSearchForm/AdvancedCarContractSearch";
+import AdvancedContractSearch from "./MainElements/ContractSearchForm/AdvancedContractSearch";
+import AdvancedHouseContractSearch from "./MainElements/ContractSearchForm/AdvancedHouseContractSearch";
+import PendingLeases from "./MainElements/LeasingOperations/PendingLeases";
+import LeasesList from "./MainElements/LeasingViews/LeasesList";
+import ExpiredLeasesList from "./MainElements/LeasingViews/ExpiredLeasesList";
 
 function Main() {
     return (
@@ -23,10 +27,12 @@ function Main() {
                 <ContractFastSearch />
                 <AdvancedCarContractSearch />
                 <AdvancedContractSearch />
+                <AdvancedHouseContractSearch />
+                <PendingLeases />
+                <LeasesList />
+                <ExpiredLeasesList />
             </div>
-
         </main>
-
     )
 }
 
