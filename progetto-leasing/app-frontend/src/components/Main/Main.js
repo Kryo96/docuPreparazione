@@ -10,6 +10,7 @@ import AdvancedHouseContractSearch from "./MainElements/ContractSearchForm/Advan
 import PendingLeases from "./MainElements/LeasingOperations/PendingLeases";
 import LeasesList from "./MainElements/LeasingViews/LeasesList";
 import ExpiredLeasesList from "./MainElements/LeasingViews/ExpiredLeasesList";
+import CreateLeaseContract from "./MainElements/LeasingOperations/CreateLeaseContract";
 
 function Main() {
     return (
@@ -31,6 +32,7 @@ function Main() {
                 <PendingLeases />
                 <LeasesList />
                 <ExpiredLeasesList />
+                <CreateLeaseContract />
             </div>
         </main>
     )
