@@ -1,7 +1,10 @@
 import {useState} from "react";
-
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../../provider/AuthProvider";
 
 function LoginForm() {
+    const { setToken } = useAuth();
+    const navigate = useNavigate();
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -27,6 +30,8 @@ function LoginForm() {
             })
             .then((data) => {
                 console.log("Login riuscito:", data);
+                setToken(data.token)
+                navigate("/", { replace: true });
             })
             .catch((error) => {
                 console.error("Errore nel login:", error);

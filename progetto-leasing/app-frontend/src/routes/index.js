@@ -1,7 +1,7 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import { ProtectedRoutes } from "./ProtectedRoutes";
-import Login from "../pages/Login";
+import HomePage from "../pages/HomePage";
 
 const Routes = () => {
     const { token } = useAuth();
@@ -44,12 +44,8 @@ const Routes = () => {
     const routesForNotAuthenticatedOnly = [
         {
             path: "/",
-            element: <div>Home Page</div>,
-        },
-        {
-            path: "/login",
-            element: <Login />,
-        },
+            element: <HomePage />,
+        }
     ];
 
     // Combine and conditionally include routes based on authentication status

@@ -12,13 +12,13 @@ import LeasesList from "./MainElements/LeasingViews/LeasesList";
 import ExpiredLeasesList from "./MainElements/LeasingViews/ExpiredLeasesList";
 import CreateLeaseContract from "./MainElements/LeasingOperations/CreateLeaseContract";
 
-function Main({children}) {
+function Main() {
     return (
 
 
         <main className="container my-4">
             <div className="row">
-                {children}
+                <LoginForm />
             </div>
         </main>
     )
