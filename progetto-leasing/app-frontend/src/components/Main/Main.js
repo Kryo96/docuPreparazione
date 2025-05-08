@@ -3,6 +3,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import FastSearch from './MainElements/FastSearch';
 import LoginForm from "./MainElements/LoginForm";
 import RegistrationForm from "./MainElements/RegistrationForm";
+import ContractFastSearch from "./MainElements/ContractFastSearch";
+import AdvancedCarContractSearch from "./MainElements/AdvancedCarContractSearch";
+import AdvancedContractSearch from "./MainElements/AdvancedContractSearch";
 
 function Main() {
     return (
@@ -14,8 +17,14 @@ function Main() {
 
             <div className="row">
                 <RegistrationForm />
-
             </div>
+
+            <div className="row">
+                <ContractFastSearch />
+                <AdvancedCarContractSearch />
+                <AdvancedContractSearch />
+            </div>
+
         </main>
 
     )
