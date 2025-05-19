@@ -13,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,19 +34,19 @@ public class WebUserController {
     private WebUserRepository webUserRepository;
 
     @PostMapping("/auth/login")
-    public LoginResponse loginUser(@RequestBody LoginRequest loginRequest){
-        try{
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword())
-            );
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginRequest.getUsername(),
+                        loginRequest.getPassword()
+                )
+        );
 
-            String token = jwtUtil.generateToken(loginRequest.getUsername());
+        String token = jwtUtil.generateToken(loginRequest.getUsername());
 
-            return new LoginResponse(token);
-        }catch (AuthenticationException e){
-            throw new RuntimeException("compare hai sbagliato dati");
-        }
+        return ResponseEntity.ok(new LoginResponse(token));
     }
+
 
     @PostMapping("/auth/signup")
     public ResponseEntity<?> registerUser(@RequestBody WebUserDTO user){

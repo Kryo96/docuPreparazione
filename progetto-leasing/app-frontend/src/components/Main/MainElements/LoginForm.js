@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../../provider/AuthProvider";
+import LoginError from "../../../Errors/LoginError";
 
 function LoginForm() {
     const { setToken } = useAuth();
@@ -8,50 +9,117 @@ function LoginForm() {
 
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState({
+        show: false,
+        message: '',
+        type: 'auth'
+    });
 
-    function handleSubmit(e) {
+    function dismissError() {
+        setError({...error, show: false});
+    }
+
+    async function handleSubmit(e) {
         e.preventDefault();
 
-        fetch("http://localhost:8080/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password
-            })
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Login fallito");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log("Login riuscito:", data);
-                setToken(data.token)
-                navigate("/", { replace: true });
-            })
-            .catch((error) => {
-                console.error("Errore nel login:", error);
+        try {
+            const response = await fetch("http://localhost:8080/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username,
+                    password,
+                }),
             });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                setError({
+                    show: true,
+                    message: data.detail || "Errore di autenticazione",
+                    type: "auth",
+                });
+                return;
+            }
+
+            setToken(data.token);
+            navigate("/", { replace: true });
+
+        } catch (error) {
+            setError({
+                show: true,
+                message: error.message || "Errore di rete",
+                type: "auth",
+            });
+        }
+    }
+
+
+    function handleWhoIsInput(e, callback){
+        e.preventDefault();
+        const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
+        const passwordRegex = /^.*(?=.{8,})/;
+
+        if (username.includes('@') && username.includes('.')) {
+            if (!emailregex.test(username)) {
+                setError({
+                    show: true,
+                    message: "Email non valida!",
+                    type: 'validation'
+                })
+                return
+            }
+        }
+
+        if(!usernameRegex.test(username)) {
+            setError({
+                show: true,
+                message: "Username deve contenere almeno 3 caratteri (solo lettere, numeri o underscore)",
+                type: 'validation'
+            })
+            return
+        }
+
+        if(!passwordRegex.test(password)) {
+            setError({
+                show: true,
+                message: "Password deve contenere almeno 3 caratteri",
+                type: 'validation'
+            })
+            return
+        }
+
+        callback(e);
     }
 
     return (
+        <>
+        <div style={{height: '60px'}} >
+            <LoginError
+                show={error.show}
+                message={error.message}
+                type={error.type}
+                onDismiss={dismissError}
+                autoHide={true}
+            />
+        </div>
+
         <div className="col-md-8">
-            <h1 className="mb-4">Login Utente</h1>
-            <form onSubmit={handleSubmit}>
+
+            <h1 className="mb-4" >Login Utente</h1>
+            <form onSubmit={(event) => handleWhoIsInput(event, handleSubmit)}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
                     <input
-                        type="email"
                         className="form-control"
                         id="email"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="nome@esempio.com"
-                        required
                     />
                 </div>
 
@@ -64,7 +132,6 @@ function LoginForm() {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Password"
-                        required
                     />
                 </div>
 
@@ -75,6 +142,7 @@ function LoginForm() {
                 Non hai un account? <a href="/registrazione">Registrati</a>
             </p>
         </div>
+        </>
     )
 }
 

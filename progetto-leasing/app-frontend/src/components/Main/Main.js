@@ -15,9 +15,8 @@ import CreateLeaseContract from "./MainElements/LeasingOperations/CreateLeaseCon
 function Main() {
     return (
 
-
-        <main className="container my-4">
-            <div className="row">
+        <main className="container my-12">
+            <div className="row justify-content-center">
                 <LoginForm />
             </div>
         </main>
