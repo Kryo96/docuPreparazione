@@ -53,7 +53,7 @@ const typeClass = errorTypeClasses[type] || errorTypeClasses.default;
 
     return (
         <div
-            className={`alert d-flex align-items-start border-start border-4 rounded ${typeClass} ${className}`}
+            className={` h-auto mt-2 p-1 w-100 alert position-absolute z-1 d-flex align-items-start border-start border-2 rounded ${typeClass} ${className}`}
             role="alert"
             style={{ marginBottom: '0px' }}
         >

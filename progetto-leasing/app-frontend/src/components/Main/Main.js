@@ -2,6 +2,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 import FastSearch from './MainElements/FastSearch';
 import LoginForm from "./MainElements/LoginForm";
+import MainImageSection from './MainElements/MainSections/MainImageSection';
+import MainHomepageSection from './MainElements/MainSections/MainHomepageSection';
+
 import RegistrationForm from "./MainElements/RegistrationForm";
 import ContractFastSearch from "./MainElements/ContractSearchForm/ContractFastSearch";
 import AdvancedCarContractSearch from "./MainElements/ContractSearchForm/AdvancedCarContractSearch";
@@ -16,6 +19,15 @@ function Main() {
     return (
 
         <main className="container my-12">
+
+            <div className="row justify-content-center" style={{height: "600px"}}>
+                <MainImageSection />
+            </div>
+
+            <div className="row justify-content-center" style={{height: "600px"}}>
+                <MainHomepageSection />
+            </div>
+
             <div className="row justify-content-center">
                 <LoginForm />
             </div>

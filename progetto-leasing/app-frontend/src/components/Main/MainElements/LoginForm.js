@@ -57,7 +57,6 @@ function LoginForm() {
         }
     }
 
-
     function handleWhoIsInput(e, callback){
         e.preventDefault();
         const emailregex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -73,21 +72,21 @@ function LoginForm() {
                 })
                 return
             }
-        }
-
-        if(!usernameRegex.test(username)) {
-            setError({
-                show: true,
-                message: "Username deve contenere almeno 3 caratteri (solo lettere, numeri o underscore)",
-                type: 'validation'
-            })
-            return
+        } else {
+            if(!usernameRegex.test(username)) {
+                setError({
+                    show: true,
+                    message: "Username non valida!",
+                    type: 'validation'
+                })
+                return
+            }
         }
 
         if(!passwordRegex.test(password)) {
             setError({
                 show: true,
-                message: "Password deve contenere almeno 3 caratteri",
+                message: "Password non valida!",
                 type: 'validation'
             })
             return
@@ -98,7 +97,7 @@ function LoginForm() {
 
     return (
         <>
-        <div style={{height: '60px'}} >
+        <div className="p-0">
             <LoginError
                 show={error.show}
                 message={error.message}
@@ -108,9 +107,7 @@ function LoginForm() {
             />
         </div>
 
-        <div className="col-md-8">
-
-            <h1 className="mb-4" >Login Utente</h1>
+        <div className="col-md-8 p-3">
             <form onSubmit={(event) => handleWhoIsInput(event, handleSubmit)}>
                 <div className="mb-3">
                     <label htmlFor="email" className="form-label">Email</label>
