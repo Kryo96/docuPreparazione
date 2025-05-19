@@ -1,0 +1,28 @@
+services:
+  # Backend Spring Boot
+  backend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: spring-backend
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  # Frontend React
+  frontend:
+    build:
+      context: ./app-frontend
+      dockerfile: Dockerfile
+    container_name: react-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
