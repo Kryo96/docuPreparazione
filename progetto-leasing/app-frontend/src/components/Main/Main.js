@@ -1,7 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import FastSearch from './MainElements/FastSearch';
-import RegistrationForm from "./MainElements/RegistrationForm";
+
 import ContractFastSearch from "./MainElements/ContractSearchForm/ContractFastSearch";
 import AdvancedCarContractSearch from "./MainElements/ContractSearchForm/AdvancedCarContractSearch";
 import AdvancedContractSearch from "./MainElements/ContractSearchForm/AdvancedContractSearch";
@@ -24,12 +24,6 @@ function Main({ sections }) {
                     </div>
                 ))
             }
-
-            <div className="row" style={{height:'600px'}}>
-                <RegistrationForm />
-            </div>
-
-
         </main>
     )
 }
