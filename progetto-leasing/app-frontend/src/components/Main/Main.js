@@ -20,11 +20,11 @@ function Main() {
 
         <main className="container my-12">
 
-            <div className="row justify-content-center" style={{height: "600px"}}>
+            <div className="row justify-content-center mb-4" style={{height: "600px"}}>
                 <MainImageSection />
             </div>
 
-            <div className="row justify-content-center" style={{height: "600px"}}>
+            <div className="row justify-content-center mb-4" style={{height: "600px"}}>
                 <MainHomepageSection />
             </div>
 

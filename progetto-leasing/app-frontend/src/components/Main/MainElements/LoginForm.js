@@ -110,7 +110,7 @@ function LoginForm() {
         <div className="col-md-8 p-3">
             <form onSubmit={(event) => handleWhoIsInput(event, handleSubmit)}>
                 <div className="mb-3">
-                    <label htmlFor="email" className="form-label">Email</label>
+                    <label htmlFor="email" className="form-label">Email/Username</label>
                     <input
                         className="form-control"
                         id="email"

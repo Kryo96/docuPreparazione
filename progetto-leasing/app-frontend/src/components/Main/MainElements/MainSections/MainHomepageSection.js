@@ -58,16 +58,16 @@ const slides = [
 
 function MainHomepageSection() {
     return (
-        <div className="container py-4 h-100">
-            <div className="mb-4 h-25">
-                <h1 className="text-center">
+        <div className="container py-4 h-100 bg-secondary ">
+            <div className="mb-0 h-25">
+                <h1 className=" m-0 text-center text-white">
                     Noleggio a lungo termine auto, moto, furgoni, flotte aziendali e molto altro
                 </h1>
             </div>
 
             {/* Carousel */}
             <div id="mainCarousel" className="carousel slide h-75" data-bs-ride="carousel">
-                <div className="carousel-indicators">
+                <div className="carousel-indicators mb-0">
                     {slides.map((_, i) => (
                         <button
                             key={i}
@@ -82,19 +82,29 @@ function MainHomepageSection() {
                 </div>
 
                 {/* Slides dinamiche */}
-                <div className="carousel-inner h-100">
+                <div className="carousel-inner h-100 bg-opacity-75 bg-primary">
                     {slides.map((slide, i) => (
                         <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''} h-100`}>
-                            <div className="border d-flex flex-column align-items-center justify-content-center p-4 h-100 text-center">
-                                <h3 className="p-2 m-0">{slide.title}</h3>
-                                <p className="p-2 m-0">{slide.description}</p>
-                                <a className="btn btn-primary m-2 p-2" href={slide.ctaLink} target="_blank" rel="noopener noreferrer">
-                                    <strong>{slide.ctaText}</strong>
-                                </a>
+                            <div className="h-100 w-100">
+                                <div className="h-25 p-0 text-center text-white" >
+                                    <h3 className="m-0 h-100 align-content-center">{slide.title}</h3>
+                                </div>
+
+                                <div className="h-50 p-0 px-5 m-0 text-center">
+                                    <p className="p-0 m-0 h-100 align-content-center text-white">{slide.description}</p>
+                                </div>
+
+                                <div className="p-0 m-0  h-25 align-content-center text-center" >
+                                    <a className="btn btn-secondary m-2" href={slide.ctaLink} target="_blank" rel="noopener noreferrer">
+                                        <strong>{slide.ctaText}</strong>
+                                    </a>
+                                </div>
+
                             </div>
                         </div>
                     ))}
                 </div>
+
 
                 {/* Controlli */}
                 <button className="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
