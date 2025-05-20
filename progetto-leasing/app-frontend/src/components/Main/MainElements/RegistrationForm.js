@@ -1,25 +1,84 @@
 import { useState } from "react";
+import {useNavigate} from "react-router-dom";
+import { useAuth } from "../../../provider/AuthProvider";
+import RegistrationError from "../../../Errors/RegistrationError";
 
 function RegistrationForm() {
+    const { setToken } = useAuth();
+    const navigate = useNavigate();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
 
+    const [error, setError] = useState({
+        show: false,
+        message: '',
+        type: 'auth',
+    });
+
+    function dismissError() {
+        setError({ ...error, show: false });
+    }
+
+    const handleWhoIsInput = (e, callback) => {
+        e.preventDefault();
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        const usernameRegex = /^[a-zA-Z0-9_]{3,}$/;
+        const passwordRegex = /^.*(?=.{8,})/;
+
+        console.log(email.length)
+        if (email.includes('@') && email.includes('.') || email.length === 0) {
+
+            if (!emailRegex.test(email)) {
+
+                setError({
+                    show: true,
+                    message: "Email non valida!",
+                    type: 'validation',
+                });
+                return;
+            }
+        }
+
+
+        if (!usernameRegex.test(username)) {
+            setError({
+                show: true,
+                message: "Username non valido!",
+                type: 'validation',
+            });
+            return;
+        }
+
+
+        if (!passwordRegex.test(password)) {
+            setError({
+                show: true,
+                message: "Password non valida!",
+                type: 'validation',
+            });
+            return;
+        }
+
+        callback(e);
+    };
+
     function handleSubmit(e) {
         e.preventDefault();
 
-        fetch("http://localhost:8080/register", {
+        fetch("http://localhost:8080/auth/signup", {
             method: "POST",
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                username: username,
-                password: password,
-                email: email,
-                name: name
-            })
+                username,
+                password,
+                email,
+                name,
+            }),
         })
             .then((response) => {
                 if (!response.ok) {
@@ -28,18 +87,34 @@ function RegistrationForm() {
                 return response.json();
             })
             .then((data) => {
-                console.log("Registrazione riuscita:", data);
+                if (data.token) {
+                    setToken(data.token);
+                    window.location.href = "/";
+                }
             })
             .catch((error) => {
-                console.error("Errore nella registrazione:", error);
+                setError({
+                    show: true,
+                    message: error.message || "Errore nella registrazione",
+                    type: "auth",
+                });
             });
     }
 
     return (
-        <div className="row justify-content-center align-items-center">
-            <div className="col-md-6">
-                <h1 className="mb-4">Registrazione Utente</h1>
-                <form onSubmit={handleSubmit}>
+        <>
+            <div className="p-0">
+                <RegistrationError
+                    show={error.show}
+                    message={error.message}
+                    type={error.type}
+                    onDismiss={dismissError}
+                    autoHide={true}
+                />
+            </div>
+
+            <div className="col-md-8 p-3">
+                <form onSubmit={(event) => handleWhoIsInput(event, handleSubmit)}>
                     <div className="mb-3">
                         <label htmlFor="name" className="form-label">Nome</label>
                         <input
@@ -48,7 +123,7 @@ function RegistrationForm() {
                             id="name"
                             value={name}
                             onChange={(e) => setName(e.target.value)}
-                            required
+                            placeholder="Nome completo"
                         />
                     </div>
 
@@ -60,7 +135,7 @@ function RegistrationForm() {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            required
+                            placeholder="nome@esempio.com"
                         />
                     </div>
 
@@ -72,7 +147,7 @@ function RegistrationForm() {
                             id="username"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
-                            required
+                            placeholder="Nome utente"
                         />
                     </div>
 
@@ -84,18 +159,18 @@ function RegistrationForm() {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            required
+                            placeholder="Password"
                         />
                     </div>
 
-                    <button type="submit" className="btn btn-success w-100">Registrati</button>
+                    <button type="submit" className="btn btn-primary w-100">Registrati</button>
                 </form>
 
                 <p className="mt-3">
                     Hai già un account? <a href="/login">Accedi</a>
                 </p>
             </div>
-        </div>
+        </>
     );
 }
 

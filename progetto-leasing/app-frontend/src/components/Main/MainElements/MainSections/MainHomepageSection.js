@@ -65,7 +65,6 @@ function MainHomepageSection() {
                 </h1>
             </div>
 
-            {/* Carousel */}
             <div id="mainCarousel" className="carousel slide h-75" data-bs-ride="carousel">
                 <div className="carousel-indicators mb-0">
                     {slides.map((_, i) => (
@@ -81,7 +80,6 @@ function MainHomepageSection() {
                     ))}
                 </div>
 
-                {/* Slides dinamiche */}
                 <div className="carousel-inner h-100 bg-opacity-75 bg-primary">
                     {slides.map((slide, i) => (
                         <div key={i} className={`carousel-item ${i === 0 ? 'active' : ''} h-100`}>
@@ -105,8 +103,6 @@ function MainHomepageSection() {
                     ))}
                 </div>
 
-
-                {/* Controlli */}
                 <button className="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
                     <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                     <span className="visually-hidden">Precedente</span>

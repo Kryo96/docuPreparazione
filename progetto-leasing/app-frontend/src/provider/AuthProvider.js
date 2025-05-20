@@ -12,11 +12,11 @@ import {
 // It also ensures that the default authorization header in axios is updated with the authentication token whenever it changes.
 
 
-const AuthContext = createContext('security');
+const AuthContext = createContext();
 
 function AuthProvider({ children }){
     // State to hold the authentication token
-    const [token, setToken_] = useState(localStorage.getItem("token"));
+    const [token, setToken_] = useState(localStorage.getItem("token") || null);
 
     // Function to set the authentication token
     function setToken(newToken){
@@ -26,7 +26,7 @@ function AuthProvider({ children }){
     useEffect(() => {
         if (token) {
             axios.defaults.headers.common["Authorization"] = "Bearer " + token;
-            localStorage.setItem('token',token);
+            localStorage.setItem('token', token);
         } else {
             delete axios.defaults.headers.common["Authorization"];
             localStorage.removeItem('token')

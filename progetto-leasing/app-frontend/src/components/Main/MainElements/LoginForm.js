@@ -136,7 +136,7 @@ function LoginForm() {
             </form>
 
             <p className="mt-3">
-                Non hai un account? <a href="/registrazione">Registrati</a>
+                Non hai un account? <a href="/register">Registrati</a>
             </p>
         </div>
         </>

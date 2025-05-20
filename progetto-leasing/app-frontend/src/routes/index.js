@@ -2,9 +2,16 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { useAuth } from "../provider/AuthProvider";
 import { ProtectedRoutes } from "./ProtectedRoutes";
 import HomePage from "../pages/HomePage";
+import RegistrationPage from "../pages/RegistrationPage";
+import {useEffect, useState} from "react";
 
 const Routes = () => {
     const { token } = useAuth();
+    const [isAuthenticated, setIsAuthenticated] = useState(!!token);
+
+    useEffect(() => {
+        setIsAuthenticated(!!token);
+    }, [token]);
 
     // Define public routes accessible to all users
     const routesForPublic = [
@@ -45,13 +52,17 @@ const Routes = () => {
         {
             path: "/",
             element: <HomePage />,
+        },
+        {
+            path:"/register",
+            element: <RegistrationPage />
         }
     ];
 
     // Combine and conditionally include routes based on authentication status
     const router = createBrowserRouter([
         ...routesForPublic,
-        ...(!token ? routesForNotAuthenticatedOnly : []),
+        ...(!isAuthenticated ? routesForNotAuthenticatedOnly : []),
         ...routesForAuthenticatedOnly,
     ]);
 
