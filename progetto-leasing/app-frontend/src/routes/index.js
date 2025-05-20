@@ -5,6 +5,7 @@ import HomePage from "../pages/HomePage";
 import RegistrationPage from "../pages/RegistrationPage";
 import {useEffect, useState} from "react";
 import UserHomePage from "../pages/UserHomePage";
+import BackOfficeHomePage from "../pages/BackOfficeHomePage";
 
 const Routes = () => {
     const { token } = useAuth();
@@ -35,6 +36,10 @@ const Routes = () => {
                 {
                     path: "/",
                     element: <UserHomePage />,
+                },
+                {
+                    path: "/backoffice",
+                    element: <BackOfficeHomePage />,
                 },
                 {
                     path: "/profile",
