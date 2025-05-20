@@ -4,6 +4,7 @@ import { ProtectedRoutes } from "./ProtectedRoutes";
 import HomePage from "../pages/HomePage";
 import RegistrationPage from "../pages/RegistrationPage";
 import {useEffect, useState} from "react";
+import UserHomePage from "../pages/UserHomePage";
 
 const Routes = () => {
     const { token } = useAuth();
@@ -33,7 +34,7 @@ const Routes = () => {
             children: [
                 {
                     path: "/",
-                    element: <div>User Home Page</div>,
+                    element: <UserHomePage />,
                 },
                 {
                     path: "/profile",
