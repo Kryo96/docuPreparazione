@@ -45,7 +45,7 @@ public class GlobalExceptionHandler {
         problemDetail.setTitle("Errore di validazione");
         problemDetail.setDetail("Uno o più campi non sono validi.");
 
-        // Puoi anche aggiungere i dettagli dei campi invalidi:
+        // aggiungo dettagli dei campi non validi
         var firstError = ex.getBindingResult().getFieldErrors().stream().findFirst();
         firstError.ifPresent(error -> {
             problemDetail.setProperty("invalidField", error.getField());

@@ -59,8 +59,8 @@ public class WebUserController {
         websiteUser.setRole(Role.USER);
 
         webUserRepository.save(websiteUser);
-
-        return ResponseEntity.ok("HELL YEAH");
-
+        String token = jwtUtil.generateToken(user.getUsername());
+        return ResponseEntity.ok(new LoginResponse(token));
     }
+
 }
