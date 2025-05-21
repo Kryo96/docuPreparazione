@@ -1,8 +1,6 @@
 package com.leasing.app.model.common.cash;
 
-
 import jakarta.persistence.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -17,6 +15,6 @@ public class Accounting {
     private String descrizione;
 
     @ManyToOne
-    @JoinColumn(name = "bankAccount_id")
+    @JoinColumn(name = "bank_account_id")
     private BankAccount bankAccount;
 }
