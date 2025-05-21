@@ -1,4 +1,3 @@
-// AdvancedFilters.js
 import React, { useState } from 'react';
 
 const AdvancedFilters = () => {
@@ -18,7 +17,6 @@ const AdvancedFilters = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Logica per eseguire la ricerca con i filtri
         console.log('Filtri applicati:', filters);
     };
 

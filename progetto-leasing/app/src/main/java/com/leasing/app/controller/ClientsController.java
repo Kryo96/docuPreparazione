@@ -24,6 +24,11 @@ public class ClientsController {
         return clientService.getAllClients();
     }
 
+    @GetMapping()
+    public List<Client> fastSearch(@RequestParam String searchTerm, @RequestParam String searchType) {
+        return clientService.getFastSearch(searchTerm, searchType);
+    }
+
     @GetMapping("/{id}")
     public Client getClient(@PathVariable Long id) {
         return clientService.getClientById(id);

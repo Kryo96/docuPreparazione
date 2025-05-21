@@ -17,10 +17,13 @@ import ContractTemplates from '../components/Main/UserBackoffice/ContractTemplat
 import WorkflowVisual from '../components/Main/UserBackoffice/WorkflowVisual';
 import ApprovalTracking from '../components/Main/UserBackoffice/ApprovalTracking';
 import RenewalsAndClosures from '../components/Main/UserBackoffice/RenewalsAndClosures';
+import SearchForm from "../components/Main/MainElements/SearchForm/SearchForm";
+import MultipleSearchForm from "../components/Main/UserBackoffice/Common/MultipleSearchForm";
 
 const BackofficeUserHomePage = () => {
     return (
         <div className="container mt-4">
+            <MultipleSearchForm />
             <Dashboard />
             <WorkQueue />
             <ClientRequestsTable />

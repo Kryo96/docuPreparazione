@@ -15,6 +15,7 @@ public class Client {
 
     private String name;
     private String email;
+    private String uniqueStringForIdentity;
 
     public Long getId() {
         return id;
@@ -39,5 +40,11 @@ public class Client {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setUniqueStringForIdentity(String uniqueStringForIdentity) {
+        this.uniqueStringForIdentity = uniqueStringForIdentity;
+    }
+
+    public String getUniqueStringForIdentity() {return uniqueStringForIdentity;}
 
 }
