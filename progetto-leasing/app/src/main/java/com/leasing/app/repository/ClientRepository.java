@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long> {
-    @Query("SELECT s FROM Client s WHERE s.uniqueStringForIdentity = :uniqueStringForIdentity")
-    List<Client> leasingFastSearchByClient (@Param("uniqueStringForIdentity") String uniqueStringForIdentity);
+    @Query("SELECT c FROM Client c " +
+            "WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :term, '%')) " +
+            "OR LOWER(c.email) LIKE LOWER(CONCAT('%', :term, '%')) " +
+            "OR LOWER(c.uniqueStringForIdentity) LIKE LOWER(CONCAT('%', :term, '%'))")
+    List<Client> fastSearchByClientValue (@Param("term") String term);
 }

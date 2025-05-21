@@ -25,8 +25,8 @@ public class ClientsController {
     }
 
     @GetMapping("/search")
-    public List<Client> fastSearch(@RequestParam String searchTerm) {
-        return clientService.getFastSearch(searchTerm);
+    public List<Client> fastSearch(@RequestParam String term) {
+        return clientService.getFastSearch(term);
     }
 
     @GetMapping("/{id}")
