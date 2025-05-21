@@ -2,7 +2,12 @@ package com.leasing.app.model;
 
 import com.leasing.app.model.common.cash.BankAccount;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+
+@Getter
+@Setter
 @Entity
 @Table(name = "client")
 public class Client {
@@ -10,42 +15,18 @@ public class Client {
     @Id
     @GeneratedValue
     private Long id;
-
+    private String vatnumber;
+    private String phonenumber;
     private String name;
     private String email;
     private String uniqueStringForIdentity;
 
+    @OneToOne
+    @JoinColumn(name = "webuser_id")  // questa è la colonna FK nella tabella client
+    private WebUser webUser;
+
     @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
     private BankAccount bankAccount;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setUniqueStringForIdentity(String uniqueStringForIdentity) {
-        this.uniqueStringForIdentity = uniqueStringForIdentity;
-    }
-
-    public String getUniqueStringForIdentity() {return uniqueStringForIdentity;}
 
 }

@@ -6,24 +6,23 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 @Setter
 @Entity(name="product_contract")
 public abstract class ProductContract {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @EmbeddedId
+    private ProductContractId productContractId;
 
+    @MapsId("productId")
     @ManyToOne
-    @JoinColumn(name = "product_id")
+    @JoinColumn(name = "productid", referencedColumnName = "id", nullable = false)
     private Product product;
 
+    @MapsId("contractId")
     @ManyToOne
-    @JoinColumn(name = "contract_id")
+    @JoinColumn(name = "contractid", referencedColumnName = "id", nullable = false)
     private Contract contract;
 
     @Version

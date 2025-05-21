@@ -1,4 +1,4 @@
-package com.leasing.app.repository.common;
+package com.leasing.app.repository;
 
 import com.leasing.app.model.common.contract.ProductContract;
 import org.springframework.data.jpa.repository.JpaRepository;
