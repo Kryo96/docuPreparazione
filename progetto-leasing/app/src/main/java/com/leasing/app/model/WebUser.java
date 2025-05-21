@@ -21,4 +21,6 @@ public class WebUser {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToOne(mappedBy = "webUser")
+    private Client client;
 }
