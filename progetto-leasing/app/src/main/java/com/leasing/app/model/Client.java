@@ -1,9 +1,7 @@
 package com.leasing.app.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.leasing.app.model.common.cash.BankAccount;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "client")
@@ -16,6 +14,9 @@ public class Client {
     private String name;
     private String email;
     private String uniqueStringForIdentity;
+
+    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+    private BankAccount bankAccount;
 
     public Long getId() {
         return id;

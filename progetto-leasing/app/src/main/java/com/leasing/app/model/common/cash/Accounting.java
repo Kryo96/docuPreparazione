@@ -1,4 +1,22 @@
 package com.leasing.app.model.common.cash;
 
-public class accounting {
+
+import jakarta.persistence.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+@Entity
+public class Accounting {
+    @Id
+    @GeneratedValue
+    private Long id;
+
+    private LocalDate data;
+    private BigDecimal importo;
+    private String descrizione;
+
+    @ManyToOne
+    @JoinColumn(name = "bankAccount_id")
+    private BankAccount bankAccount;
 }

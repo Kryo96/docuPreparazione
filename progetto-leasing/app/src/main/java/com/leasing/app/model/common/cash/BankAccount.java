@@ -1,7 +1,10 @@
-package com.leasing.app.model;
+package com.leasing.app.model.common.cash;
 
+import com.leasing.app.model.Client;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,10 +22,10 @@ public class BankAccount {
     private BigDecimal saldo;
 
     @OneToOne
-    @JoinColumn(name = "cliente_id")
+    @JoinColumn(name = "client_id")
     private Client client;
 
 
-    @OneToMany(mappedBy = "contoBancario", cascade = CascadeType.ALL)
-    private List<MovimentoContabile> movimenti;
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    private List<Accounting> moviments;
 }
