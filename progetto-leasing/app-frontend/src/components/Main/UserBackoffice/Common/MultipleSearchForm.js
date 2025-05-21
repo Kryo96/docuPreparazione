@@ -1,9 +1,13 @@
+import axios from "axios";
 import { useState } from "react";
 import HttpError from "../../../../Errors/HttpError";
+
 
 function SearchForm({ title, placeholder }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchType, setSearchType] = useState("clients");
+    const [data, setData] = useState({});
+
     const [error, setError] = useState({
         show: false,
         message: '',
@@ -17,36 +21,32 @@ function SearchForm({ title, placeholder }) {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        try{
-            const response = await fetch("http://localhost:8080/clients", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    searchTerm: searchTerm,
-                    searchType: searchType,
-                })
-            });
+        const queryParams = new URLSearchParams({
+            term: searchTerm
+        }).toString();
 
-            const data = await response.json();
+        const url = `http://localhost:8080/clients/search?${queryParams}`;
 
-            if(!response.ok) {
-                setError({
-                    show: true,
-                    message: data.detail || "Errore server",
-                    type: "network"
-                })
-            }
+        try {
+            const response = await axios.get(url);
+            console.log(response);
+            setData(response.data);
 
-        }catch(err){
+        } catch (err) {
+            const message =
+                err.response?.data?.detail ||
+                err.response?.data?.message ||
+                err.message ||
+                "Errore di rete";
             setError({
                 show: true,
-                message: err.message || "Errore di rete",
+                message,
                 type: "network"
-            })
+            });
         }
     }
+
+
 
     return (
         <>
@@ -101,6 +101,11 @@ function SearchForm({ title, placeholder }) {
                         Cerca
                     </button>
                 </form>
+
+                { data.length > 0 && (
+                    <h1>Ci sono i dati</h1>
+                    )
+                }
             </div>
         </>
     );
