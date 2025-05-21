@@ -20,8 +20,8 @@ public class ClientService {
         return clientRepository.findAll();
     }
 
-    public List<Client> getFastSearch(String searchTerm, String searchType) {
-        return clientRepository.leasingFastSearchByClient(searchTerm, searchType);
+    public List<Client> getFastSearch(String searchTerm) {
+        return clientRepository.leasingFastSearchByClient(searchTerm);
     }
 
     public Client getClientById(Long id) {

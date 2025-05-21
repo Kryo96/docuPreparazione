@@ -14,17 +14,18 @@ import java.util.List;
 @Entity(name="product_contract")
 public abstract class ProductContract {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-
-    @MapsId("product_id")
     @ManyToOne
-    private Product productId;
+    @JoinColumn(name = "product_id")
+    private Product product;
 
-    @MapsId("contract_id")
     @ManyToOne
-    private Contract contractId;
+    @JoinColumn(name = "contract_id")
+    private Contract contract;
 
     @Version
     private Integer version;
-
-    }
+}
