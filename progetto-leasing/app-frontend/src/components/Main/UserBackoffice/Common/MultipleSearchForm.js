@@ -1,12 +1,16 @@
 import axios from "axios";
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import HttpError from "../../../../Errors/HttpError";
+import Table from "../Utils/Table";
 
 
 function SearchForm({ title, placeholder }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [searchType, setSearchType] = useState("clients");
-    const [data, setData] = useState({});
+    const [useSearchType, setUseSearchType] = useState("clients");
+    const [data, setData] = useState([]);
+    const [hasSearched, setHasSearched] = useState(false);
+
 
     const [error, setError] = useState({
         show: false,
@@ -17,6 +21,10 @@ function SearchForm({ title, placeholder }) {
     function dismissError() {
         setError({...error, show: false});
     }
+
+    useEffect(() => {
+        setUseSearchType(searchType.toString());
+    }, [data])
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -30,7 +38,8 @@ function SearchForm({ title, placeholder }) {
         try {
             const response = await axios.get(url);
             console.log(response);
-            setData(response.data);
+            setData([...response.data]);
+            setHasSearched(true);
 
         } catch (err) {
             const message =
@@ -45,8 +54,6 @@ function SearchForm({ title, placeholder }) {
             });
         }
     }
-
-
 
     return (
         <>
@@ -102,10 +109,10 @@ function SearchForm({ title, placeholder }) {
                     </button>
                 </form>
 
-                { data.length > 0 && (
-                    <h1>Ci sono i dati</h1>
-                    )
-                }
+                {hasSearched && data.length > 0 && (
+                    <Table data={data} searchType={useSearchType} />
+                )}
+
             </div>
         </>
     );
