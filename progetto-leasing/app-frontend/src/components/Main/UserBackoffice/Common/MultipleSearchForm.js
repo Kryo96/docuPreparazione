@@ -18,6 +18,8 @@ function SearchForm({ title, placeholder }) {
         type: 'network'
     });
 
+    const [search, setSearch ] = useState("");
+    
     function dismissError() {
         setError({...error, show: false});
     }
