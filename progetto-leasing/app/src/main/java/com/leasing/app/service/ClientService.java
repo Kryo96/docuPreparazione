@@ -21,7 +21,7 @@ public class ClientService {
     }
 
     public List<Client> getFastSearch(String term) {
-        return clientRepository.fastSearchByClientValue(term);
+        return clientRepository.searchClients(term);
     }
 
     public Client getClientById(Long id) {
