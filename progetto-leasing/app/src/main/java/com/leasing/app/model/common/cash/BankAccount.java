@@ -24,8 +24,4 @@ public class BankAccount {
     @OneToOne
     @JoinColumn(name = "client_id")
     private Client client;
-
-
-    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
-    private List<Accounting> moviments;
 }
