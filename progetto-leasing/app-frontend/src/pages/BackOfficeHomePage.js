@@ -19,11 +19,13 @@ import ApprovalTracking from '../components/Main/UserBackoffice/ApprovalTracking
 import RenewalsAndClosures from '../components/Main/UserBackoffice/RenewalsAndClosures';
 import SearchForm from "../components/Main/MainElements/SearchForm/SearchForm";
 import MultipleSearchForm from "../components/Main/UserBackoffice/Common/MultipleSearchForm";
+import ProductSearchForm from "../components/Main/UserBackoffice/Common/ProductSearchForm";
 
 const BackofficeUserHomePage = () => {
     return (
         <div className="container mt-4">
             <MultipleSearchForm />
+            <ProductSearchForm />
             <Dashboard />
             <WorkQueue />
             <ClientRequestsTable />

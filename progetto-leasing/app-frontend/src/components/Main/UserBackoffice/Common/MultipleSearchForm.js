@@ -10,16 +10,13 @@ function SearchForm({ title, placeholder }) {
     const [useSearchType, setUseSearchType] = useState("clients");
     const [data, setData] = useState([]);
     const [hasSearched, setHasSearched] = useState(false);
-
-
     const [error, setError] = useState({
         show: false,
         message: '',
         type: 'network'
     });
-
     const [search, setSearch ] = useState("");
-    
+
     function dismissError() {
         setError({...error, show: false});
     }
@@ -111,9 +108,15 @@ function SearchForm({ title, placeholder }) {
                     </button>
                 </form>
 
-                {hasSearched && data.length > 0 && (
-                    <Table data={data} searchType={useSearchType} />
-                )}
+                {hasSearched && data.length > 0 &&
+                    (
+                        <Table data={data} searchType={useSearchType} />
+                    ) ||
+                    hasSearched && data.length === 0 &&
+                    (
+                        <h1>No result find!</h1>
+                    )
+                }
 
             </div>
         </>
