@@ -24,4 +24,11 @@ public class BankAccount {
     @OneToOne
     @JoinColumn(name = "client_id")
     private Client client;
+<<<<<<< HEAD
+=======
+
+
+    @OneToMany(mappedBy = "bankAccount", cascade = CascadeType.ALL)
+    private List<Transaction> moviments;
+>>>>>>> f839fa2 (refactoring model accounting)
 }
