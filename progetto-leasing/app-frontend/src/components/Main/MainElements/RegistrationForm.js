@@ -10,6 +10,9 @@ function RegistrationForm() {
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
     const [name, setName] = useState("");
+    const [phonenumber, setPhoneNumber] =  useState("");
+    const [vatnumber, setVatNumber] = useState("");
+
 
     const [error, setError] = useState({
         show: false,
@@ -160,6 +163,28 @@ function RegistrationForm() {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Password"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="phonenumber" className="form-label">Phone Number</label>
+                        <input
+                            type="tel"
+                            className="form-control"
+                            id="phonenumber"
+                            value={phonenumber}
+                            onChange={(e) => setPhoneNumber(e.target.value)}
+                            placeholder="Numero di telefono"
+                        />
+                    </div>
+                    <div className="mb-3">
+                        <label htmlFor="vatnumber" className="form-label">Vat Number</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            id="vatnumber"
+                            value={vatnumber}
+                            onChange={(e) => setVatNumber(e.target.value)}
+                            placeholder="Numero di P. Iva"
                         />
                     </div>
 
