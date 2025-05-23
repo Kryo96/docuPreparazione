@@ -1,4 +1,4 @@
-package com.leasing.app.dto.product;
+package com.leasing.app.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
