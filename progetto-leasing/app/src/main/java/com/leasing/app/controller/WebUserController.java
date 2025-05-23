@@ -2,10 +2,12 @@ package com.leasing.app.controller;
 
 
 import com.leasing.app.dto.WebUserDTO;
+import com.leasing.app.dto.signup.SignupDTO;
 import com.leasing.app.model.Role;
 import com.leasing.app.model.WebUser;
 import com.leasing.app.repository.WebUserRepository;
 import com.leasing.app.security.JwtUtil;
+import com.leasing.app.service.WebUserService;
 import com.leasing.app.web.LoginRequest;
 import com.leasing.app.web.LoginResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class WebUserController {
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
     AuthenticationManager authenticationManager;
@@ -31,7 +31,7 @@ public class WebUserController {
     private JwtUtil jwtUtil;
 
     @Autowired
-    private WebUserRepository webUserRepository;
+    private WebUserService webUserService;
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
@@ -49,16 +49,8 @@ public class WebUserController {
 
 
     @PostMapping("/auth/signup")
-    public ResponseEntity<?> registerUser(@RequestBody WebUserDTO user){
-        WebUser websiteUser = new WebUser();
-
-        websiteUser.setName(user.getName());
-        websiteUser.setEmail(user.getEmail());
-        websiteUser.setUsername(user.getUsername());
-        websiteUser.setPassword(passwordEncoder.encode(user.getPassword()));
-        websiteUser.setRole(Role.USER);
-
-        webUserRepository.save(websiteUser);
+    public ResponseEntity<?> registerUser(@RequestBody SignupDTO user){
+        webUserService.createWebUser(user);
         String token = jwtUtil.generateToken(user.getUsername());
         return ResponseEntity.ok(new LoginResponse(token));
     }

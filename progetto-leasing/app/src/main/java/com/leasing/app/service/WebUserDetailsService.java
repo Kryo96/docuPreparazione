@@ -23,4 +23,6 @@ public class WebUserDetailsService implements UserDetailsService {
                         ()-> new UsernameNotFoundException("User not found"));
         return new WebUserDetails(user);
     }
+
+
 }
