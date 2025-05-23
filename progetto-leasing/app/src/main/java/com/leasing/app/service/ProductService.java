@@ -1,6 +1,6 @@
 package com.leasing.app.service;
 
-import com.leasing.app.dto.product.ProductDTO;
+import com.leasing.app.dto.ProductDTO;
 import com.leasing.app.model.Product;
 import com.leasing.app.repository.ProductRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -32,7 +32,12 @@ public class ProductService {
             return productRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Product not found with id: " + id));
         }
 
-        public Product createProduct(Product product) {
+        public Product createProduct(ProductDTO productDTO) {
+            Product product = new Product();
+            product.setName(productDTO.getName() != null ? productDTO.getName() : null);
+            product.setModel(productDTO.getAgency() != null ? productDTO.getModel() : null);
+            product.setAgency(productDTO.getAgency() != null ? productDTO.getAgency() : null);
+            product.setOrganization(productDTO.getOrganization() != null ? productDTO.getOrganization() : null);
             return productRepository.save(product);
         }
 

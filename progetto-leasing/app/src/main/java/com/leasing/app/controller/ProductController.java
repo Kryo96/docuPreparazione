@@ -1,6 +1,6 @@
 package com.leasing.app.controller;
 
-import com.leasing.app.dto.product.ProductDTO;
+import com.leasing.app.dto.ProductDTO;
 import com.leasing.app.model.Product;
 import com.leasing.app.service.ProductService;
 import org.springframework.http.ResponseEntity;
@@ -40,8 +40,8 @@ public class ProductController {
         }
 
         @PostMapping
-        public ResponseEntity<Product> createProduct(@RequestBody Product product) throws URISyntaxException {
-            Product savedProduct = productService.createProduct(product);
+        public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) throws URISyntaxException {
+            Product savedProduct = productService.createProduct(productDTO);
             return ResponseEntity.created(new URI("/products/" + savedProduct.getId())).body(savedProduct);
         }
 

@@ -1,5 +1,6 @@
 package com.leasing.app.controller;
 
+import com.leasing.app.dto.ClientDTO;
 import com.leasing.app.model.Client;
 import com.leasing.app.service.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -35,8 +36,8 @@ public class ClientsController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> createClient(@RequestBody Client client) throws URISyntaxException {
-        Client savedClient = clientService.createClient(client);
+    public ResponseEntity<Client> createClient(@RequestBody ClientDTO clientDTO) throws URISyntaxException {
+        Client savedClient = clientService.createClient(clientDTO);
         return ResponseEntity.created(new URI("/clients/" + savedClient.getId())).body(savedClient);
     }
 
