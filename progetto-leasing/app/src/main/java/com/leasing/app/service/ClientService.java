@@ -19,15 +19,13 @@ import java.util.List;
 @Service
 public class ClientService {
 
-    @Autowired
-    private WebUserRepository webUserRepository;
-
-    @Autowired
-    private BankAccountRepository bankAccountRepository;
-
+    private final WebUserRepository webUserRepository;
+    private final BankAccountRepository bankAccountRepository;
     private final ClientRepository clientRepository;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(WebUserRepository webUserRepository, BankAccountRepository bankAccountRepository, ClientRepository clientRepository) {
+        this.webUserRepository = webUserRepository;
+        this.bankAccountRepository = bankAccountRepository;
         this.clientRepository = clientRepository;
     }
 
