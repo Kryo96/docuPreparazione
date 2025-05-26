@@ -26,6 +26,10 @@ public class ProductContractService {
         this.contractRepository = contractRepository;
     }
 
+    public List<ProductContract> findAll(){
+        return productContractRepository.findAll();
+    }
+
 
    public ProductContract findById(@NotNull Long id){
         return productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Invalid Id"));
@@ -73,4 +77,8 @@ public class ProductContractService {
             return productContract;
         }
 
+    public void deleteById(@NotNull Long id){
+        ProductContract productContract = productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("invalid id"));
+        productContractRepository.deleteById(id);
+    }
 }
