@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name="product_contract")
-public abstract class ProductContract {
+public class ProductContract {
 
     @EmbeddedId
     private ProductContractId productContractId;
