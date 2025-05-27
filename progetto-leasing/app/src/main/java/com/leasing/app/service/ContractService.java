@@ -6,9 +6,10 @@ import com.leasing.app.model.common.contract.Contract;
 import com.leasing.app.repository.ClientRepository;
 import com.leasing.app.repository.ContractRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ContractService {
 
     private final ContractRepository contractRepository;
