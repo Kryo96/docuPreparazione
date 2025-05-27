@@ -35,10 +35,26 @@ public class ProductContractService {
         return productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("Invalid Id"));
    }
 
-
-    public ProductContract createProductContract(ProductContractDTO productContractDTO){
-
+   public ProductContract createProductContract(ProductContractDTO productContractDTO){
         ProductContract productContract = new ProductContract();
+        setUpProductContract(productContractDTO, productContract);
+        productContractRepository.save(productContract);
+        return productContract;
+    }
+
+   public ProductContract updateById(@NotNull Long id, ProductContractDTO productContractDTO){
+        ProductContract productContract = productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("invalid id"));
+        setUpProductContract(productContractDTO, productContract);
+        productContractRepository.save(productContract);
+            return productContract;
+        }
+
+    public void deleteById(@NotNull Long id){
+        ProductContract productContract = productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("invalid id"));
+        productContractRepository.deleteById(id);
+    }
+
+    private void setUpProductContract(ProductContractDTO productContractDTO, ProductContract productContract) {
         if(productContractDTO.getContractId() != null){
             Contract contract = contractRepository
                     .findById(productContractDTO.getContractId())
@@ -51,34 +67,5 @@ public class ProductContractService {
                     .orElseThrow(()-> new EntityNotFoundException("product id it's not valid"));
             productContract.setProduct(product);
         }
-
-        productContractRepository.save(productContract);
-        return productContract;
-    }
-
-    public ProductContract updateById(@NotNull Long id, ProductContractDTO productContractDTO){
-
-            ProductContract productContract = productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("invalid id"));
-
-            if(productContractDTO.getContractId() != null){
-                Contract contract = contractRepository
-                        .findById(productContractDTO.getContractId())
-                        .orElseThrow(()-> new EntityNotFoundException("contract id it's not valid"));
-                productContract.setContract(contract);
-            }
-
-            if(productContractDTO.getProductId() != null){
-                Product product = productRepository.findById(productContractDTO.getProductId())
-                        .orElseThrow(()-> new EntityNotFoundException("product id it's not valid"));
-                productContract.setProduct(product);
-            }
-
-            productContractRepository.save(productContract);
-            return productContract;
-        }
-
-    public void deleteById(@NotNull Long id){
-        ProductContract productContract = productContractRepository.findById(id).orElseThrow(()-> new EntityNotFoundException("invalid id"));
-        productContractRepository.deleteById(id);
     }
 }
