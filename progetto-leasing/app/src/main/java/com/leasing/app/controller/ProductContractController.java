@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController("/productContract")
+@RestController
+@RequestMapping("/productContract")
 public class ProductContractController {
 
     private ProductContractService productContractService;
