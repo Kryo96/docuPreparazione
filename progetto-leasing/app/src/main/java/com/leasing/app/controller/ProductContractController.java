@@ -5,16 +5,18 @@ import com.azure.core.annotation.PathParam;
 import com.leasing.app.dto.ProductContractDTO;
 import com.leasing.app.model.common.contract.ProductContract;
 import com.leasing.app.service.ProductContractService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/productContract")
 public class ProductContractController {
 
-    private ProductContractService productContractService;
+    private final ProductContractService productContractService;
 
     @GetMapping("/all")
     public ResponseEntity<List<ProductContract>> getAll(){
