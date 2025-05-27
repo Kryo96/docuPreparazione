@@ -2,7 +2,7 @@ package com.leasing.app.model.common.cash;
 
 import com.leasing.app.model.Client;
 import jakarta.persistence.*;
-import java.math.BigDecimal;
+
 import java.util.List;
 
 import lombok.Getter;
@@ -19,7 +19,7 @@ public class BankAccount {
 
     private String iban;
 
-    private BigDecimal saldo;
+    private String intestatario;
 
     @OneToOne
     @JoinColumn(name = "client_id")
