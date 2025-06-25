@@ -1,0 +1,21 @@
+services:
+  db2:
+    image: ibmcom/db2:11.5.7.0
+    container_name: db2server
+    restart: unless-stopped
+    ports:
+      - "50000:50000"
+    environment:
+      LICENSE: accept
+      DB2INST1_PASSWORD: test
+      DBNAME: SAMPLE
+    volumes:
+      - db2data:/database
+    privileged: true
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
+
+volumes:
+  db2data:
