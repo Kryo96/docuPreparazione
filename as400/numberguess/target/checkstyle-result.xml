@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="8.5">
+<file name="/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/EmployeeDao.java">
+</file>
+<file name="/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/EmployeeController.java">
+</file>
+<file name="/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/Employee.java">
+</file>
+<file name="/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/test/java/org/jboss/as/quickstarts/numberguess/BasicRuntimeIT.java">
+</file>
+<file name="/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/test/java/org/jboss/as/quickstarts/numberguess/NumberguessIT.java">
+</file>
+</checkstyle>

@@ -1,0 +1,8 @@
+#Fri Jun 27 17:47:24 CEST 2025
+configuration*?=3058010FBCE17398811DE99269FD37E0BD259DA2
+module-resource*?\:/wildfly-checkstyle/suppressions.xml=DD3FD5987C62C3034A4613F83C42B24683BCFC2E
+/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/EmployeeController.java=1751034823828
+/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/test/java/org/jboss/as/quickstarts/numberguess/NumberguessIT.java=1751038948668
+/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/EmployeeDao.java=1751035058468
+/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/main/java/org/jboss/as/quickstarts/numberguess/Employee.java=1751033440295
+/Users/lukaspetryla/docuPreparazione/as400/numberguess/src/test/java/org/jboss/as/quickstarts/numberguess/BasicRuntimeIT.java=1751038941768
