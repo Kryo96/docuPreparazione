@@ -32,7 +32,7 @@ public class UserServlet extends HttpServlet {
         if (empnoParam != null && !empnoParam.trim().isEmpty()) {
             logger.debug("Parametro empno fornito: {}", empnoParam);
             try {
-                params.add(Integer.parseInt(empnoParam));
+                params.add(empnoParam);
             } catch (NumberFormatException e) {
                 logger.warn("Parametro empno non valido: {}", empnoParam);
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parametro empno non valido");
