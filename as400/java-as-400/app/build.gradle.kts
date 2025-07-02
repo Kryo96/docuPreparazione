@@ -1,21 +1,17 @@
 import mx.com.inftel.wildfly.gradle_plugin.WildFlyDeployTask
-import mx.com.inftel.wildfly.gradle_plugin.WildFlyPlugin
+import mx.com.inftel.wildfly.gradle_plugin.WildFlyUndeployTask
 
 plugins {
-    java
-    application
-    id("war")
     id("mx.com.inftel.wildfly") version "1.0.2"
+    id("war")
+
+    application
+    java
+
 }
 
-group = "dontKnow"
+group = "org.example"
 version= "1.0-SNAPSHOT"
-
-repositories {
-    mavenCentral()
-}
-
-//configure<JavaPlugin>{}
 
 dependencies {
     testImplementation(libs.junit)
@@ -28,15 +24,40 @@ dependencies {
 }
 
 tasks.named<War>("war") {
-    archiveAppendix.set("wildfly")
     archiveBaseName.set("war_db2")
+    archiveAppendix.set("wildfly")
+    archiveClassifier.set("release")
+    manifest {
+        attributes["Implementation-Title"] = "My App"
+        attributes["Implementation-Version"] = "1.0"
+    }
+
 }
 
-wildfly{
-    controller="127.0.0.1:9990"
-    username="user"
-    password="user"
-    deployment = tasks.named<War>("war").get().archiveFile.get().asFile.absolutePath
+tasks.named<WildFlyDeployTask>("wildflyDeploy"){
+    dependsOn(tasks.named("war"))
+
+    controller.set("127.0.0.1:9990")
+    username.set("user")
+    password.set("user")
+
+    // war path
+    deploymentPath.set(tasks.named<War>("war").get().archiveFile.get().asFile.absolutePath)
+    deploymentName.set(tasks.named<War>(name="war").get().archiveFile.get().asFile.name)
+
+    // is war or exploded path
+    deploymentArchive.set(true)
+    deploymentPersistent.set(true)
+}
+
+
+tasks.named<WildFlyUndeployTask>("wildflyUndeploy") {
+    controller.set("127.0.0.1:9990")
+    username.set("user")
+    password.set("user")
+
+    // exact name of deployed war
+    deploymentName.set(tasks.named<War>("war").get().archiveFile.get().asFile.name)
 }
 
 java {

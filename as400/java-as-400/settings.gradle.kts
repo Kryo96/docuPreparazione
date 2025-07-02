@@ -5,9 +5,28 @@
  * For more detailed information on multi-project builds, please refer to https://docs.gradle.org/8.14.2/userguide/multi_project_builds.html in the Gradle documentation.
  */
 
-plugins {
-    // Apply the foojay-resolver plugin to allow automatic download of JDKs
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+pluginManagement {
+    plugins {
+        id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+        id("com.github.ben-manes.versions") version "0.51.0"
+        id("mx.com.inftel.wildfly") version "1.0.2"
+        id("war")
+
+        application
+        java
+    }
+
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentral()
+        google()
+    }
 }
 
 rootProject.name = "java-as-400"
