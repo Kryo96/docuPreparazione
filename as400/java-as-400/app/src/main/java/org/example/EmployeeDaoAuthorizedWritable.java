@@ -11,7 +11,7 @@ public class EmployeeDaoAuthorizedWritable {
     private EmployeeDaoWritableTransactional writableDao;
 
 //    @Inject
-//    private SecurityService securityService; // o qualche bean che conosce i ruoli utente
+//    private SecurityService securityService;
 //
 //    public int insertEmployee(Map<String, Object> empData) throws SQLException {
 //        if (!securityService.hasRole("ADMIN")) {
