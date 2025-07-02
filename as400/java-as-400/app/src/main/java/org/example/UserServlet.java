@@ -46,35 +46,35 @@ public class UserServlet extends HttpServlet {
 
         resp.setContentType("text/html;charset=UTF-8");
 
-        try (PrintWriter out = resp.getWriter()) {
-            List<Map<String, Object>> results = employeeDao.executeQuery(sql, params);
-            logger.info("Query eseguita con successo, {} righe restituite", results.size());
-
-            out.println("<html><body><h2>Risultati Query</h2><table border='1'>");
-
-            if (!results.isEmpty()) {
-                out.println("<tr>");
-                for (String col : results.get(0).keySet()) {
-                    out.printf("<th>%s</th>", col);
-                }
-                out.println("</tr>");
-            }
-
-            for (Map<String, Object> row : results) {
-                out.println("<tr>");
-                for (Object value : row.values()) {
-                    out.printf("<td>%s</td>", value);
-                }
-                out.println("</tr>");
-            }
-
-            out.println("</table></body></html>");
-        } catch (SQLException e) {
-            logger.error("Errore durante l'esecuzione della query al database", e);
-            throw new ServletException("Errore nel database: " + e.getMessage(), e);
-        } catch (IOException e) {
-            logger.error("Errore nell'invio della risposta HTTP", e);
-            throw e;
-        }
+//        try (PrintWriter out = resp.getWriter()) {
+//            List<Map<String, Object>> results = employeeDao.executeQuery(sql, params);
+//            logger.info("Query eseguita con successo, {} righe restituite", results.size());
+//
+//            out.println("<html><body><h2>Risultati Query</h2><table border='1'>");
+//
+//            if (!results.isEmpty()) {
+//                out.println("<tr>");
+//                for (String col : results.get(0).keySet()) {
+//                    out.printf("<th>%s</th>", col);
+//                }
+//                out.println("</tr>");
+//            }
+//
+//            for (Map<String, Object> row : results) {
+//                out.println("<tr>");
+//                for (Object value : row.values()) {
+//                    out.printf("<td>%s</td>", value);
+//                }
+//                out.println("</tr>");
+//            }
+//
+//            out.println("</table></body></html>");
+//        } catch (SQLException e) {
+//            logger.error("Errore durante l'esecuzione della query al database", e);
+//            throw new ServletException("Errore nel database: " + e.getMessage(), e);
+//        } catch (IOException e) {
+//            logger.error("Errore nell'invio della risposta HTTP", e);
+//            throw e;
+//        }
     }
 }

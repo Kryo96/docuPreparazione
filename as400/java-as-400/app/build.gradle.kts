@@ -15,15 +15,18 @@ version= "1.0-SNAPSHOT"
 
 
 dependencies {
-    testImplementation(libs.junit)
     implementation(libs.guava)
     implementation("com.ibm.db2:jcc:11.5.0.0")
     implementation("org.slf4j:slf4j-api:2.0.7")
-    providedCompile("jakarta.platform:jakarta.jakartaee-web-api:10.0.0")
     implementation("ch.qos.logback:logback-classic:1.4.8")
     implementation("ch.qos.logback:logback-core:1.4.8")
     implementation("jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0")
+
+    providedCompile("jakarta.platform:jakarta.jakartaee-web-api:10.0.0")
+    compileOnly("jakarta.enterprise:jakarta.enterprise.cdi-api:3.0.1")
     compileOnly("jakarta.servlet:jakarta.servlet-api:5.0.0")
+
+    testImplementation(libs.junit)
 }
 
 val wildflyHost: String = (project.findProperty("wildflyHost") as? String) ?: "127.0.0.1:9990"
