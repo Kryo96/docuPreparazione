@@ -1,2 +1,0 @@
-:prereq-openshift: true
-include::./helm-install-prerequisites-cloud.adoc[]

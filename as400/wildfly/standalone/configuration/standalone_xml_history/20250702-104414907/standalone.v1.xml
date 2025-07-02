@@ -527,4 +527,9 @@
             <remote-destination host="${jboss.mail.server.host:localhost}" port="${jboss.mail.server.port:25}"/>
         </outbound-socket-binding>
     </socket-binding-group>
+    <deployments>
+        <deployment name="numberguess.war" runtime-name="numberguess.war">
+            <content sha1="30d9cba64c7841488bd539c6ddf73a818840bc9c"/>
+        </deployment>
+    </deployments>
 </server>

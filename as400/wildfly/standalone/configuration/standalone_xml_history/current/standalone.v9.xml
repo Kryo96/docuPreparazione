@@ -528,8 +528,8 @@
         </outbound-socket-binding>
     </socket-binding-group>
     <deployments>
-        <deployment name="war_db2-wildfly-1.0-SNAPSHOT.war" runtime-name="war_db2-wildfly-1.0-SNAPSHOT.war">
-            <fs-archive path="/Users/lukaspetryla/docuPreparazione/as400/java-as-400/app/build/libs/war_db2-wildfly-1.0-SNAPSHOT.war"/>
+        <deployment name="war_db2-wildfly-1.0-SNAPSHOT-release.war" runtime-name="war_db2-wildfly-1.0-SNAPSHOT-release.war">
+            <fs-archive path="/Users/lukaspetryla/docuPreparazione/as400/java-as-400/app/build/libs/war_db2-wildfly-1.0-SNAPSHOT-release.war"/>
         </deployment>
     </deployments>
 </server>

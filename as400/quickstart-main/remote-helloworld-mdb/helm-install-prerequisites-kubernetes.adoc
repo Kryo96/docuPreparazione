@@ -1,3 +1,0 @@
-:prereq-kubernetes: true
-include::./helm-install-prerequisites-cloud.adoc[]
-
