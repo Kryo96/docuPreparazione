@@ -1,4 +1,4 @@
-package org.example;
+package org.example.config;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Produces;

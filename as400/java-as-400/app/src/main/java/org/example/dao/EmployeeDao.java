@@ -1,4 +1,4 @@
-package org.example;
+package org.example.dao;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
@@ -26,44 +26,6 @@ public class EmployeeDao {
     public List<Map<String, Object>> getFirstFiveEmployees() throws SQLException {
         String sql = "SELECT EMPNO, FIRSTNME, LASTNAME FROM EMPLOYEE FETCH FIRST 5 ROWS ONLY";
         return executeQuery(sql, Collections.emptyList());
-    }
-
-    public List<Map<String, Object>> getEmployeeWithDepartment(String empNo) throws SQLException {
-        String sql = "SELECT E.EMPNOEMPNO, E.FIRSTNME, E.LASTNAME, D.DEPTNAME, D.LOCATION " +
-                "FROM EMPLOYEE E " +
-                "LEFT JOIN DEPARTMENT D ON E.WORKDEPT = D.DEPTNO " +
-                "WHERE E.EMPNOEMPNO = ?";
-        return executeQuery(sql, Collections.singletonList(empNo));
-    }
-
-    public List<Map<String, Object>> getProjectsByEmployee(String empNo) throws SQLException {
-        String sql = "SELECT P.PROJNO, P.PROJNAME, P.CUSTOMER " +
-                "FROM PROJ P " +
-                "INNER JOIN PROJACT PA ON P.PROJNO = PA.PROJNO " +
-                "INNER JOIN EMP_PROJACT EPA ON PA.ACTNO = EPA.ACTNO " +
-                "WHERE EPA.EMPNOEMPNO = ?";
-        return executeQuery(sql, Collections.singletonList(empNo));
-    }
-
-    public List<Map<String, Object>> getProjectActivitiesByEmployee(String empNo) throws SQLException {
-        String sql = "SELECT PA.ACTNO, PA.DESCRIPTION, EPA.HOURS " +
-                "FROM PROJACT PA " +
-                "INNER JOIN EMPPROJACT EPA ON PA.ACTNO = EPA.ACTNO " +
-                "WHERE EPA.EMPNOEMPNO = ?";
-        return executeQuery(sql, Collections.singletonList(empNo));
-    }
-
-    public List<Map<String, Object>> getEmployeesWithDeptName(String deptNo) throws SQLException {
-        String sql = "SELECT E.EMPNOEMPNO, E.FIRSTNME, E.LASTNAME, D.DEPTNAME " +
-                "FROM EMPLOYEE E " +
-                "INNER JOIN DEPARTMENT D ON E.WORKDEPT = D.DEPTNO " +
-                "WHERE E.WORKDEPT = ?";
-        return executeQuery(sql, Collections.singletonList(deptNo));
-    }
-
-    public List<Map<String, Object>> getEmployeesByDept(String deptNo) throws SQLException {
-        String sql = "SELECT EMPNOEMPNO, FIRSTNME, LASTNAME, WORKDEPT, SALARY FROM EMPLOYEE WHERE WORKDEPT = ?";
-        return executeQuery(sql, Collections.singletonList(deptNo));
     }
 
     public List<Map<String, Object>> getEmployeesWithSalaryAbove(double minSalary) throws SQLException {
