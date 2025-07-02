@@ -7,8 +7,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.example.dao.EmployeeDao;
+import org.example.dao.EmployeeDao.EmployeeDao;
 import org.example.dao.ProductDao;
+import org.example.qualifier.DaoProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ public class DataServlet extends HttpServlet {
     private static final Logger logger = LoggerFactory.getLogger(DataServlet.class);
 
     @Inject
+    @DaoProfile(role = DaoProfile.Role.READONLY, mode = DaoProfile.Mode.NON_TRANSACTIONAL)
     private EmployeeDao employeeDao;
 
     @Inject

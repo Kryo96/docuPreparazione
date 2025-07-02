@@ -1,37 +1,26 @@
-package org.example.dao;
+package org.example.dao.EmployeeDao.impl;
 
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.inject.Inject;
-import javax.sql.DataSource;
-
-import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+import org.example.dao.EmployeeDao.EmployeeDao;
+import org.example.qualifier.DaoProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@RequestScoped
-public class EmployeeDao {
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-    private static final Logger logger = LoggerFactory.getLogger(EmployeeDao.class);
+@RequestScoped
+@DaoProfile(role = DaoProfile.Role.WRITABLE, mode = DaoProfile.Mode.TRANSACTIONAL)
+public class EmployeeDaoWritableTransactional extends EmployeeDao {
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeDaoWritableTransactional.class);
 
     @Inject
     private DataSource dataSource; // JNDI
-
-    public List<Map<String, Object>> getEmployeesByEmpno(String empno) throws SQLException {
-        String sql = "SELECT EMPNO, FIRSTNME, LASTNAME FROM EMPLOYEE WHERE EMPNO = ?";
-        return executeQuery(sql, Collections.singletonList(empno));
-    }
-
-    public List<Map<String, Object>> getFirstFiveEmployees() throws SQLException {
-        String sql = "SELECT EMPNO, FIRSTNME, LASTNAME FROM EMPLOYEE FETCH FIRST 5 ROWS ONLY";
-        return executeQuery(sql, Collections.emptyList());
-    }
-
-    public List<Map<String, Object>> getEmployeesWithSalaryAbove(double minSalary) throws SQLException {
-        String sql = "SELECT EMPNOEMPNO, FIRSTNME, LASTNAME, SALARY FROM EMPLOYEE WHERE SALARY > ?";
-        return executeQuery(sql, Collections.singletonList(minSalary));
-    }
 
     public int insertEmployee(Map<String, Object> empData) throws SQLException {
         String sql = "INSERT INTO EMPLOYEE (EMPNOEMPNO, FIRSTNME, MIDINIT, LASTNAME, WORKDEPT, PHONENO, HIREDATE, JOB, EDLEVEL, SEX, BIRTHDATE, SALARY, BONUS, COMM) " +
@@ -84,7 +73,7 @@ public class EmployeeDao {
         }
     }
 
-    private List<Map<String, Object>> executeQuery(String sql, List<Object> parameters) throws SQLException {
+    public List<Map<String, Object>> executeQuery(String sql, List<Object> parameters) throws SQLException {
         logger.info("Esecuzione query: {}", sql);
 
         List<Map<String, Object>> resultList = new ArrayList<>();
