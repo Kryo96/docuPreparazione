@@ -1,4 +1,0 @@
-Manifest-Version: 1.0
-Implementation-Title: My App
-Implementation-Version: 1.0
-
