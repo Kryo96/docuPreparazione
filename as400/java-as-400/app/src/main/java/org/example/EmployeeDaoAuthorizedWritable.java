@@ -28,4 +28,7 @@ public class EmployeeDaoAuthorizedWritable {
 //    }
 
     // e così via per gli altri metodi di scrittura
+    // https://jakarta.ee/learn/docs/jakartaee-tutorial/current/platform/injection/injection.html
+    // https://jakarta.ee/learn/docs/jakartaee-tutorial/current/cdi/cdi-basic/cdi-basic.html#_overview_of_cdi
+
 }
