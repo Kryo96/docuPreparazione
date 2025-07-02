@@ -24,7 +24,6 @@ public class EmployeeDao {
             Class.forName("com.ibm.db2.jcc.DB2Driver");
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
-            // Considera lanzar RuntimeException si el driver no está disponible
         }
     }
 

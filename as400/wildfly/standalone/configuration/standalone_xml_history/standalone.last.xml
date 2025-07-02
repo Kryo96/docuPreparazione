@@ -135,27 +135,18 @@
                     <driver>h2</driver>
                     <security user-name="sa" password="sa"/>
                 </datasource>
-
-                <datasource jndi-name="java:jboss/datasources/ibmlegacy"
-                            pool-name="ibmlegacypool"
-                            enabled="true"
-                            use-java-context="true"
-                            statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
+                <datasource jndi-name="java:jboss/datasources/ibmlegacy" pool-name="ibmlegacypool" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
                     <connection-url>jdbc:as400://ibmtest;prompt=false;translate binary=true</connection-url>
                     <driver>jt400</driver>
                     <security user-name="ibm" password="ibm"/>
                 </datasource>
-
                 <drivers>
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-
-
                     <driver name="jt400" module="com.ibmlegacy.jt400">
                         <driver-class>com.ibm.as400.access.AS400JDBCDriver</driver-class>
                     </driver>
-
                 </drivers>
             </datasources>
         </subsystem>
@@ -536,4 +527,9 @@
             <remote-destination host="${jboss.mail.server.host:localhost}" port="${jboss.mail.server.port:25}"/>
         </outbound-socket-binding>
     </socket-binding-group>
+    <deployments>
+        <deployment name="war_db2-wildfly-1.0-SNAPSHOT.war" runtime-name="war_db2-wildfly-1.0-SNAPSHOT.war">
+            <fs-archive path="/Users/lukaspetryla/docuPreparazione/as400/java-as-400/app/build/libs/war_db2-wildfly-1.0-SNAPSHOT.war"/>
+        </deployment>
+    </deployments>
 </server>
