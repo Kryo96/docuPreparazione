@@ -19,7 +19,6 @@ public class DepartmentDAO implements DepartmentReadOperations, DepartmentWriteO
     @Inject
     private DataSource dataSource;
 
-    // Implementazione metodi di lettura
     @Override
     public List<String> getAllDeptNumbers() {
         String sql = "SELECT DEPTNO FROM DEPARTMENT";
@@ -279,6 +278,4 @@ public class DepartmentDAO implements DepartmentReadOperations, DepartmentWriteO
     public int executeCustomUpdate(String query, Object... parameters) {
         return 0;
     }
-
-    // Altri metodi implementati seguendo lo stesso pattern...
 }
