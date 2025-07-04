@@ -34,6 +34,9 @@ public class DepartmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String deptNo = req.getParameter("deptNo");
+        
+        logger.info("DepartmentServlet.doGet() - action: {}, deptNo: {}", action, deptNo);
+        logger.debug("Request URI: {}, Query String: {}", req.getRequestURI(), req.getQueryString());
 
         try {
             switch (action == null ? "list" : action) {
@@ -108,11 +111,21 @@ public class DepartmentServlet extends HttpServlet {
     // === METODI DI PREPARAZIONE DATI ===
 
     private void prepareListData(HttpServletRequest req) {
-        List<Map<String, Object>> departments = readOnlyDept.findAll();
-        req.setAttribute("departments", departments);
-        req.setAttribute("pageTitle", "Department Management");
-        req.setAttribute("currentAction", "list");
-        req.setAttribute("showAddButton", true);
+        logger.info("Preparing department list data");
+        try {
+            List<Map<String, Object>> departments = readOnlyDept.findAll();
+            logger.info("Found {} departments", departments.size());
+            
+            req.setAttribute("departments", departments);
+            req.setAttribute("pageTitle", "Department Management");
+            req.setAttribute("currentAction", "list");
+            req.setAttribute("showAddButton", true);
+            
+            logger.debug("Department list data prepared successfully");
+        } catch (Exception e) {
+            logger.error("Error preparing department list data", e);
+            throw e;
+        }
     }
 
     private void prepareViewData(HttpServletRequest req, String deptNo) {

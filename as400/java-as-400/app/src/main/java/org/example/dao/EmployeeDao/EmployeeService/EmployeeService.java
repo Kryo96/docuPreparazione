@@ -4,6 +4,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
 import org.example.dao.EmployeeDao.EmployeeReadOperations;
 import org.example.dao.EmployeeDao.EmployeeWriteOperations;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
@@ -11,13 +13,20 @@ import java.util.Map;
 @Default
 @ApplicationScoped
 public class EmployeeService implements EmployeeReadOperations, EmployeeWriteOperations {
+    
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
+    
     @Override
     public List<Map<String, Object>> findAll() {
+        logger.info("EmployeeService.findAll() called - returning empty list (not implemented)");
+        logger.warn("EmployeeService.findAll() is not implemented, returning empty list");
         return List.of();
     }
 
     @Override
     public List<Map<String, Object>> findByEmpNo(String empNo) {
+        logger.info("EmployeeService.findByEmpNo() called with empNo: {} - returning empty list (not implemented)", empNo);
+        logger.warn("EmployeeService.findByEmpNo() is not implemented, returning empty list");
         return List.of();
     }
 
@@ -133,6 +142,8 @@ public class EmployeeService implements EmployeeReadOperations, EmployeeWriteOpe
 
     @Override
     public int insertEmployee(String empNo, String firstName, String midInit, String lastName, String workDept, String phoneNo, String hireDate, String job, String edLevel, String sex, String birthDate, String salary, String bonus, String comm) {
+        logger.info("EmployeeService.insertEmployee() called with empNo: {}, firstName: {}, lastName: {} - returning 0 (not implemented)", empNo, firstName, lastName);
+        logger.warn("EmployeeService.insertEmployee() is not implemented, returning 0");
         return 0;
     }
 
@@ -142,6 +153,8 @@ public class EmployeeService implements EmployeeReadOperations, EmployeeWriteOpe
     }
 
     public int updateFirstName(String empNo, String firstName) {
+        logger.info("EmployeeService.updateFirstName() called with empNo: {}, firstName: {} - returning 0 (not implemented)", empNo, firstName);
+        logger.warn("EmployeeService.updateFirstName() is not implemented, returning 0");
         return 0;
     }
 
@@ -178,6 +191,8 @@ public class EmployeeService implements EmployeeReadOperations, EmployeeWriteOpe
 
     @Override
     public int deleteEmployee(String empNo) {
+        logger.info("EmployeeService.deleteEmployee() called with empNo: {} - returning 0 (not implemented)", empNo);
+        logger.warn("EmployeeService.deleteEmployee() is not implemented, returning 0");
         return 0;
     }
 

@@ -6,14 +6,31 @@
 <div class="page-header">
     <h2>👥 Employee List</h2>
     <c:if test="${showAddButton}">
-        <a href="${pageContext.request.contextPath}/employees?action=add" class="btn">➕ Add New Employee</a>
+        <div class="btn-group">
+            <a href="${pageContext.request.contextPath}/employees?action=add" class="btn btn-primary">
+                ➕ Add New Employee
+            </a>
+        </div>
     </c:if>
 </div>
 
 <c:choose>
     <c:when test="${not empty employees}">
+        <!-- Employee Statistics -->
+        <div class="employee-stats">
+            <div class="stat-card-employee">
+                <h3>Total Employees</h3>
+                <div class="value">${employees.size()}</div>
+            </div>
+            <div class="stat-card-employee">
+                <h3>Active Records</h3>
+                <div class="value">${employees.size()}</div>
+            </div>
+        </div>
+
+        <!-- Employee Table -->
         <div class="table-responsive">
-            <table>
+            <table class="employee-table">
                 <thead>
                     <tr>
                         <th>Employee #</th>
@@ -28,16 +45,29 @@
                 </thead>
                 <tbody>
                     <c:forEach items="${employees}" var="emp">
-                        <tr>
-                            <td><strong>${emp.EMPNO}</strong></td>
+                        <tr class="employee-row">
                             <td>
-                                <div style="display: flex; flex-direction: column;">
-                                    <span style="font-weight: 600;">${emp.FIRSTNME} ${emp.MIDINIT != null ? emp.MIDINIT : ''} ${emp.LASTNAME}</span>
-                                    <span style="font-size: 0.9em; color: #666;">${emp.SEX == 'M' ? '👨' : '👩'} ${emp.SEX}</span>
+                                <span class="employee-badge">${emp.EMPNO}</span>
+                            </td>
+                            <td>
+                                <div class="employee-list-item">
+                                    <div class="employee-name">
+                                        <strong>${emp.FIRSTNME} ${emp.MIDINIT != null ? emp.MIDINIT : ''} ${emp.LASTNAME}</strong>
+                                    </div>
+                                    <div class="employee-details">
+                                        <span class="gender-badge">${emp.SEX == 'M' ? '👨' : '👩'}</span>
+                                        <span>${emp.SEX}</span>
+                                    </div>
                                 </div>
                             </td>
-                            <td>${emp.WORKDEPT}</td>
-                            <td>${emp.JOB}</td>
+                            <td>
+                                <c:if test="${not empty emp.WORKDEPT}">
+                                    <span class="department-badge">${emp.WORKDEPT}</span>
+                                </c:if>
+                            </td>
+                            <td>
+                                <span class="job-title">${emp.JOB}</span>
+                            </td>
                             <td>${emp.PHONENO}</td>
                             <td>
                                 <fmt:formatDate value="${emp.HIREDATE}" pattern="dd/MM/yyyy" />
@@ -51,9 +81,12 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="action-link">👁️ View</a>
-                                <a href="${pageContext.request.contextPath}/employees?action=edit&empNo=${emp.EMPNO}" class="action-link">✏️ Edit</a>
-                                <a href="${pageContext.request.contextPath}/employees?action=delete&empNo=${emp.EMPNO}" class="action-link delete"
+                                <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}"
+                                   class="action-link">👁️ View</a>
+                                <a href="${pageContext.request.contextPath}/employees?action=edit&empNo=${emp.EMPNO}"
+                                   class="action-link">✏️ Edit</a>
+                                <a href="${pageContext.request.contextPath}/employees?action=delete&empNo=${emp.EMPNO}"
+                                   class="action-link delete"
                                    onclick="return confirm('Are you sure you want to delete employee ${emp.FIRSTNME} ${emp.LASTNAME}?')">
                                    🗑️ Delete
                                 </a>
@@ -64,7 +97,7 @@
             </table>
         </div>
 
-        <!-- Summary -->
+        <!-- Summary Alert -->
         <div class="alert alert-info">
             📊 Total employees: <strong>${employees.size()}</strong>
         </div>
@@ -74,35 +107,9 @@
         <div class="alert alert-info">
             <h3>No employees found</h3>
             <p>There are no employees in the system yet.</p>
-            <a href="${pageContext.request.contextPath}/employees?action=add" class="btn">➕ Add First Employee</a>
+            <a href="${pageContext.request.contextPath}/employees?action=add" class="btn btn-primary">
+                ➕ Add First Employee
+            </a>
         </div>
     </c:otherwise>
 </c:choose>
-
-<style>
-    .page-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 30px;
-        padding-bottom: 15px;
-        border-bottom: 2px solid #e0e0e0;
-    }
-
-    .page-header h2 {
-        color: #333;
-        margin: 0;
-    }
-
-    @media (max-width: 768px) {
-        .page-header {
-            flex-direction: column;
-            gap: 15px;
-            align-items: stretch;
-        }
-        
-        .page-header .btn {
-            text-align: center;
-        }
-    }
-</style>

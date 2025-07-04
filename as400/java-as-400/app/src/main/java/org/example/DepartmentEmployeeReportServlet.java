@@ -28,6 +28,9 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
         String reportType = req.getParameter("type");
         String deptNo = req.getParameter("deptNo");
         String location = req.getParameter("location");
+        
+        logger.info("DepartmentEmployeeReportServlet.doGet() - reportType: {}, deptNo: {}, location: {}", reportType, deptNo, location);
+        logger.debug("Request URI: {}, Query String: {}", req.getRequestURI(), req.getQueryString());
 
         try {
             // Preparazione dati in base al tipo di report
@@ -92,17 +95,28 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
     }
 
     private void prepareDashboardData(HttpServletRequest req) {
-        Map<String, Object> metrics = reportService.getDashboardMetrics();
-        req.setAttribute("dashboardMetrics", metrics);
+        logger.info("Preparing dashboard data");
+        try {
+            Map<String, Object> metrics = reportService.getDashboardMetrics();
+            logger.debug("Dashboard metrics retrieved: {}", metrics.keySet());
+            req.setAttribute("dashboardMetrics", metrics);
 
-        List<Map<String, Object>> topDepartments = reportService.getLargestDepartments(5);
-        req.setAttribute("topDepartments", topDepartments);
+            List<Map<String, Object>> topDepartments = reportService.getLargestDepartments(5);
+            logger.debug("Top departments retrieved: {} items", topDepartments.size());
+            req.setAttribute("topDepartments", topDepartments);
 
-        List<Map<String, Object>> locationDist = reportService.getEmployeeDistributionByLocation();
-        req.setAttribute("locationDistribution", locationDist);
+            List<Map<String, Object>> locationDist = reportService.getEmployeeDistributionByLocation();
+            logger.debug("Location distribution retrieved: {} items", locationDist.size());
+            req.setAttribute("locationDistribution", locationDist);
 
-        req.setAttribute("pageTitle", "Organization Dashboard");
-        req.setAttribute("currentReport", "dashboard");
+            req.setAttribute("pageTitle", "Organization Dashboard");
+            req.setAttribute("currentReport", "dashboard");
+            
+            logger.info("Dashboard data prepared successfully");
+        } catch (Exception e) {
+            logger.error("Error preparing dashboard data", e);
+            throw e;
+        }
     }
 
     private void prepareSummaryData(HttpServletRequest req) {
@@ -113,15 +127,29 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
     }
 
     private void prepareDetailedData(HttpServletRequest req, String deptNo) {
+        logger.info("Preparing detailed data for department: {}", deptNo);
+        
         if (deptNo != null && !deptNo.trim().isEmpty()) {
-            List<Map<String, Object>> details = reportService.getDepartmentDetailedReport(deptNo);
-            req.setAttribute("departmentDetails", details);
-            req.setAttribute("selectedDeptNo", deptNo);
+            try {
+                List<Map<String, Object>> details = reportService.getDepartmentDetailedReport(deptNo);
+                logger.debug("Department details retrieved: {} records for deptNo: {}", details.size(), deptNo);
+                
+                req.setAttribute("departmentDetails", details);
+                req.setAttribute("selectedDeptNo", deptNo);
 
-            if (!details.isEmpty()) {
-                Map<String, Object> deptInfo = details.get(0);
-                req.setAttribute("departmentInfo", deptInfo);
+                if (!details.isEmpty()) {
+                    Map<String, Object> deptInfo = details.get(0);
+                    req.setAttribute("departmentInfo", deptInfo);
+                    logger.info("Department info loaded for: {}", deptNo);
+                } else {
+                    logger.warn("No department details found for: {}", deptNo);
+                }
+            } catch (Exception e) {
+                logger.error("Error loading department details for: {}", deptNo, e);
+                throw e;
             }
+        } else {
+            logger.warn("prepareDetailedData called with null or empty deptNo");
         }
 
         req.setAttribute("pageTitle", "Department Detailed Report");

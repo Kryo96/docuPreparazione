@@ -3,6 +3,8 @@ package org.example.dao.EmployeeDao;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -15,25 +17,39 @@ import java.util.Map;
 @ApplicationScoped
 public class EmployeeDAO implements EmployeeReadOperations, EmployeeWriteOperations {
 
+    private static final Logger logger = LoggerFactory.getLogger(EmployeeDAO.class);
+
     @Inject
     private DataSource dataSource;
 
     @Override
     public List<Map<String, Object>> findAll() {
         String sql = "SELECT * FROM EMPLOYEE";
+        logger.info("Executing findAll() - SQL: {}", sql);
+        
         try (Connection conn = dataSource.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            return executeQuery(ps);
-        }catch (SQLException e) {
+            
+            logger.debug("Database connection established, executing query");
+            List<Map<String, Object>> results = executeQuery(ps);
+            logger.info("findAll() completed successfully, returned {} records", results.size());
+            return results;
+            
+        } catch (SQLException e) {
+            logger.error("SQLException in findAll()", e);
             throw new RuntimeException("Error fetching all employees", e);
         }
     }
 
     private List<Map<String, Object>> executeQuery(PreparedStatement ps) throws SQLException {
+        logger.debug("Executing prepared statement");
+        
         try (ResultSet rs = ps.executeQuery()) {
             List<Map<String, Object>> results = new ArrayList<>();
             ResultSetMetaData metaData = rs.getMetaData();
             int columnCount = metaData.getColumnCount();
+            
+            logger.debug("ResultSet metadata - columns: {}", columnCount);
 
             while (rs.next()) {
                 Map<String, Object> row = new HashMap<>();
@@ -44,13 +60,31 @@ public class EmployeeDAO implements EmployeeReadOperations, EmployeeWriteOperati
                 }
                 results.add(row);
             }
+            
+            logger.debug("Processed {} rows from ResultSet", results.size());
             return results;
         }
     }
 
     @Override
     public List<Map<String, Object>> findByEmpNo(String empNo) {
-        return List.of();
+        String sql = "SELECT * FROM EMPLOYEE WHERE EMPNO = ?";
+        logger.info("Executing findByEmpNo() - empNo: {}, SQL: {}", empNo, sql);
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, empNo);
+            logger.debug("Parameter set: empNo = {}", empNo);
+            
+            List<Map<String, Object>> results = executeQuery(ps);
+            logger.info("findByEmpNo() completed, returned {} records for empNo: {}", results.size(), empNo);
+            return results;
+            
+        } catch (SQLException e) {
+            logger.error("SQLException in findByEmpNo() for empNo: {}", empNo, e);
+            throw new RuntimeException("Error fetching employee by empNo: " + empNo, e);
+        }
     }
 
     @Override
@@ -165,7 +199,24 @@ public class EmployeeDAO implements EmployeeReadOperations, EmployeeWriteOperati
 
     @Override
     public int deleteEmployee(String empNo) {
-        return 0;
+        String sql = "DELETE FROM EMPLOYEE WHERE EMPNO = ?";
+        logger.info("Executing deleteEmployee() - empNo: {}", empNo);
+        logger.debug("Delete SQL: {}", sql);
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, empNo);
+            
+            logger.debug("Parameter set for employee delete");
+            int result = ps.executeUpdate();
+            logger.info("deleteEmployee() completed, affected rows: {}", result);
+            return result;
+            
+        } catch (SQLException e) {
+            logger.error("SQLException in deleteEmployee() for empNo: {}", empNo, e);
+            throw new RuntimeException("Error deleting employee: " + empNo, e);
+        }
     }
 
     @Override
@@ -215,7 +266,37 @@ public class EmployeeDAO implements EmployeeReadOperations, EmployeeWriteOperati
 
     @Override
     public int insertEmployee(String empNo, String firstName, String midInit, String lastName, String workDept, String phoneNo, String hireDate, String job, String edLevel, String sex, String birthDate, String salary, String bonus, String comm) {
-        return 0;
+        String sql = "INSERT INTO EMPLOYEE (EMPNO, FIRSTNME, MIDINIT, LASTNAME, WORKDEPT, PHONENO, HIREDATE, JOB, EDLEVEL, SEX, BIRTHDATE, SALARY, BONUS, COMM) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        logger.info("Executing insertEmployee() - empNo: {}, firstName: {}, lastName: {}", empNo, firstName, lastName);
+        logger.debug("Insert SQL: {}", sql);
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, empNo);
+            ps.setString(2, firstName);
+            ps.setString(3, midInit);
+            ps.setString(4, lastName);
+            ps.setString(5, workDept);
+            ps.setString(6, phoneNo);
+            ps.setString(7, hireDate);
+            ps.setString(8, job);
+            ps.setString(9, edLevel);
+            ps.setString(10, sex);
+            ps.setString(11, birthDate);
+            ps.setString(12, salary);
+            ps.setString(13, bonus);
+            ps.setString(14, comm);
+            
+            logger.debug("All parameters set for employee insert");
+            int result = ps.executeUpdate();
+            logger.info("insertEmployee() completed, affected rows: {}", result);
+            return result;
+            
+        } catch (SQLException e) {
+            logger.error("SQLException in insertEmployee() for empNo: {}", empNo, e);
+            throw new RuntimeException("Error inserting employee: " + empNo, e);
+        }
     }
 
     @Override
@@ -225,7 +306,25 @@ public class EmployeeDAO implements EmployeeReadOperations, EmployeeWriteOperati
 
     @Override
     public int updateFirstName(String empNo, String firstName) {
-        return 0;
+        String sql = "UPDATE EMPLOYEE SET FIRSTNME = ? WHERE EMPNO = ?";
+        logger.info("Executing updateFirstName() - empNo: {}, firstName: {}", empNo, firstName);
+        logger.debug("Update SQL: {}", sql);
+        
+        try (Connection conn = dataSource.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            
+            ps.setString(1, firstName);
+            ps.setString(2, empNo);
+            
+            logger.debug("Parameters set for firstName update");
+            int result = ps.executeUpdate();
+            logger.info("updateFirstName() completed, affected rows: {}", result);
+            return result;
+            
+        } catch (SQLException e) {
+            logger.error("SQLException in updateFirstName() for empNo: {}", empNo, e);
+            throw new RuntimeException("Error updating firstName for employee: " + empNo, e);
+        }
     }
 
     @Override
