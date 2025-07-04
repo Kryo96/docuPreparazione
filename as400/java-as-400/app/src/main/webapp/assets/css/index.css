@@ -262,7 +262,7 @@ body.homepage {
     gap: var(--space-5);
     margin: var(--space-10) 0;
     padding: var(--space-8);
-    background: rgba(255,255,255,0.1);
+    background: var(--primary-light);
     border-radius: var(--radius-xl);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255,255,255,0.2);
@@ -302,7 +302,7 @@ body.homepage {
     margin-top: var(--space-10);
     padding-top: var(--space-8);
     border-top: 1px solid rgba(255,255,255,0.2);
-    color: rgba(255,255,255,0.8);
+    color: var(--primary-light);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-normal);
 }
@@ -483,7 +483,7 @@ body.homepage {
     }
 
     .stats-section {
-        background: white;
+        background: var(--primary-light);
         color: black;
         border: 1px solid var(--border-medium);
     }

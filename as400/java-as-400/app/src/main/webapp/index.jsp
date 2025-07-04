@@ -106,7 +106,7 @@
                     <span class="stat-label">Locations</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number" aria-label="24/7 support available">24/7</span>
+                    <span class="stat-number" aria-label="24/7 support available">∞</span>
                     <span class="stat-label">Support</span>
                 </div>
             </section>
