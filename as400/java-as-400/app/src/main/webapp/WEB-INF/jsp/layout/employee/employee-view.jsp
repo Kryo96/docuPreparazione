@@ -6,7 +6,7 @@
 <c:choose>
     <c:when test="${not empty employee}">
         <div class="page-header">
-            <h2>👤 Employee Details</h2>
+            <h2>Employee Details</h2>
             <div class="btn-group">
                 <a href="${pageContext.request.contextPath}/employees?action=edit&empNo=${employee.EMPNO}"
                    class="btn btn-primary">Edit</a>
