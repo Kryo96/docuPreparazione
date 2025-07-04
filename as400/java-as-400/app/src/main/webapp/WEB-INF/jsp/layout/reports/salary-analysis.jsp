@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="report-header">
-    <h2>💰 Salary Analysis Report</h2>
+    <h2>Salary Analysis Report</h2>
     <p>Comprehensive salary analysis and compensation statistics by department</p>
 </div>
 
@@ -12,10 +12,10 @@
     <c:when test="${not empty salaryStatistics}">
         <!-- Overall Statistics -->
         <div class="overall-stats">
-            <h3>📊 Organization Overview</h3>
+            <h3>Organization Overview</h3>
             <div class="stats-grid">
                 <div class="stat-card highlight">
-                    <div class="stat-icon">💰</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Total Payroll</h4>
                         <div class="stat-value">
@@ -31,7 +31,7 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon">📈</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Average Salary</h4>
                         <div class="stat-value">
@@ -51,7 +51,7 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon">🏆</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Highest Salary</h4>
                         <div class="stat-value">
@@ -67,7 +67,7 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon">🏢</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Departments</h4>
                         <div class="stat-value">${salaryStatistics.size()}</div>
@@ -78,7 +78,7 @@
 
         <!-- Department Salary Breakdown -->
         <div class="salary-breakdown">
-            <h3>🏢 Department Salary Breakdown</h3>
+            <h3>Department Salary Breakdown</h3>
             <div class="table-responsive">
                 <table class="salary-table">
                     <thead>
@@ -142,11 +142,11 @@
 
         <!-- Visual Charts -->
         <div class="charts-section">
-            <h3>📈 Visual Analysis</h3>
+            <h3>Visual Analysis</h3>
             <div class="charts-grid">
                 <!-- Salary Distribution Chart -->
                 <div class="chart-card">
-                    <h4>💰 Salary Distribution by Department</h4>
+                    <h4>Salary Distribution by Department</h4>
                     <div class="chart-container">
                         <c:forEach items="${salaryStatistics}" var="stat">
                             <div class="chart-bar">
@@ -165,7 +165,7 @@
 
                 <!-- Average Salary Comparison -->
                 <div class="chart-card">
-                    <h4>📊 Average Salary Comparison</h4>
+                    <h4>Average Salary Comparison</h4>
                     <div class="comparison-chart">
                         <c:set var="maxAvgSalary" value="0" />
                         <c:forEach items="${salaryStatistics}" var="stat">
@@ -194,7 +194,7 @@
 
         <!-- Key Insights -->
         <div class="insights-section">
-            <h3>💡 Key Insights</h3>
+            <h3>Key Insights</h3>
             <div class="insights-grid">
                 <c:set var="highestPayrollDept" value="" />
                 <c:set var="highestPayrollValue" value="0" />
@@ -526,11 +526,11 @@
         .stats-grid {
             grid-template-columns: 1fr;
         }
-        
+
         .charts-grid {
             grid-template-columns: 1fr;
         }
-        
+
         .stat-card {
             flex-direction: column;
             text-align: center;
