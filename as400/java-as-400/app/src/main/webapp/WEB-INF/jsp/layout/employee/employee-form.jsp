@@ -7,11 +7,11 @@
     <h2>
         <c:choose>
             <c:when test="${currentAction == 'add'}">➕ Add New Employee</c:when>
-            <c:otherwise>✏️ Edit Employee</c:otherwise>
+            <c:otherwise>✏Edit Employee</c:otherwise>
         </c:choose>
     </h2>
     <div class="btn-group">
-        <a href="${cancelUrl}" class="btn btn-secondary">❌ Cancel</a>
+        <a href="${cancelUrl}" class="btn btn-secondary">Cancel</a>
     </div>
 </div>
 
@@ -24,7 +24,7 @@
 
     <!-- Personal Information Section -->
     <div class="form-section">
-        <h3>👤 Personal Information</h3>
+        <h3>Personal Information</h3>
 
         <div class="form-row">
             <div class="form-group">
@@ -41,8 +41,8 @@
                 <label for="sex">Gender</label>
                 <select id="sex" name="sex">
                     <option value="">Select Gender</option>
-                    <option value="M" ${(employee.SEX == 'M' || (formData.sex != null && formData.sex[0] == 'M')) ? 'selected' : ''}>👨 Male</option>
-                    <option value="F" ${(employee.SEX == 'F' || (formData.sex != null && formData.sex[0] == 'F')) ? 'selected' : ''}>👩 Female</option>
+                    <option value="M" ${(employee.SEX == 'M' || (formData.sex != null && formData.sex[0] == 'M')) ? 'selected' : ''}>Male</option>
+                    <option value="F" ${(employee.SEX == 'F' || (formData.sex != null && formData.sex[0] == 'F')) ? 'selected' : ''}>Female</option>
                 </select>
             </div>
         </div>
@@ -98,7 +98,7 @@
 
     <!-- Work Information Section -->
     <div class="form-section">
-        <h3>💼 Work Information</h3>
+        <h3>Work Information</h3>
 
         <div class="form-row">
             <div class="form-group">
@@ -145,7 +145,7 @@
 
     <!-- Compensation Section -->
     <div class="form-section">
-        <h3>💰 Compensation</h3>
+        <h3>Compensation</h3>
 
         <div class="form-row-3">
             <div class="form-group">
@@ -187,11 +187,11 @@
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">
             <c:choose>
-                <c:when test="${currentAction == 'add'}">➕ Create Employee</c:when>
-                <c:otherwise>💾 Update Employee</c:otherwise>
+                <c:when test="${currentAction == 'add'}">Create Employee</c:when>
+                <c:otherwise>Update Employee</c:otherwise>
             </c:choose>
         </button>
-        <a href="${cancelUrl}" class="btn btn-secondary">❌ Cancel</a>
+        <a href="${cancelUrl}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
 
