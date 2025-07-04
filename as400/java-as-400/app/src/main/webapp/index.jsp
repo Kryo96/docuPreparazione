@@ -31,10 +31,8 @@
             <%-- Main Navigation Grid --%>
             <nav class="modules-grid" role="navigation" aria-label="Main navigation">
                 <%-- Employee Management Module --%>
-                <a href="${pageContext.request.contextPath}/employees"
-                   class="module-card employees"
+                <div class="module-card employees"
                    aria-label="Employee Management - Manage employee information and records">
-                    <span class="module-icon" aria-hidden="true"></span>
                     <h2 class="module-title">Employee Management</h2>
                     <p class="module-description">
                         Complete employee lifecycle management with detailed profiles and comprehensive tracking.
@@ -45,14 +43,16 @@
                         <li>Department assignments</li>
                         <li>Contact information management</li>
                     </ul>
-                    <span class="cta-button">Manage Employees →</span>
-                </a>
+                    <span class="cta-button">
+                        <a class="cta-button-href" href="${pageContext.request.contextPath}/employees">
+                            Manage Employees
+                        </a>
+                    </span>
+                </div>
 
                 <%-- Department Management Module --%>
-                <a href="${pageContext.request.contextPath}/departments"
-                   class="module-card departments"
+                <div class="module-card departments"
                    aria-label="Department Management - Organize and manage organizational structure">
-                    <span class="module-icon" aria-hidden="true"></span>
                     <h2 class="module-title">Department Management</h2>
                     <p class="module-description">
                         Organize and manage organizational structure with department hierarchy and administration.
@@ -63,14 +63,16 @@
                         <li>Track department metrics</li>
                         <li>Organizational hierarchy</li>
                     </ul>
-                    <span class="cta-button">Manage Departments →</span>
-                </a>
+                    <span class="cta-button">
+                        <a class="cta-button-href" href="${pageContext.request.contextPath}/departments">
+                            Manage Departments
+                        </a>
+                    </span>
+                </div>
 
                 <%-- Reports & Analytics Module --%>
-                <a href="${pageContext.request.contextPath}/reports"
-                   class="module-card reports"
+                <div class="module-card reports"
                    aria-label="Reports and Analytics - View comprehensive reports and analytics">
-                    <span class="module-icon" aria-hidden="true"></span>
                     <h2 class="module-title">Reports & Analytics</h2>
                     <p class="module-description">
                         Powerful reporting and analytics tools for data-driven decision making and insights.
@@ -81,8 +83,12 @@
                         <li>Geographic distribution</li>
                         <li>Advanced analytics</li>
                     </ul>
-                    <span class="cta-button">View Reports →</span>
-                </a>
+                    <span class="cta-button">
+                        <a class="cta-button-href" href="${pageContext.request.contextPath}/reports">
+                            View Reports
+                        </a>
+                    </span>
+                </div>
             </nav>
 
             <%-- Statistics Section --%>

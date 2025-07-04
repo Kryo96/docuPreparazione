@@ -95,12 +95,13 @@ body.homepage {
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-normal);
-    text-decoration: none;
     color: inherit;
-    border: 2px solid transparent;
+    border: 0px solid transparent;
     position: relative;
     overflow: hidden;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .module-card::before {
@@ -147,6 +148,7 @@ body.homepage {
     margin-bottom: var(--space-5);
     display: block;
     opacity: 0.9;
+    text-align: center;
 }
 
 .module-title {
@@ -154,6 +156,11 @@ body.homepage {
     font-weight: var(--font-weight-semibold);
     margin-bottom: var(--space-4);
     line-height: var(--line-height-tight);
+    text-align: center;
+    min-height: calc(var(--font-size-2xl) * var(--line-height-tight) * 2); /* Spazio per max 2 righe */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .module-description {
@@ -162,6 +169,11 @@ body.homepage {
     line-height: var(--line-height-relaxed);
     margin-bottom: var(--space-5);
     font-weight: var(--font-weight-normal);
+    text-align: center;
+    flex-grow: 1;
+    min-height: calc(var(--font-size-lg) * var(--line-height-relaxed) * 3); /* Spazio per max 3 righe */
+    display: flex;
+    align-items: flex-start;
 }
 
 /* ===== MODULE FEATURES LIST ===== */
@@ -170,6 +182,11 @@ body.homepage {
     padding: 0;
     margin: var(--space-5) 0;
     text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: calc(var(--font-size-base) * var(--line-height-normal) * 4 + var(--space-2) * 8); /* Spazio per 4 elementi fisso */
 }
 
 .module-features li {
@@ -179,6 +196,9 @@ body.homepage {
     line-height: var(--line-height-normal);
     position: relative;
     padding-left: var(--space-6);
+    min-height: calc(var(--font-size-base) * var(--line-height-normal) + var(--space-2) * 2);
+    display: flex;
+    align-items: center;
 }
 
 .module-features li::before {
@@ -199,11 +219,15 @@ body.homepage {
     border-radius: var(--radius-full);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     transition: all var(--transition-normal);
-    margin-top: var(--space-4);
+    margin-top: auto; /* Questo spinge il bottone in fondo */
     font-size: var(--font-size-base);
     backdrop-filter: blur(5px);
+    text-align: center;
+    min-height: calc(var(--font-size-base) * var(--line-height-normal) + var(--space-3) * 2);
 }
 
 .cta-button:hover {
@@ -211,6 +235,24 @@ body.homepage {
     border-color: rgba(255,255,255,0.5);
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* ===== CTA BUTTON LINK ===== */
+.cta-button-href {
+    color: inherit;
+    text-decoration: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+.cta-button-href:hover {
+    color: inherit;
+    text-decoration: none;
 }
 
 /* ===== STATS SECTION ===== */
@@ -286,19 +328,34 @@ body.homepage {
 
     .module-card {
         padding: var(--space-8) var(--space-6);
+        /* Su mobile rimuoviamo le altezze fisse per permettere contenuto naturale */
+        min-height: auto;
+    }
+
+    .module-title {
+        min-height: auto;
+        text-align: center;
+    }
+
+    .module-description {
+        min-height: auto;
+        text-align: center;
+    }
+
+    .module-features {
+        min-height: auto;
+        text-align: center;
+    }
+
+    .module-features li {
+        min-height: auto;
+        padding-left: var(--space-4);
+        justify-content: center;
     }
 
     .stats-section {
         grid-template-columns: repeat(2, 1fr);
         padding: var(--space-6);
-    }
-
-    .module-features {
-        text-align: center;
-    }
-
-    .module-features li {
-        padding-left: var(--space-4);
     }
 }
 
