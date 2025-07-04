@@ -6,10 +6,10 @@
 <c:choose>
     <c:when test="${not empty department}">
         <div class="page-header">
-            <h2>🏢 Department Details</h2>
+            <h2>Department Details</h2>
             <div class="btn-group">
-                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${department.DEPTNO}" class="btn">✏️ Edit</a>
-                <a href="${pageContext.request.contextPath}/departments?action=list" class="btn btn-secondary">📋 Back to List</a>
+                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${department.DEPTNO}" class="btn">Edit</a>
+                <a href="${pageContext.request.contextPath}/departments?action=list" class="btn btn-secondary">Back to List</a>
             </div>
         </div>
 
@@ -22,17 +22,17 @@
             <div class="department-info">
                 <!-- Basic Information -->
                 <div class="info-item">
-                    <span class="info-label">🏢 Department Name:</span>
+                    <span class="info-label">Department Name:</span>
                     <span class="info-value">${department.DEPTNAME}</span>
                 </div>
 
                 <div class="info-item">
-                    <span class="info-label">🆔 Department Number:</span>
+                    <span class="info-label">Department Number:</span>
                     <span class="info-value">${department.DEPTNO}</span>
                 </div>
 
                 <div class="info-item">
-                    <span class="info-label">👤 Manager:</span>
+                    <span class="info-label">Manager:</span>
                     <span class="info-value">
                         <c:choose>
                             <c:when test="${department.MGRNO != null}">
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="info-item">
-                    <span class="info-label">🏛️ Admin Department:</span>
+                    <span class="info-label">Admin Department:</span>
                     <span class="info-value">
                         <c:choose>
                             <c:when test="${department.ADMRDEPT != null}">
@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="info-item">
-                    <span class="info-label">📍 Location:</span>
+                    <span class="info-label">Location:</span>
                     <span class="info-value">
                         <c:choose>
                             <c:when test="${department.LOCATION != null}">
@@ -75,10 +75,10 @@
 
                 <!-- Additional Information Section -->
                 <div class="info-item full-width">
-                    <span class="info-label">📊 Department Status:</span>
+                    <span class="info-label">Department Status:</span>
                     <span class="info-value">
                         <span style="background: #28a745; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.9em;">
-                            ✅ Active
+                            Active
                         </span>
                     </span>
                 </div>
@@ -86,10 +86,10 @@
 
             <!-- Quick Actions -->
             <div class="quick-actions">
-                <h4>📋 Quick Actions</h4>
+                <h4>Quick Actions</h4>
                 <div class="action-grid">
                     <a href="${pageContext.request.contextPath}/reports?type=detailed&deptNo=${department.DEPTNO}" class="action-card">
-                        <div class="action-icon">📊</div>
+                        <div class="action-icon"></div>
                         <div class="action-text">
                             <strong>Department Report</strong>
                             <small>View detailed department report</small>
@@ -97,7 +97,7 @@
                     </a>
                     
                     <a href="${pageContext.request.contextPath}/employees?deptNo=${department.DEPTNO}" class="action-card">
-                        <div class="action-icon">👥</div>
+                        <div class="action-icon"></div>
                         <div class="action-text">
                             <strong>View Employees</strong>
                             <small>See all department employees</small>
@@ -105,7 +105,7 @@
                     </a>
                     
                     <a href="${pageContext.request.contextPath}/reports?type=salary&deptNo=${department.DEPTNO}" class="action-card">
-                        <div class="action-icon">💰</div>
+                        <div class="action-icon"></div>
                         <div class="action-text">
                             <strong>Salary Analysis</strong>
                             <small>Department salary statistics</small>
@@ -116,14 +116,14 @@
 
             <!-- Action Buttons -->
             <div class="action-buttons">
-                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${department.DEPTNO}" class="btn">✏️ Edit Department</a>
-                <a href="${pageContext.request.contextPath}/departments?action=list" class="btn btn-secondary">📋 Back to List</a>
+                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${department.DEPTNO}" class="btn">Edit Department</a>
+                <a href="${pageContext.request.contextPath}/departments?action=list" class="btn btn-secondary">Back to List</a>
                 <form method="post" action="${pageContext.request.contextPath}/departments" style="display: inline;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="deptNo" value="${department.DEPTNO}">
                     <button type="submit" class="btn btn-danger" 
                             onclick="return confirm('Are you sure you want to delete department ${department.DEPTNAME}?')">
-                        🗑️ Delete Department
+                        Delete Department
                     </button>
                 </form>
             </div>
@@ -132,7 +132,7 @@
     </c:when>
     <c:otherwise>
         <div class="alert alert-error">
-            <h3>❌ Department Not Found</h3>
+            <h3>Department Not Found</h3>
             <p>The requested department could not be found in the system.</p>
             <a href="${pageContext.request.contextPath}/departments?action=list" class="btn">🏢 Back to Department List</a>
         </div>

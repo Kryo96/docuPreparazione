@@ -4,9 +4,9 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="page-header">
-    <h2>🏢 Department List</h2>
+    <h2>Department List</h2>
     <c:if test="${showAddButton}">
-        <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">➕ Add New Department</a>
+        <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">Add New Department</a>
     </c:if>
 </div>
 
@@ -56,7 +56,7 @@
                             <td>
                                 <c:choose>
                                     <c:when test="${dept.LOCATION != null}">
-                                        📍 ${dept.LOCATION}
+                                        ${dept.LOCATION}
                                     </c:when>
                                     <c:otherwise>
                                         <span style="color: #666; font-style: italic;">Not specified</span>
@@ -64,11 +64,11 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="action-link">👁️ View</a>
-                                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${dept.DEPTNO}" class="action-link">✏️ Edit</a>
+                                <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="action-link">View</a>
+                                <a href="${pageContext.request.contextPath}/departments?action=edit&deptNo=${dept.DEPTNO}" class="action-link">Edit</a>
                                 <a href="${pageContext.request.contextPath}/departments?action=delete&deptNo=${dept.DEPTNO}" class="action-link delete"
                                    onclick="return confirm('Are you sure you want to delete department ${dept.DEPTNAME}?')">
-                                   🗑️ Delete
+                                   Delete
                                 </a>
                             </td>
                         </tr>
@@ -79,7 +79,7 @@
 
         <!-- Summary -->
         <div class="alert alert-info">
-            🏢 Total departments: <strong>${departments.size()}</strong>
+            Total departments: <strong>${departments.size()}</strong>
         </div>
 
     </c:when>
@@ -87,7 +87,7 @@
         <div class="alert alert-info">
             <h3>No departments found</h3>
             <p>There are no departments in the system yet.</p>
-            <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">➕ Add First Department</a>
+            <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">Add First Department</a>
         </div>
     </c:otherwise>
 </c:choose>
