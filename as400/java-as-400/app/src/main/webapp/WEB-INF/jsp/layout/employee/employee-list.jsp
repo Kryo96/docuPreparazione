@@ -55,7 +55,7 @@
                                         <strong>${emp.FIRSTNME} ${emp.MIDINIT != null ? emp.MIDINIT : ''} ${emp.LASTNAME}</strong>
                                     </div>
                                     <div class="employee-details">
-                                        <span class="gender-badge">${emp.SEX == 'M' ? '👨' : '👩'}</span>
+                                        <span class="gender-badge"></span>
                                         <span>${emp.SEX}</span>
                                     </div>
                                 </div>
