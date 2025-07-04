@@ -38,49 +38,41 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
                 case "dashboard":
                     prepareDashboardData(req);
                     req.setAttribute("content", "dashboard.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/dashboard.jsp").forward(req, resp);
                     break;
 
                 case "summary":
                     prepareSummaryData(req);
                     req.setAttribute("content", "department-summary.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/department-summary.jsp").forward(req, resp);
                     break;
 
                 case "detailed":
                     prepareDetailedData(req, deptNo);
                     req.setAttribute("content", "department-detailed.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/department-detailed.jsp").forward(req, resp);
                     break;
 
                 case "employees":
                     prepareEmployeeData(req);
                     req.setAttribute("content", "employee-list.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/employee-list.jsp").forward(req, resp);
                     break;
 
                 case "location":
                     prepareLocationData(req, location);
                     req.setAttribute("content", "location-report.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/location-report.jsp").forward(req, resp);
                     break;
 
                 case "salary":
                     prepareSalaryData(req);
                     req.setAttribute("content", "salary-analysis.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/salary-analysis.jsp").forward(req, resp);
                     break;
 
                 case "analytics":
                     prepareAnalyticsData(req);
                     req.setAttribute("content", "analytics.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/analytics.jsp").forward(req, resp);
                     break;
 
                 default:
                     prepareDashboardData(req);
                     req.setAttribute("content", "dashboard.jsp");
-                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/dashboard.jsp").forward(req, resp);
             }
             // Forward al layout principale
             req.setAttribute("moduleType", "reports");
@@ -157,10 +149,18 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
     }
 
     private void prepareEmployeeData(HttpServletRequest req) {
-        List<Map<String, Object>> employees = reportService.getEmployeesWithDepartmentInfo();
-        req.setAttribute("employees", employees);
-        req.setAttribute("pageTitle", "Employee List with Department Info");
-        req.setAttribute("currentReport", "employees");
+
+        logger.info("Preparing employee data");
+        try {
+            List<Map<String, Object>> employees = reportService.getEmployeesWithDepartmentInfo();
+            logger.debug("Employee data retrieved: {} items", employees.size());
+            req.setAttribute("employees", employees);
+            req.setAttribute("pageTitle", "Employee List with Department Info");
+            req.setAttribute("currentReport", "employees");
+        }catch(RuntimeException e) {
+            logger.error("Error preparing employee data", e);
+            throw new RuntimeException("Error while preparing employee data", e);
+        }
     }
 
     private void prepareLocationData(HttpServletRequest req, String location) {

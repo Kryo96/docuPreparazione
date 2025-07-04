@@ -6,14 +6,14 @@
 <div class="container">
     <!-- Employee Header with gradient -->
     <div class="header">
-        <h1>👥 Employee Management</h1>
+        <h1>Employee Management</h1>
         <p class="header-subtitle">${pageTitle}</p>
     </div>
 
     <!-- Breadcrumb Navigation -->
     <div class="breadcrumb">
-        <a href="${pageContext.request.contextPath}/reports">🏠 Home</a> /
-        <a href="${pageContext.request.contextPath}/employees">👥 Employees</a>
+        <a href="${pageContext.request.contextPath}/reports">Home</a> /
+        <a href="${pageContext.request.contextPath}/employees">Employees</a>
         <c:if test="${currentAction == 'view'}">
             / <span>View Employee</span>
         </c:if>
@@ -29,32 +29,32 @@
     <div class="navigation">
         <div class="nav-links">
             <a href="${pageContext.request.contextPath}/employees?action=list"
-               class="nav-link ${currentAction == 'list' ? 'active' : ''}">📋 All Employees</a>
+               class="nav-link ${currentAction == 'list' ? 'active' : ''}">All Employees</a>
             <a href="${pageContext.request.contextPath}/employees?action=add"
-               class="nav-link ${currentAction == 'add' ? 'active' : ''}">➕ Add Employee</a>
+               class="nav-link ${currentAction == 'add' ? 'active' : ''}">Add Employee</a>
             <a href="${pageContext.request.contextPath}/reports"
-               class="nav-link">📊 Reports</a>
+               class="nav-link">Reports</a>
         </div>
     </div>
 
     <!-- Alert Messages -->
     <c:if test="${not empty sessionScope.successMessage}">
         <div class="alert alert-success fade-in">
-            ✅ ${sessionScope.successMessage}
+            ${sessionScope.successMessage}
         </div>
         <c:remove var="successMessage" scope="session" />
     </c:if>
 
     <c:if test="${not empty sessionScope.errorMessage}">
         <div class="alert alert-error fade-in">
-            ❌ ${sessionScope.errorMessage}
+            ${sessionScope.errorMessage}
         </div>
         <c:remove var="errorMessage" scope="session" />
     </c:if>
 
     <c:if test="${not empty errorMessage}">
         <div class="alert alert-error fade-in">
-            ❌ ${errorMessage}
+            ${errorMessage}
         </div>
     </c:if>
 

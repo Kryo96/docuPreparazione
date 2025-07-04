@@ -236,7 +236,7 @@
             <div class="modules-grid">
                 <!-- Employee Management Module -->
                 <a href="${pageContext.request.contextPath}/employees" class="module-card employees">
-                    <span class="module-icon">👥</span>
+                    <span class="module-icon"></span>
                     <h3 class="module-title">Employee Management</h3>
                     <p class="module-description">
                         Complete employee lifecycle management with detailed profiles and comprehensive tracking.
@@ -252,7 +252,7 @@
 
                 <!-- Department Management Module -->
                 <a href="${pageContext.request.contextPath}/departments" class="module-card departments">
-                    <span class="module-icon">🏢</span>
+                    <span class="module-icon"></span>
                     <h3 class="module-title">Department Management</h3>
                     <p class="module-description">
                         Organize and manage organizational structure with department hierarchy and administration.
@@ -268,7 +268,7 @@
 
                 <!-- Reports & Analytics Module -->
                 <a href="${pageContext.request.contextPath}/reports" class="module-card reports">
-                    <span class="module-icon">📊</span>
+                    <span class="module-icon"></span>
                     <h3 class="module-title">Reports & Analytics</h3>
                     <p class="module-description">
                         Powerful reporting and analytics tools for data-driven decision making and insights.

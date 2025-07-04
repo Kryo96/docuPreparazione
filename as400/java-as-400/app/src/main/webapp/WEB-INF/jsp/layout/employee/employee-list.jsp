@@ -4,11 +4,11 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="page-header">
-    <h2>👥 Employee List</h2>
+    <h2>Employee List</h2>
     <c:if test="${showAddButton}">
         <div class="btn-group">
             <a href="${pageContext.request.contextPath}/employees?action=add" class="btn btn-primary">
-                ➕ Add New Employee
+                Add New Employee
             </a>
         </div>
     </c:if>
@@ -33,7 +33,7 @@
             <table class="employee-table">
                 <thead>
                     <tr>
-                        <th>Employee #</th>
+                        <th>Employee</th>
                         <th>Name</th>
                         <th>Department</th>
                         <th>Job Title</th>
@@ -82,13 +82,13 @@
                             </td>
                             <td>
                                 <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}"
-                                   class="action-link">👁️ View</a>
+                                   class="action-link">View</a>
                                 <a href="${pageContext.request.contextPath}/employees?action=edit&empNo=${emp.EMPNO}"
-                                   class="action-link">✏️ Edit</a>
+                                   class="action-link">Edit</a>
                                 <a href="${pageContext.request.contextPath}/employees?action=delete&empNo=${emp.EMPNO}"
                                    class="action-link delete"
                                    onclick="return confirm('Are you sure you want to delete employee ${emp.FIRSTNME} ${emp.LASTNAME}?')">
-                                   🗑️ Delete
+                                   Delete
                                 </a>
                             </td>
                         </tr>
@@ -99,7 +99,7 @@
 
         <!-- Summary Alert -->
         <div class="alert alert-info">
-            📊 Total employees: <strong>${employees.size()}</strong>
+            Total employees: <strong>${employees.size()}</strong>
         </div>
 
     </c:when>
@@ -108,7 +108,7 @@
             <h3>No employees found</h3>
             <p>There are no employees in the system yet.</p>
             <a href="${pageContext.request.contextPath}/employees?action=add" class="btn btn-primary">
-                ➕ Add First Employee
+                Add First Employee
             </a>
         </div>
     </c:otherwise>
