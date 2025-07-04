@@ -4,22 +4,22 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="report-header">
-    <h2>📍 Location Report</h2>
+    <h2>Location Report</h2>
     <p>Geographic distribution and location-based employee analysis</p>
 </div>
 
 <div class="location-container">
     <!-- Location Selection -->
     <div class="location-selector">
-        <h3>🌍 Select Location</h3>
+        <h3>Select Location</h3>
         <div class="location-buttons">
             <a href="${pageContext.request.contextPath}/reports?type=location" class="location-btn ${empty selectedLocation ? 'active' : ''}">
-                🌐 All Locations
+                All Locations
             </a>
             <c:forEach items="${allLocations}" var="location">
                 <a href="${pageContext.request.contextPath}/reports?type=location&location=${location.LOCATION}"
                    class="location-btn ${selectedLocation == location.LOCATION ? 'active' : ''}">
-                    📍 ${location.LOCATION}
+                    ${location.LOCATION}
                     <span class="location-count">(${location.EMPLOYEE_COUNT})</span>
                 </a>
             </c:forEach>
@@ -29,12 +29,12 @@
     <!-- All Locations Overview -->
     <c:if test="${empty selectedLocation}">
         <div class="all-locations-overview">
-            <h3>🏢 All Locations Overview</h3>
+            <h3>All Locations Overview</h3>
             
             <!-- Location Statistics -->
             <div class="location-stats">
                 <div class="stat-card">
-                    <div class="stat-icon">🌍</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Total Locations</h4>
                         <div class="stat-value">${allLocations.size()}</div>
@@ -42,7 +42,7 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon">👥</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Total Employees</h4>
                         <div class="stat-value">
@@ -56,7 +56,7 @@
                 </div>
                 
                 <div class="stat-card">
-                    <div class="stat-icon">📊</div>
+                    <div class="stat-icon"></div>
                     <div class="stat-content">
                         <h4>Average per Location</h4>
                         <div class="stat-value">
@@ -68,7 +68,7 @@
 
             <!-- Location Distribution Chart -->
             <div class="distribution-chart">
-                <h4>📊 Employee Distribution by Location</h4>
+                <h4>Employee Distribution by Location</h4>
                 <div class="chart-container">
                     <c:set var="maxEmployees" value="0" />
                     <c:forEach items="${allLocations}" var="location">
@@ -80,7 +80,7 @@
                     <c:forEach items="${allLocations}" var="location">
                         <div class="chart-bar">
                             <div class="bar-info">
-                                <span class="bar-label">📍 ${location.LOCATION}</span>
+                                <span class="bar-label">${location.LOCATION}</span>
                                 <span class="bar-value">${location.EMPLOYEE_COUNT} employees</span>
                             </div>
                             <div class="bar-container">
@@ -98,7 +98,7 @@
 
             <!-- Location Comparison Table -->
             <div class="location-table">
-                <h4>📋 Location Comparison</h4>
+                <h4>Location Comparison</h4>
                 <div class="table-responsive">
                     <table>
                         <thead>
@@ -116,7 +116,7 @@
                                 <tr>
                                     <td>
                                         <div class="location-info">
-                                            <strong>📍 ${location.LOCATION}</strong>
+                                            <strong>${location.LOCATION}</strong>
                                         </div>
                                     </td>
                                     <td class="text-center">
@@ -139,7 +139,7 @@
                                     </td>
                                     <td class="text-center">
                                         <span class="status-badge ${location.EMPLOYEE_COUNT > 0 ? 'active' : 'inactive'}">
-                                            ${location.EMPLOYEE_COUNT > 0 ? '✅ Active' : '❌ Inactive'}
+                                            ${location.EMPLOYEE_COUNT > 0 ? 'Active' : 'Inactive'}
                                         </span>
                                     </td>
                                     <td class="text-center">
@@ -159,15 +159,15 @@
     <!-- Specific Location Details -->
     <c:if test="${not empty selectedLocation}">
         <div class="location-details">
-            <h3>📍 ${selectedLocation} - Detailed Report</h3>
+            <h3>${selectedLocation} - Detailed Report</h3>
             
             <!-- Location Summary -->
             <div class="location-summary">
                 <div class="summary-card">
-                    <h4>📊 Location Summary</h4>
+                    <h4>Location Summary</h4>
                     <div class="summary-stats">
                         <div class="summary-item">
-                            <span class="summary-label">👥 Total Employees:</span>
+                            <span class="summary-label">Total Employees:</span>
                             <span class="summary-value">${employees.size()}</span>
                         </div>
                         <div class="summary-item">
@@ -183,7 +183,7 @@
                             </span>
                         </div>
                         <div class="summary-item">
-                            <span class="summary-label">💰 Total Payroll:</span>
+                            <span class="summary-label">Total Payroll:</span>
                             <span class="summary-value">
                                 <c:set var="totalPayroll" value="0" />
                                 <c:forEach items="${employees}" var="emp">
@@ -195,7 +195,7 @@
                             </span>
                         </div>
                         <div class="summary-item">
-                            <span class="summary-label">📈 Average Salary:</span>
+                            <span class="summary-label">Average Salary:</span>
                             <span class="summary-value">
                                 <c:set var="salaryCount" value="0" />
                                 <c:forEach items="${employees}" var="emp">
@@ -256,13 +256,13 @@
                                         </c:if>
                                     </c:forEach>
                                     <div class="dept-stat">
-                                        <span class="stat-label">💰 Total:</span>
+                                        <span class="stat-label">Total:</span>
                                         <span class="stat-value">
                                             <fmt:formatNumber value="${deptPayroll}" type="currency" currencySymbol="$" />
                                         </span>
                                     </div>
                                     <div class="dept-stat">
-                                        <span class="stat-label">📊 Average:</span>
+                                        <span class="stat-label">Average:</span>
                                         <span class="stat-value">
                                             <c:if test="${deptSalaryCount > 0}">
                                                 <fmt:formatNumber value="${deptPayroll / deptSalaryCount}" type="currency" currencySymbol="$" />
@@ -279,7 +279,7 @@
             <!-- Employee List -->
             <c:if test="${not empty employees}">
                 <div class="employees-section">
-                    <h4>👥 Employees in ${selectedLocation}</h4>
+                    <h4>Employees in ${selectedLocation}</h4>
                     <div class="table-responsive">
                         <table class="employees-table">
                             <thead>
@@ -319,7 +319,7 @@
                                         </td>
                                         <td>
                                             <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="action-link">
-                                                👁️ View
+                                                View
                                             </a>
                                         </td>
                                     </tr>

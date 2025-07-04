@@ -213,7 +213,7 @@
                 </c:forEach>
 
                 <div class="insight-card">
-                    <div class="insight-icon">🏆</div>
+                    <div class="insight-icon"></div>
                     <div class="insight-content">
                         <h4>Highest Payroll Department</h4>
                         <p><strong>${highestPayrollDept}</strong> has the highest total payroll with 
@@ -222,7 +222,7 @@
                 </div>
                 
                 <div class="insight-card">
-                    <div class="insight-icon">💎</div>
+                    <div class="insight-icon"></div>
                     <div class="insight-content">
                         <h4>Highest Average Salary</h4>
                         <p><strong>${highestAvgDept}</strong> has the highest average salary at 
@@ -231,7 +231,7 @@
                 </div>
                 
                 <div class="insight-card">
-                    <div class="insight-icon">📊</div>
+                    <div class="insight-icon"></div>
                     <div class="insight-content">
                         <h4>Organization Health</h4>
                         <p>Total payroll represents <strong>100%</strong> of compensation budget across 
@@ -246,7 +246,7 @@
         <div class="alert alert-info">
             <h3>No salary data available</h3>
             <p>There is no salary information available to analyze.</p>
-            <a href="${pageContext.request.contextPath}/reports" class="btn">📊 Back to Reports</a>
+            <a href="${pageContext.request.contextPath}/reports" class="btn">Back to Reports</a>
         </div>
     </c:otherwise>
 </c:choose>

@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="report-header">
-    <h2>📋 Department Summary Report</h2>
+    <h2>Department Summary Report</h2>
     <p>Overview of all departments with key metrics and statistics</p>
 </div>
 
@@ -12,11 +12,11 @@
     <c:when test="${not empty departments}">
         <div class="summary-stats">
             <div class="stat-card">
-                <h3>🏢 Total Departments</h3>
+                <h3>Total Departments</h3>
                 <div class="stat-value">${departments.size()}</div>
             </div>
             <div class="stat-card">
-                <h3>👥 Total Employees</h3>
+                <h3>Total Employees</h3>
                 <div class="stat-value">
                     <c:set var="totalEmployees" value="0" />
                     <c:forEach items="${departments}" var="dept">
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="stat-card">
-                <h3>💰 Average Salary</h3>
+                <h3>Average Salary</h3>
                 <div class="stat-value">
                     <c:set var="totalSalary" value="0" />
                     <c:set var="deptCount" value="0" />
@@ -73,7 +73,7 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <span class="location-badge">📍 ${dept.LOCATION}</span>
+                                <span class="location-badge">${dept.LOCATION}</span>
                             </td>
                             <td class="text-center">
                                 <span class="employee-count">${dept.EMPLOYEE_COUNT}</span>
@@ -97,8 +97,8 @@
                                 </c:choose>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/reports?type=detailed&deptNo=${dept.DEPTNO}" class="action-link">👁️ Details</a>
-                                <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="action-link">🏢 Manage</a>
+                                <a href="${pageContext.request.contextPath}/reports?type=detailed&deptNo=${dept.DEPTNO}" class="action-link">Details</a>
+                                <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="action-link">Manage</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -112,11 +112,11 @@
                 <div class="department-card">
                     <div class="card-header">
                         <h3>${dept.DEPTNO} - ${dept.DEPTNAME}</h3>
-                        <span class="location-badge">📍 ${dept.LOCATION}</span>
+                        <span class="location-badge">${dept.LOCATION}</span>
                     </div>
                     <div class="card-content">
                         <div class="card-row">
-                            <span class="label">👤 Manager:</span>
+                            <span class="label">Manager:</span>
                             <span class="value">
                                 <c:choose>
                                     <c:when test="${dept.MGRNO != null}">${dept.MGRNO}</c:when>
@@ -125,11 +125,11 @@
                             </span>
                         </div>
                         <div class="card-row">
-                            <span class="label">👥 Employees:</span>
+                            <span class="label">Employees:</span>
                             <span class="value">${dept.EMPLOYEE_COUNT}</span>
                         </div>
                         <div class="card-row">
-                            <span class="label">💰 Avg Salary:</span>
+                            <span class="label">Avg Salary:</span>
                             <span class="value">
                                 <c:choose>
                                     <c:when test="${dept.AVG_SALARY != null}">
@@ -140,7 +140,7 @@
                             </span>
                         </div>
                         <div class="card-row">
-                            <span class="label">💼 Total Payroll:</span>
+                            <span class="label">Total Payroll:</span>
                             <span class="value">
                                 <c:choose>
                                     <c:when test="${dept.TOTAL_PAYROLL != null}">

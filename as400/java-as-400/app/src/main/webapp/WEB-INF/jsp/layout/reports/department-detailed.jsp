@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
-<h2>🔍 Department Detailed Report</h2>
+<h2>Department Detailed Report</h2>
 
 <c:choose>
     <c:when test="${empty selectedDeptNo}">
@@ -24,7 +24,7 @@
             <p><strong>Manager:</strong> ${departmentInfo.MGRNO}</p>
         </div>
 
-        <h3>👥 Department Employees</h3>
+        <h3>Department Employees</h3>
         <div class="table-responsive">
             <table>
                 <thead>
@@ -50,10 +50,10 @@
                                 <td>${emp.HIREDATE}</td>
                                 <td>
                                     <c:if test="${emp.ROLE_IN_DEPT == 'MANAGER'}">
-                                        <span style="background: #ffd700; color: #333; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">👑 MANAGER</span>
+                                        <span style="background: #ffd700; color: #333; padding: 3px 8px; border-radius: 12px; font-size: 0.8em; font-weight: bold;">MANAGER</span>
                                     </c:if>
                                     <c:if test="${emp.ROLE_IN_DEPT == 'EMPLOYEE'}">
-                                        <span style="background: #e3f2fd; color: #1565c0; padding: 3px 8px; border-radius: 12px; font-size: 0.8em;">👤 EMPLOYEE</span>
+                                        <span style="background: #e3f2fd; color: #1565c0; padding: 3px 8px; border-radius: 12px; font-size: 0.8em;">EMPLOYEE</span>
                                     </c:if>
                                 </td>
                             </tr>
@@ -65,7 +65,7 @@
 
         <div style="display: flex; gap: 15px; margin-top: 20px;">
             <a href="?type=summary" class="btn">← Back to Summary</a>
-            <a href="?type=salary" class="btn" style="background: #28a745;">💰 View Salary Analysis</a>
+            <a href="?type=salary" class="btn" style="background: #28a745;">View Salary Analysis</a>
         </div>
     </c:otherwise>
 </c:choose>

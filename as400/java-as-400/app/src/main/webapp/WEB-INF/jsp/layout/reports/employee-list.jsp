@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="report-header">
-    <h2>👥 Employee List Report</h2>
+    <h2>Employee List Report</h2>
     <p>Complete employee listing with department and compensation information</p>
 </div>
 
@@ -13,11 +13,11 @@
         <!-- Summary Statistics -->
         <div class="summary-stats">
             <div class="stat-card">
-                <h3>👥 Total Employees</h3>
+                <h3>Total Employees</h3>
                 <div class="stat-value">${employees.size()}</div>
             </div>
             <div class="stat-card">
-                <h3>💰 Total Payroll</h3>
+                <h3>Total Payroll</h3>
                 <div class="stat-value">
                     <c:set var="totalPayroll" value="0" />
                     <c:forEach items="${employees}" var="emp">
@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="stat-card">
-                <h3>📊 Average Salary</h3>
+                <h3>Average Salary</h3>
                 <div class="stat-value">
                     <c:set var="avgSalary" value="0" />
                     <c:set var="salaryCount" value="0" />
@@ -111,7 +111,7 @@
                                         <span class="employee-id">#${emp.EMPNO}</span>
                                     </div>
                                     <div class="employee-details">
-                                        <span class="gender-badge">${emp.SEX == 'M' ? '👨' : '👩'}</span>
+                                        <span class="gender-badge">${emp.SEX == 'M' ? 'F' : 'M'}</span>
                                         <span class="phone">${emp.PHONENO}</span>
                                     </div>
                                 </div>
@@ -153,7 +153,7 @@
                                 </strong>
                             </td>
                             <td>
-                                <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="action-link">👁️ View</a>
+                                <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="action-link">View</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -174,7 +174,7 @@
                     </div>
                     <div class="card-content">
                         <div class="card-row">
-                            <span class="label">🏢 Department:</span>
+                            <span class="label">Department:</span>
                             <span class="value">
                                 <c:if test="${emp.WORKDEPT != null}">
                                     <span class="dept-badge">${emp.WORKDEPT}</span>
@@ -182,11 +182,11 @@
                             </span>
                         </div>
                         <div class="card-row">
-                            <span class="label">💼 Job:</span>
+                            <span class="label">Job:</span>
                             <span class="value">${emp.JOB}</span>
                         </div>
                         <div class="card-row">
-                            <span class="label">💰 Salary:</span>
+                            <span class="label">Salary:</span>
                             <span class="value">
                                 <c:if test="${emp.SALARY != null}">
                                     <fmt:formatNumber value="${emp.SALARY}" type="currency" currencySymbol="$" />
@@ -194,7 +194,7 @@
                             </span>
                         </div>
                         <div class="card-row">
-                            <span class="label">📅 Hire Date:</span>
+                            <span class="label">Hire Date:</span>
                             <span class="value">
                                 <c:if test="${emp.HIREDATE != null}">
                                     <fmt:formatDate value="${emp.HIREDATE}" pattern="dd/MM/yyyy" />
@@ -203,7 +203,7 @@
                         </div>
                     </div>
                     <div class="card-actions">
-                        <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="btn btn-sm">👁️ View</a>
+                        <a href="${pageContext.request.contextPath}/employees?action=view&empNo=${emp.EMPNO}" class="btn btn-sm">View</a>
                     </div>
                 </div>
             </c:forEach>
@@ -214,7 +214,7 @@
         <div class="alert alert-info">
             <h3>No employees found</h3>
             <p>There are no employees in the system to display.</p>
-            <a href="${pageContext.request.contextPath}/employees?action=add" class="btn">➕ Add First Employee</a>
+            <a href="${pageContext.request.contextPath}/employees?action=add" class="btn">Add First Employee</a>
         </div>
     </c:otherwise>
 </c:choose>

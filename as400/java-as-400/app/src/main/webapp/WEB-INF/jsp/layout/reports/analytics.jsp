@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 
 <div class="report-header">
-    <h2>📈 Advanced Analytics Dashboard</h2>
+    <h2>Advanced Analytics Dashboard</h2>
     <p>Deep insights into organizational demographics, performance, and trends</p>
 </div>
 
@@ -12,7 +12,7 @@
     <!-- Gender Distribution Analysis -->
     <c:if test="${not empty genderDistribution}">
         <div class="analytics-section">
-            <h3>👥 Gender Distribution by Department</h3>
+            <h3>Gender Distribution by Department</h3>
             <div class="gender-analysis">
                 <div class="gender-overview">
                     <c:set var="totalMale" value="0" />
@@ -25,7 +25,7 @@
                     
                     <div class="overview-stats">
                         <div class="gender-stat male">
-                            <div class="stat-icon">👨</div>
+                            <div class="stat-icon"></div>
                             <div class="stat-info">
                                 <h4>Male Employees</h4>
                                 <div class="stat-value">${totalMale}</div>
@@ -36,7 +36,7 @@
                         </div>
                         
                         <div class="gender-stat female">
-                            <div class="stat-icon">👩</div>
+                            <div class="stat-icon"></div>
                             <div class="stat-info">
                                 <h4>Female Employees</h4>
                                 <div class="stat-value">${totalFemale}</div>
@@ -112,13 +112,13 @@
     <!-- Location Distribution Analysis -->
     <c:if test="${not empty locationDistribution}">
         <div class="analytics-section">
-            <h3>📍 Geographic Distribution</h3>
+            <h3>Geographic Distribution</h3>
             <div class="location-analysis">
                 <div class="location-stats">
                     <c:forEach items="${locationDistribution}" var="location">
                         <div class="location-card">
                             <div class="location-header">
-                                <h4>📍 ${location.LOCATION}</h4>
+                                <h4>${location.LOCATION}</h4>
                                 <span class="location-count">${location.EMPLOYEE_COUNT} employees</span>
                             </div>
                             <div class="location-details">
@@ -140,13 +140,13 @@
     <!-- Top Performers Analysis -->
     <c:if test="${not empty topEarners}">
         <div class="analytics-section">
-            <h3>🏆 Top Performers by Department</h3>
+            <h3>Top Performers by Department</h3>
             <div class="top-performers">
                 <c:forEach items="${topEarners}" var="dept">
                     <div class="department-performers">
                         <div class="dept-header">
                             <h4>${dept.DEPTNO} - ${dept.DEPTNAME}</h4>
-                            <span class="dept-location">📍 ${dept.LOCATION}</span>
+                            <span class="dept-location">${dept.LOCATION}</span>
                         </div>
                         
                         <c:if test="${not empty dept.topEmployees}">
@@ -181,10 +181,10 @@
 
     <!-- Key Insights and Recommendations -->
     <div class="analytics-section">
-        <h3>💡 Key Insights & Recommendations</h3>
+        <h3>Key Insights & Recommendations</h3>
         <div class="insights-grid">
             <div class="insight-card diversity">
-                <div class="insight-icon">⚖️</div>
+                <div class="insight-icon"></div>
                 <div class="insight-content">
                     <h4>Gender Diversity</h4>
                     <p>Organization maintains a 
@@ -192,40 +192,40 @@
                                <fmt:formatNumber value="${(totalFemale / totalEmployees) * 100}" type="number" maxFractionDigits="0" />%</strong> 
                        male-to-female ratio.</p>
                     <div class="recommendation">
-                        <small>💡 Consider diversity initiatives for better balance</small>
+                        <small>Consider diversity initiatives for better balance</small>
                     </div>
                 </div>
             </div>
 
             <div class="insight-card geography">
-                <div class="insight-icon">🌍</div>
+                <div class="insight-icon"></div>
                 <div class="insight-content">
                     <h4>Geographic Spread</h4>
                     <p>Workforce distributed across <strong>${locationDistribution.size()}</strong> locations.</p>
                     <div class="recommendation">
-                        <small>💡 Evaluate remote work opportunities</small>
+                        <small>Evaluate remote work opportunities</small>
                     </div>
                 </div>
             </div>
 
             <div class="insight-card performance">
-                <div class="insight-icon">📊</div>
+                <div class="insight-icon"></div>
                 <div class="insight-content">
                     <h4>Performance Distribution</h4>
                     <p>Top performers identified across all departments.</p>
                     <div class="recommendation">
-                        <small>💡 Consider leadership development programs</small>
+                        <small>Consider leadership development programs</small>
                     </div>
                 </div>
             </div>
 
             <div class="insight-card growth">
-                <div class="insight-icon">📈</div>
+                <div class="insight-icon"></div>
                 <div class="insight-content">
                     <h4>Organizational Growth</h4>
                     <p>Balanced structure across departments and locations.</p>
                     <div class="recommendation">
-                        <small>💡 Focus on retention strategies for top talent</small>
+                        <small>Focus on retention strategies for top talent</small>
                     </div>
                 </div>
             </div>
@@ -237,7 +237,7 @@
         <h3>🔬 Advanced Metrics</h3>
         <div class="advanced-metrics">
             <div class="metric-card">
-                <h4>📊 Diversity Score</h4>
+                <h4>Diversity Score</h4>
                 <div class="metric-value">
                     <c:set var="overallDiversity" value="${1 - Math.abs((totalMale - totalFemale) / totalEmployees)}" />
                     <div class="score-circle ${overallDiversity > 0.8 ? 'high' : overallDiversity > 0.5 ? 'medium' : 'low'}">
@@ -248,7 +248,7 @@
             </div>
 
             <div class="metric-card">
-                <h4>🌍 Geographic Diversity</h4>
+                <h4>Geographic Diversity</h4>
                 <div class="metric-value">
                     <div class="score-circle medium">
                         ${locationDistribution.size()}
@@ -258,7 +258,7 @@
             </div>
 
             <div class="metric-card">
-                <h4>💰 Compensation Spread</h4>
+                <h4>Compensation Spread</h4>
                 <div class="metric-value">
                     <c:set var="maxSalary" value="0" />
                     <c:set var="minSalary" value="999999" />
@@ -280,7 +280,7 @@
             </div>
 
             <div class="metric-card">
-                <h4>🎯 Department Balance</h4>
+                <h4>Department Balance</h4>
                 <div class="metric-value">
                     <div class="score-circle high">
                         ${genderDistribution.size()}
