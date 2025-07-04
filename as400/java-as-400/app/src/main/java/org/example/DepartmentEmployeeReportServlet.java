@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/reports")
+@WebServlet(name = "DepartmentEmployeeReportServlet", urlPatterns = {"/reports"})
 public class DepartmentEmployeeReportServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(DepartmentEmployeeReportServlet.class);
@@ -34,50 +34,60 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
             switch (reportType == null ? "dashboard" : reportType) {
                 case "dashboard":
                     prepareDashboardData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(req, resp);
+                    req.setAttribute("content", "dashboard.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/dashboard.jsp").forward(req, resp);
                     break;
 
                 case "summary":
                     prepareSummaryData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/department-summary.jsp").forward(req, resp);
+                    req.setAttribute("content", "department-summary.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/department-summary.jsp").forward(req, resp);
                     break;
 
                 case "detailed":
                     prepareDetailedData(req, deptNo);
-                    req.getRequestDispatcher("/WEB-INF/jsp/department-detailed.jsp").forward(req, resp);
+                    req.setAttribute("content", "department-detailed.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/department-detailed.jsp").forward(req, resp);
                     break;
 
                 case "employees":
                     prepareEmployeeData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/employee-list.jsp").forward(req, resp);
+                    req.setAttribute("content", "employee-list.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/employee-list.jsp").forward(req, resp);
                     break;
 
                 case "location":
                     prepareLocationData(req, location);
-                    req.getRequestDispatcher("/WEB-INF/jsp/location-report.jsp").forward(req, resp);
+                    req.setAttribute("content", "location-report.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/location-report.jsp").forward(req, resp);
                     break;
 
                 case "salary":
                     prepareSalaryData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/salary-analysis.jsp").forward(req, resp);
+                    req.setAttribute("content", "salary-analysis.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/salary-analysis.jsp").forward(req, resp);
                     break;
 
                 case "analytics":
                     prepareAnalyticsData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/analytics.jsp").forward(req, resp);
+                    req.setAttribute("content", "analytics.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/analytics.jsp").forward(req, resp);
                     break;
 
                 default:
                     prepareDashboardData(req);
-                    req.getRequestDispatcher("/WEB-INF/jsp/dashboard.jsp").forward(req, resp);
+                    req.setAttribute("content", "dashboard.jsp");
+                    //req.getRequestDispatcher("/WEB-INF/jsp/layout/reports/dashboard.jsp").forward(req, resp);
             }
-
+            // Forward al layout principale
+            req.setAttribute("moduleType", "reports");
+            req.setAttribute("layoutPath", "/WEB-INF/jsp/layout/reports-layout.jsp");
             req.getRequestDispatcher("/WEB-INF/jsp/layout/main.jsp").forward(req, resp);
 
         } catch (Exception e) {
             logger.error("Error preparing report data", e);
             req.setAttribute("errorMessage", "Error generating report: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/common/error.jsp").forward(req, resp);
         }
     }
 

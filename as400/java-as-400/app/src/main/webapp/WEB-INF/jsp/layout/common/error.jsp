@@ -100,9 +100,9 @@
         </div>
 
         <div class="error-actions">
-            <a href="/reports" class="btn">🏠 Go to Dashboard</a>
+            <a href="${pageContext.request.contextPath}/reports" class="btn">🏠 Go to Dashboard</a>
             <a href="javascript:history.back()" class="btn btn-secondary">← Go Back</a>
-            <a href="/reports?type=summary" class="btn btn-secondary">📋 Department Summary</a>
+            <a href="${pageContext.request.contextPath}/reports?type=summary" class="btn btn-secondary">📋 Department Summary</a>
         </div>
     </div>
 </body>

@@ -14,11 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 
-@WebServlet("/employee")
+@WebServlet(name = "EmployeeServlet", urlPatterns = {"/employees"})
 public class EmployeeServlet extends HttpServlet {
 
     private static final Logger logger = LoggerFactory.getLogger(EmployeeServlet.class);
@@ -33,32 +32,149 @@ public class EmployeeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html;charset=UTF-8");
+        String action = req.getParameter("action");
+        String empNo = req.getParameter("empNo");
 
-        try (PrintWriter out = resp.getWriter()) {
-            out.println("<html><body>");
-            out.println("<h2>Employee Data</h2>");
+        try {
+            switch (action == null ? "list" : action) {
+                case "list":
+                    prepareListData(req);
+                    req.setAttribute("content", "employee-list.jsp");
+                    break;
 
-            // Chiamata al servizio read-only
-            List<Map<String, Object>> employees = readOnlyEmpl.findAll();
+                case "view":
+                    prepareViewData(req, empNo);
+                    req.setAttribute("content", "employee-view.jsp");
+                    break;
 
-            if (employees != null && !employees.isEmpty()) {
-                printTable(out, employees);
-            } else {
-                out.println("<p>No employees found.</p>");
+                case "add":
+                    prepareAddForm(req);
+                    req.setAttribute("content", "employee-form.jsp");
+                    break;
+
+                case "edit":
+                    prepareEditForm(req, empNo);
+                    req.setAttribute("content", "employee-form.jsp");
+                    break;
+
+                default:
+                    prepareListData(req);
+                    req.setAttribute("content", "employee-list.jsp");
             }
-
-            out.println("</body></html>");
+            req.setAttribute("moduleType", "employee");
+            req.setAttribute("layoutPath", "/WEB-INF/jsp/layout/employee-layout.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/main.jsp").forward(req, resp);
 
         } catch (Exception e) {
-            logger.error("Errore durante l'accesso ai dati dei dipendenti", e);
-            handleError(resp, "Errore interno del server");
+            logger.error("Error in employee servlet GET", e);
+            req.setAttribute("errorMessage", "Error loading employee data: " + e.getMessage());
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/common/error.jsp").forward(req, resp);
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Recupera tutti i parametri necessari per un nuovo dipendente
+        String action = req.getParameter("action");
+
+        try {
+            switch (action == null ? "create" : action) {
+                case "create":
+                    handleCreate(req, resp);
+                    break;
+
+                case "update":
+                    handleUpdate(req, resp);
+                    break;
+
+                case "delete":
+                    handleDelete(req, resp);
+                    break;
+
+                default:
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action");
+            }
+
+        } catch (Exception e) {
+            logger.error("Error in employee servlet POST", e);
+            req.setAttribute("errorMessage", "Error processing request: " + e.getMessage());
+            req.setAttribute("formData", extractFormData(req));
+            req.setAttribute("content", "employee-form.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/employee-layout.jsp").forward(req, resp);
+        }
+    }
+
+    // === METODI DI PREPARAZIONE DATI ===
+
+    private void prepareListData(HttpServletRequest req) {
+        List<Map<String, Object>> employees = readOnlyEmpl.findAll();
+        req.setAttribute("employees", employees);
+        req.setAttribute("pageTitle", "Employee Management");
+        req.setAttribute("currentAction", "list");
+        req.setAttribute("showAddButton", true);
+    }
+
+    private void prepareViewData(HttpServletRequest req, String empNo) {
+        if (empNo != null && !empNo.trim().isEmpty()) {
+            List<Map<String, Object>> empData = readOnlyEmpl.findByEmpNo(empNo);
+            if (!empData.isEmpty()) {
+                req.setAttribute("employee", empData.get(0));
+                req.setAttribute("pageTitle", "Employee Details - " + empNo);
+            } else {
+                req.setAttribute("errorMessage", "Employee not found: " + empNo);
+            }
+        } else {
+            req.setAttribute("errorMessage", "Employee number is required");
+        }
+        req.setAttribute("currentAction", "view");
+        req.setAttribute("empNo", empNo);
+    }
+
+    private void prepareAddForm(HttpServletRequest req) {
+        req.setAttribute("pageTitle", "Add New Employee");
+        req.setAttribute("currentAction", "add");
+        req.setAttribute("formAction", "create");
+        req.setAttribute("submitButtonText", "Create Employee");
+        req.setAttribute("cancelUrl", "/employees");
+
+        // Dati per popolare dropdown (dipartimenti, ecc.)
+        prepareDepartmentOptions(req);
+    }
+
+    private void prepareEditForm(HttpServletRequest req, String empNo) {
+        if (empNo != null && !empNo.trim().isEmpty()) {
+            List<Map<String, Object>> empData = readOnlyEmpl.findByEmpNo(empNo);
+            if (!empData.isEmpty()) {
+                req.setAttribute("employee", empData.get(0));
+                req.setAttribute("pageTitle", "Edit Employee - " + empNo);
+                req.setAttribute("currentAction", "edit");
+                req.setAttribute("formAction", "update");
+                req.setAttribute("submitButtonText", "Update Employee");
+                req.setAttribute("cancelUrl", "/employees?action=view&empNo=" + empNo);
+
+                // Dati per dropdown
+                prepareDepartmentOptions(req);
+            } else {
+                req.setAttribute("errorMessage", "Employee not found: " + empNo);
+            }
+        } else {
+            req.setAttribute("errorMessage", "Employee number is required");
+        }
+    }
+
+    private void prepareDepartmentOptions(HttpServletRequest req) {
+        // Assumo che esista un metodo per ottenere i dipartimenti
+        // Se non esiste, puoi commentare questa parte
+        try {
+            // List<Map<String, Object>> departments = departmentService.findAll();
+            // req.setAttribute("departments", departments);
+        } catch (Exception e) {
+            logger.warn("Could not load departments for dropdown", e);
+        }
+    }
+
+    // === METODI DI GESTIONE OPERAZIONI ===
+
+    private void handleCreate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         String empNo = req.getParameter("empNo");
         String firstName = req.getParameter("firstName");
         String midInit = req.getParameter("midInit");
@@ -74,82 +190,90 @@ public class EmployeeServlet extends HttpServlet {
         String bonus = req.getParameter("bonus");
         String comm = req.getParameter("comm");
 
-        try {
-            // Usa il servizio completo per operazioni di scrittura
-            int result = fullEmplService.insertEmployee(empNo, firstName, midInit, lastName,
-                    workDept, phoneNo, hireDate, job,
-                    edLevel, sex, birthDate, salary, bonus, comm);
-
-            if (result > 0) {
-                resp.setStatus(HttpServletResponse.SC_CREATED);
-                resp.getWriter().println("Employee created successfully");
-            } else {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                resp.getWriter().println("Failed to create employee");
-            }
-
-        } catch (Exception e) {
-            logger.error("Errore durante la creazione del dipendente", e);
-            handleError(resp, "Errore durante la creazione");
-        }
-    }
-
-    /**
-     * Metodo per stampare una tabella HTML con i dati dei dipendenti
-     */
-    private void printTable(PrintWriter out, List<Map<String, Object>> employees) {
-        if (employees == null || employees.isEmpty()) {
-            out.println("<p>No data available</p>");
+        // Validazione
+        if (isInvalidInput(empNo, firstName, lastName)) {
+            req.setAttribute("errorMessage", "Required fields: Employee Number, First Name, and Last Name");
+            req.setAttribute("formData", extractFormData(req));
+            prepareAddForm(req);
+            req.setAttribute("content", "employee-form.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/employee-layout.jsp").forward(req, resp);
             return;
         }
 
-        out.println("<table border='1' cellpadding='5' cellspacing='0'>");
+        int result = fullEmplService.insertEmployee(empNo, firstName, midInit, lastName,
+                workDept, phoneNo, hireDate, job, edLevel, sex, birthDate, salary, bonus, comm);
 
-        // Header della tabella
-        out.println("<thead>");
-        out.println("<tr>");
-        out.println("<th>EMPNO</th>");
-        out.println("<th>FIRST NAME</th>");
-        out.println("<th>MI</th>");
-        out.println("<th>LAST NAME</th>");
-        out.println("<th>WORK DEPT</th>");
-        out.println("<th>PHONE</th>");
-        out.println("<th>HIRE DATE</th>");
-        out.println("<th>JOB</th>");
-        out.println("<th>ED LEVEL</th>");
-        out.println("<th>SEX</th>");
-        out.println("<th>BIRTH DATE</th>");
-        out.println("<th>SALARY</th>");
-        out.println("<th>BONUS</th>");
-        out.println("<th>COMM</th>");
-        out.println("</tr>");
-        out.println("</thead>");
-
-        // Corpo della tabella
-        out.println("<tbody>");
-        for (Map<String, Object> emp : employees) {
-            out.println("<tr>");
-            out.println("<td>" + getValueOrEmpty(emp, "EMPNO") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "FIRSTNME") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "MIDINIT") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "LASTNAME") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "WORKDEPT") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "PHONENO") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "HIREDATE") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "JOB") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "EDLEVEL") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "SEX") + "</td>");
-            out.println("<td>" + getValueOrEmpty(emp, "BIRTHDATE") + "</td>");
-            out.println("<td>" + formatCurrency(emp.get("SALARY")) + "</td>");
-            out.println("<td>" + formatCurrency(emp.get("BONUS")) + "</td>");
-            out.println("<td>" + formatCurrency(emp.get("COMM")) + "</td>");
-            out.println("</tr>");
+        if (result > 0) {
+            req.getSession().setAttribute("successMessage", "Employee created successfully!");
+            resp.sendRedirect("/employees?action=view&empNo=" + empNo);
+        } else {
+            req.setAttribute("errorMessage", "Failed to create employee. Please check if employee number already exists.");
+            req.setAttribute("formData", extractFormData(req));
+            prepareAddForm(req);
+            req.setAttribute("content", "employee-form.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/employee-layout.jsp").forward(req, resp);
         }
-        out.println("</tbody>");
-        out.println("</table>");
+    }
 
-        // Mostra il conteggio
-        out.println("<p>Total employees: " + employees.size() + "</p>");
+    private void handleUpdate(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        String empNo = req.getParameter("empNo");
+        String firstName = req.getParameter("firstName");
+        String lastName = req.getParameter("lastName");
+
+        if (isInvalidInput(empNo, firstName, lastName)) {
+            req.setAttribute("errorMessage", "Required fields: Employee Number, First Name, and Last Name");
+            req.setAttribute("formData", extractFormData(req));
+            prepareEditForm(req, empNo);
+            req.setAttribute("content", "employee-form.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/employee-layout.jsp").forward(req, resp);
+            return;
+        }
+
+        // Per semplicità, aggiorniamo solo il nome (puoi estendere per altri campi)
+        int result = fullEmplService.updateFirstName(empNo, firstName);
+
+        if (result > 0) {
+            req.getSession().setAttribute("successMessage", "Employee updated successfully!");
+            resp.sendRedirect("/employees?action=view&empNo=" + empNo);
+        } else {
+            req.setAttribute("errorMessage", "Failed to update employee. Employee may not exist.");
+            req.setAttribute("formData", extractFormData(req));
+            prepareEditForm(req, empNo);
+            req.setAttribute("content", "employee-form.jsp");
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/employee-layout.jsp").forward(req, resp);
+        }
+    }
+
+    private void handleDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String empNo = req.getParameter("empNo");
+
+        if (empNo == null || empNo.trim().isEmpty()) {
+            req.getSession().setAttribute("errorMessage", "Employee number is required for deletion");
+            resp.sendRedirect("/employees");
+            return;
+        }
+
+        int result = fullEmplService.deleteEmployee(empNo);
+
+        if (result > 0) {
+            req.getSession().setAttribute("successMessage", "Employee deleted successfully!");
+        } else {
+            req.getSession().setAttribute("errorMessage", "Failed to delete employee. It may not exist or have related records.");
+        }
+
+        resp.sendRedirect("/employees");
+    }
+
+    // === METODI HELPER ===
+
+    private boolean isInvalidInput(String empNo, String firstName, String lastName) {
+        return empNo == null || empNo.trim().isEmpty() ||
+                firstName == null || firstName.trim().isEmpty() ||
+                lastName == null || lastName.trim().isEmpty();
+    }
+
+    private Map<String, String[]> extractFormData(HttpServletRequest req) {
+        return req.getParameterMap();
     }
 
     /**
@@ -170,83 +294,6 @@ public class EmployeeServlet extends HttpServlet {
             return String.format("$%.2f", amount);
         } catch (NumberFormatException e) {
             return value.toString();
-        }
-    }
-
-    /**
-     * Metodo per gestire gli errori in modo centralizzato
-     */
-    private void handleError(HttpServletResponse resp, String message) throws IOException {
-        resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-        resp.setContentType("text/html;charset=UTF-8");
-
-        try (PrintWriter out = resp.getWriter()) {
-            out.println("<html><body>");
-            out.println("<h2>Error</h2>");
-            out.println("<p>" + message + "</p>");
-            out.println("<a href='/employee'>Try again</a>");
-            out.println("</body></html>");
-        }
-    }
-
-    /**
-     * Metodo per gestire richieste PUT (aggiornamento)
-     */
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String empNo = req.getParameter("empNo");
-        String firstName = req.getParameter("firstName");
-
-        if (empNo == null || firstName == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().println("Missing required parameters");
-            return;
-        }
-
-        try {
-            int result = fullEmplService.updateFirstName(empNo, firstName);
-
-            if (result > 0) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().println("Employee updated successfully");
-            } else {
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.getWriter().println("Employee not found");
-            }
-
-        } catch (Exception e) {
-            logger.error("Errore durante l'aggiornamento del dipendente", e);
-            handleError(resp, "Errore durante l'aggiornamento");
-        }
-    }
-
-    /**
-     * Metodo per gestire richieste DELETE
-     */
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String empNo = req.getParameter("empNo");
-
-        if (empNo == null) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            resp.getWriter().println("Missing empNo parameter");
-            return;
-        }
-
-        try {
-            int result = fullEmplService.deleteEmployee(empNo);
-
-            if (result > 0) {
-                resp.setStatus(HttpServletResponse.SC_OK);
-                resp.getWriter().println("Employee deleted successfully");
-            } else {
-                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                resp.getWriter().println("Employee not found");
-            }
-
-        } catch (Exception e) {
-            logger.error("Errore durante la cancellazione del dipendente", e);
-            handleError(resp, "Errore durante la cancellazione");
         }
     }
 }

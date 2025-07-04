@@ -62,13 +62,15 @@ public class DepartmentServlet extends HttpServlet {
                     req.setAttribute("content", "department-list.jsp");
             }
 
+            req.setAttribute("moduleType", "department");
+            req.setAttribute("layoutPath", "/WEB-INF/jsp/layout/department-layout.jsp");
             // Forward al layout principale
-            req.getRequestDispatcher("/WEB-INF/jsp/layout/department-layout.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/main.jsp").forward(req, resp);
 
         } catch (Exception e) {
             logger.error("Error in department servlet GET", e);
             req.setAttribute("errorMessage", "Error loading department data: " + e.getMessage());
-            req.getRequestDispatcher("/WEB-INF/jsp/error.jsp").forward(req, resp);
+            req.getRequestDispatcher("/WEB-INF/jsp/layout/common/error.jsp").forward(req, resp);
         }
     }
 
@@ -134,7 +136,7 @@ public class DepartmentServlet extends HttpServlet {
         req.setAttribute("currentAction", "add");
         req.setAttribute("formAction", "create");
         req.setAttribute("submitButtonText", "Create Department");
-        req.setAttribute("cancelUrl", "/departments");
+        req.setAttribute("cancelUrl", "departments");
 
         // Dati per popolare dropdown (se necessario)
         List<Map<String, Object>> allDepartments = readOnlyDept.findAll();

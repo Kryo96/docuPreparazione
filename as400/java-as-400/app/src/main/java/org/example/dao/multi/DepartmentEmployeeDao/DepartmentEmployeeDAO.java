@@ -376,7 +376,24 @@ public class DepartmentEmployeeDAO implements DepartmentEmployeeReadOperations, 
     @Override public List<Map<String, Object>> findRecentHiresByDepartment(String deptNo, String fromDate) { return executeQueryWithParams("SELECT e.*, d.* FROM EMPLOYEE e JOIN DEPARTMENT d ON e.WORKDEPT = d.DEPTNO WHERE d.DEPTNO = ? AND e.HIREDATE >= ?", deptNo, fromDate); }
     @Override public List<Map<String, Object>> getEmployeeDistributionByLocation() { return executeQuery("SELECT d.LOCATION, COUNT(e.EMPNO) as EMP_COUNT FROM DEPARTMENT d LEFT JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT GROUP BY d.LOCATION"); }
     @Override public List<Map<String, Object>> getGenderDistributionByDepartment() { return executeQuery("SELECT d.DEPTNO, d.DEPTNAME, COUNT(CASE WHEN e.SEX='M' THEN 1 END) as MALE_COUNT, COUNT(CASE WHEN e.SEX='F' THEN 1 END) as FEMALE_COUNT FROM DEPARTMENT d LEFT JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT GROUP BY d.DEPTNO, d.DEPTNAME"); }
-    @Override public List<Map<String, Object>> getLargestDepartments(int limit) { return executeQueryWithParams("SELECT d.*, COUNT(e.EMPNO) as EMP_COUNT FROM DEPARTMENT d LEFT JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT GROUP BY d.DEPTNO, d.DEPTNAME, d.LOCATION, d.MGRNO ORDER BY EMP_COUNT DESC LIMIT ?", limit); }
+
+    @Override
+    public List<Map<String, Object>> getLargestDepartments(int limit) {
+        String sql =
+            "SELECT d.DEPTNO, " +
+                "d.DEPTNAME, " +
+                "d.ADMRDEPT, " +
+                "d.LOCATION, " +
+                "COUNT(e.EMPNO) as EMPLOYEE_COUNT " +
+                "FROM DEPARTMENT d " +
+                "LEFT JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT " +
+                "GROUP BY d.DEPTNO, d.DEPTNAME, d.ADMRDEPT, d.LOCATION " +
+                "ORDER BY COUNT(e.EMPNO) DESC " +
+                "FETCH FIRST ? ROWS ONLY";
+
+        return executeQueryWithParams(sql, limit);
+    }
+
     @Override public List<Map<String, Object>> getOldestEmployeesByDepartment() { return executeQuery("SELECT d.DEPTNO, d.DEPTNAME, e.EMPNO, e.FIRSTNME, e.LASTNAME, e.BIRTHDATE FROM DEPARTMENT d JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT WHERE e.BIRTHDATE = (SELECT MIN(e2.BIRTHDATE) FROM EMPLOYEE e2 WHERE e2.WORKDEPT = d.DEPTNO)"); }
     @Override public List<Map<String, Object>> getNewestEmployeesByDepartment() { return executeQuery("SELECT d.DEPTNO, d.DEPTNAME, e.EMPNO, e.FIRSTNME, e.LASTNAME, e.HIREDATE FROM DEPARTMENT d JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT WHERE e.HIREDATE = (SELECT MAX(e2.HIREDATE) FROM EMPLOYEE e2 WHERE e2.WORKDEPT = d.DEPTNO)"); }
     @Override public List<Map<String, Object>> getDepartmentPerformanceMetrics() { return executeQuery("SELECT d.DEPTNO, d.DEPTNAME, COUNT(e.EMPNO) as TOTAL_EMP, AVG(e.SALARY) as AVG_SAL, SUM(e.SALARY) as TOTAL_COST FROM DEPARTMENT d LEFT JOIN EMPLOYEE e ON d.DEPTNO = e.WORKDEPT GROUP BY d.DEPTNO, d.DEPTNAME"); }
