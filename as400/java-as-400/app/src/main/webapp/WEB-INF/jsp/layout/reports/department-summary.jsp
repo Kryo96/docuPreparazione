@@ -152,8 +152,8 @@
                         </div>
                     </div>
                     <div class="card-actions">
-                        <a href="${pageContext.request.contextPath}/reports?type=detailed&deptNo=${dept.DEPTNO}" class="btn btn-sm">👁️ Details</a>
-                        <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="btn btn-sm">🏢 Manage</a>
+                        <a href="${pageContext.request.contextPath}/reports?type=detailed&deptNo=${dept.DEPTNO}" class="btn btn-sm">Details</a>
+                        <a href="${pageContext.request.contextPath}/departments?action=view&deptNo=${dept.DEPTNO}" class="btn btn-sm">Manage</a>
                     </div>
                 </div>
             </c:forEach>
@@ -164,7 +164,7 @@
         <div class="alert alert-info">
             <h3>No departments found</h3>
             <p>There are no departments in the system to display.</p>
-            <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">➕ Add First Department</a>
+            <a href="${pageContext.request.contextPath}/departments?action=add" class="btn">Add First Department</a>
         </div>
     </c:otherwise>
 </c:choose>

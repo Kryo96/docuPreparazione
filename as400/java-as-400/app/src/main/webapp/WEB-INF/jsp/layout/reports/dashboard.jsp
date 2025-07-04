@@ -96,7 +96,7 @@
 
 <!-- Quick Actions -->
 <div class="dashboard-section">
-    <h3>⚡ Quick Actions</h3>
+    <h3>Quick Actions</h3>
     <div class="quick-actions-grid">
         <a href="${pageContext.request.contextPath}/reports?type=summary" class="quick-action-card">
             <div class="action-icon"></div>

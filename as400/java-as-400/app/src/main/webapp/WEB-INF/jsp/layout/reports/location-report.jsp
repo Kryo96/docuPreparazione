@@ -144,7 +144,7 @@
                                     </td>
                                     <td class="text-center">
                                         <a href="${pageContext.request.contextPath}/reports?type=location&location=${location.LOCATION}" class="action-link">
-                                            👁️ View Details
+                                            View Details
                                         </a>
                                     </td>
                                 </tr>
@@ -171,7 +171,7 @@
                             <span class="summary-value">${employees.size()}</span>
                         </div>
                         <div class="summary-item">
-                            <span class="summary-label">🏢 Departments:</span>
+                            <span class="summary-label">Departments:</span>
                             <span class="summary-value">
                                 <c:set var="uniqueDepts" value="${[]}" />
                                 <c:forEach items="${employees}" var="emp">
