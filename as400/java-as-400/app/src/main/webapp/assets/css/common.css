@@ -249,12 +249,13 @@ body {
     padding: var(--space-3) var(--space-5);
     text-decoration: none;
     color: var(--text-primary);
-    border: 2px solid var(--border-medium);
+    border: 0px solid var(--border-medium);
     border-radius: var(--radius-full);
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
+    backgroud-color: gainsboro;
 }
 
 .nav-link::before {

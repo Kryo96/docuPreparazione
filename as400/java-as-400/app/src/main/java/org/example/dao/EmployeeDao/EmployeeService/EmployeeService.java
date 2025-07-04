@@ -2,6 +2,8 @@ package org.example.dao.EmployeeDao.EmployeeService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.inject.Default;
+import jakarta.inject.Inject;
+import org.example.dao.EmployeeDao.EmployeeDAO;
 import org.example.dao.EmployeeDao.EmployeeReadOperations;
 import org.example.dao.EmployeeDao.EmployeeWriteOperations;
 import org.slf4j.Logger;
@@ -9,25 +11,45 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Default
 @ApplicationScoped
 public class EmployeeService implements EmployeeReadOperations, EmployeeWriteOperations {
     
     private static final Logger logger = LoggerFactory.getLogger(EmployeeService.class);
-    
+
+    @Inject
+    @Default
+    private EmployeeDAO dao;
+
     @Override
     public List<Map<String, Object>> findAll() {
-        logger.info("EmployeeService.findAll() called - returning empty list (not implemented)");
-        logger.warn("EmployeeService.findAll() is not implemented, returning empty list");
-        return List.of();
+        logger.info("EmployeeReadService.findAll() called");
+        try {
+            List<Map<String, Object>> result = dao.findAll();
+            logger.info("EmployeeReadService.findAll() completed, returning {} records", result.size());
+            return result;
+        } catch (Exception e) {
+            logger.error("Error in EmployeeReadService.findAll()", e);
+            throw e;
+        }
     }
 
     @Override
     public List<Map<String, Object>> findByEmpNo(String empNo) {
         logger.info("EmployeeService.findByEmpNo() called with empNo: {} - returning empty list (not implemented)", empNo);
         logger.warn("EmployeeService.findByEmpNo() is not implemented, returning empty list");
-        return List.of();
+
+        logger.info("EmployeeService.findByEmpNo() called");
+        try {
+            List<Map<String, Object>> result = dao.findByEmpNo(empNo);
+            logger.info("EmployeeService.findByEmpNo() completed, returning {} records", result.size());
+            return result;
+        } catch (Exception e) {
+            logger.error("Error in EmployeeService.findByEmpNo");
+            throw e;
+        }
     }
 
     @Override

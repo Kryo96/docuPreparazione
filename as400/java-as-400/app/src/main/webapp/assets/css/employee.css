@@ -316,7 +316,6 @@
 }
 
 .stat-card-employee:hover::before {
-    opacity: 1;
     animation: shimmer 1.5s ease-out;
 }
 
@@ -495,8 +494,17 @@
 
 /* ===== ANIMATIONS ===== */
 @keyframes shimmer {
-    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+    0% { 
+        opacity: 1;
+        transform: translateX(-100%) translateY(-100%) rotate(45deg); 
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100% { 
+        opacity: 0;
+        transform: translateX(100%) translateY(100%) rotate(45deg); 
+    }
 }
 
 .fade-in-up {
