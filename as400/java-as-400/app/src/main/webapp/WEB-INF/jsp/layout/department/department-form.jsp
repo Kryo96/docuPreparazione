@@ -6,11 +6,11 @@
 <div class="page-header">
     <h2>
         <c:choose>
-            <c:when test="${currentAction == 'add'}">➕ Add New Department</c:when>
-            <c:otherwise>✏️ Edit Department</c:otherwise>
+            <c:when test="${currentAction == 'add'}">Add New Department</c:when>
+            <c:otherwise>Edit Department</c:otherwise>
         </c:choose>
     </h2>
-    <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">❌ Cancel</a>
+    <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">Cancel</a>
 </div>
 
 <form method="post" action="${pageContext.request.contextPath}/departments" class="department-form">
@@ -89,10 +89,10 @@
 
     <!-- Additional Information Section -->
     <div class="form-section">
-        <h3>ℹ️ Additional Information</h3>
+        <h3>Additional Information</h3>
         
         <div class="info-box">
-            <h4>📋 Department Guidelines</h4>
+            <h4>Department Guidelines</h4>
             <ul>
                 <li><strong>Department Number:</strong> Must be unique, 3 characters (e.g., A00, B01)</li>
                 <li><strong>Department Name:</strong> Descriptive name up to 36 characters</li>
@@ -107,11 +107,11 @@
     <div class="form-actions">
         <button type="submit" class="btn">
             <c:choose>
-                <c:when test="${currentAction == 'add'}">➕ Create Department</c:when>
-                <c:otherwise>💾 Update Department</c:otherwise>
+                <c:when test="${currentAction == 'add'}">Create Department</c:when>
+                <c:otherwise>Update Department</c:otherwise>
             </c:choose>
         </button>
-        <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">❌ Cancel</a>
+        <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
 
