@@ -3,18 +3,12 @@
 
 /* ===== DEPARTMENT MODULE VARIABLES ===== */
 :root {
-    /* Department-specific color palette */
-    --department-primary: hsl(142, 71%, 45%);     /* Professional green */
-    --department-primary-light: hsl(142, 71%, 55%);
-    --department-primary-dark: hsl(142, 71%, 35%);
-    --department-primary-alpha: hsla(142, 71%, 45%, 0.1);
-
-    --department-secondary: hsl(156, 73%, 59%);   /* Complementary teal */
-    --department-secondary-light: hsl(156, 73%, 69%);
-    --department-secondary-dark: hsl(156, 73%, 49%);
-
-    --department-accent: hsl(134, 61%, 41%);      /* Success green variant */
-    --department-hierarchy: hsl(200, 89%, 48%);   /* Hierarchy blue */
+    /* Department-specific color palette using new colors */
+    --department-primary: var(--secondary);        /* Peach as primary */
+    --department-secondary: var(--accent);         /* Ice blue as secondary */
+    --department-accent: var(--primary);           /* Orange as accent */
+    --department-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
+    --department-hierarchy: var(--info);           /* Soft blue for hierarchy */
 }
 
 /* ===== DEPARTMENT PAGE HEADER ===== */
@@ -35,7 +29,7 @@
     left: 0;
     width: 60px;
     height: 2px;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
 }
 
 .page-header h2 {
@@ -68,7 +62,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
 }
 
 .department-card:hover {
@@ -95,8 +89,8 @@
 }
 
 .department-id {
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--department-gradient);
+    color: var(--text-on-accent);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
     font-size: var(--font-size-sm);
@@ -139,7 +133,7 @@
 }
 
 .info-item:hover {
-    background: var(--department-primary-alpha);
+    background: var(--secondary-alpha);
     border-color: var(--department-primary);
 }
 
@@ -194,7 +188,7 @@
     right: 0;
     width: 40px;
     height: 40px;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
     border-radius: 0 var(--radius-xl) 0 var(--radius-xl);
     opacity: 0.1;
 }
@@ -231,7 +225,7 @@
 
 .hierarchy-node.parent {
     border-left-color: var(--department-primary);
-    background: linear-gradient(90deg, var(--department-primary-alpha) 0%, var(--bg-secondary) 10%);
+    background: linear-gradient(90deg, var(--secondary-alpha) 0%, var(--bg-secondary) 10%);
 }
 
 .hierarchy-node.child {
@@ -242,7 +236,7 @@
 /* ===== DEPARTMENT BADGES & STATUS ===== */
 .dept-badge {
     background: var(--department-primary);
-    color: var(--text-inverse);
+    color: var(--text-on-accent);
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
@@ -254,7 +248,7 @@
 
 .manager-badge {
     background: var(--department-accent);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
@@ -327,7 +321,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
@@ -433,7 +427,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
     transition: left var(--transition-normal);
     z-index: -1;
 }
@@ -443,7 +437,7 @@
 }
 
 .action-card:hover {
-    color: var(--text-inverse);
+    color: var(--text-on-accent);
     border-color: var(--department-primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-lg);
@@ -481,8 +475,8 @@
 }
 
 .stat-card-department {
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--department-gradient);
+    color: var(--text-on-accent);
     padding: var(--space-6);
     border-radius: var(--radius-xl);
     text-align: center;
@@ -531,12 +525,12 @@
 
 /* ===== DEPARTMENT TABLE ENHANCEMENTS ===== */
 .department-table th {
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
 }
 
 .department-table .dept-code {
     background: var(--department-primary);
-    color: var(--text-inverse);
+    color: var(--text-on-accent);
     padding: var(--space-1) var(--space-2);
     border-radius: var(--radius-md);
     font-size: var(--font-size-sm);
@@ -567,7 +561,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(135deg, var(--department-primary) 0%, var(--department-secondary) 100%);
+    background: var(--department-gradient);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 

@@ -1,17 +1,28 @@
-/* ===== INDEX/HOMEPAGE MODULE - SPECIFIC CSS ===== */
+/* ===== MODULE CARD VARIANTS ===== */
+.module-card.employees {
+    background: var(--module-employees);
+    color: var(--module-text-employees);
+    border: 2px solid var(--primary);
+}
+
+.module-card.departments {
+    background: var(/* ===== INDEX/HOMEPAGE MODULE - SPECIFIC CSS ===== */
 /* Extends common.css with homepage-specific components */
 
 /* ===== HOMEPAGE VARIABLES ===== */
 :root {
-    /* Homepage-specific gradients */
-    --homepage-primary: hsl(233, 77%, 66%);      /* Matches existing #667eea */
-    --homepage-secondary: hsl(264, 58%, 57%);    /* Matches existing #764ba2 */
-    --homepage-gradient: linear-gradient(135deg, var(--homepage-primary) 0%, var(--homepage-secondary) 100%);
+    /* Homepage-specific gradients using new palette */
+    --homepage-gradient: linear-gradient(135deg, var(--color-ice-blue) 0%, var(--color-cream) 100%);
 
     /* Module-specific colors */
-    --module-employees: var(--homepage-gradient);
-    --module-departments: linear-gradient(135deg, hsl(134, 61%, 41%) 0%, hsl(166, 73%, 59%) 100%);
-    --module-reports: linear-gradient(135deg, hsl(24, 100%, 50%) 0%, hsl(316, 73%, 52%) 100%);
+    --module-employees: linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%);
+    --module-departments: linear-gradient(135deg, var(--color-peach) 0%, var(--color-cream) 100%);
+    --module-reports: linear-gradient(135deg, var(--color-cream) 0%, var(--color-ice-blue) 100%);
+
+    /* Module text colors */
+    --module-text-employees: var(--text-on-primary);
+    --module-text-departments: var(--text-on-accent);
+    --module-text-reports: var(--text-on-accent);
 }
 
 /* ===== HOMEPAGE BODY OVERRIDE ===== */
@@ -35,12 +46,12 @@ body.homepage {
 
 /* ===== HERO SECTION ===== */
 .hero-section {
-    background: var(--bg-overlay);
+    background: var(--bg-secondary);
     padding: var(--space-16) var(--space-10);
     border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-xl);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-light);
     position: relative;
     overflow: hidden;
 }
@@ -52,7 +63,7 @@ body.homepage {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(45deg, var(--accent-alpha) 0%, transparent 50%, var(--secondary-alpha) 100%);
     pointer-events: none;
 }
 
@@ -62,7 +73,7 @@ body.homepage {
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     margin-bottom: var(--space-5);
-    background: var(--homepage-gradient);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -96,7 +107,7 @@ body.homepage {
     box-shadow: var(--shadow-lg);
     transition: all var(--transition-normal);
     color: inherit;
-    border: 0px solid transparent;
+    border: 2px solid transparent;
     position: relative;
     overflow: hidden;
     display: flex;
@@ -129,17 +140,20 @@ body.homepage {
 /* ===== MODULE CARD VARIANTS ===== */
 .module-card.employees {
     background: var(--module-employees);
-    color: var(--text-inverse);
+    color: var(--module-text-employees);
+    border: 2px solid var(--primary);
 }
 
 .module-card.departments {
     background: var(--module-departments);
-    color: var(--text-inverse);
+    color: var(--module-text-departments);
+    border: 2px solid var(--secondary);
 }
 
 .module-card.reports {
     background: var(--module-reports);
-    color: var(--text-inverse);
+    color: var(--module-text-reports);
+    border: 2px solid var(--accent-dark);
 }
 
 /* ===== MODULE CARD CONTENT ===== */
@@ -206,16 +220,16 @@ body.homepage {
     font-weight: var(--font-weight-bold);
     position: absolute;
     left: 0;
-    color: rgba(255,255,255,0.9);
+    color: var(--primary);
     font-size: var(--font-size-lg);
 }
 
 /* ===== CTA BUTTON ===== */
 .cta-button {
-    background: rgba(255,255,255,0.2);
+    background: rgba(248, 203, 166, 0.2);
     color: currentColor;
     padding: var(--space-3) var(--space-6);
-    border: 2px solid rgba(255,255,255,0.3);
+    border: 2px solid rgba(248, 203, 166, 0.4);
     border-radius: var(--radius-full);
     text-decoration: none;
     font-weight: var(--font-weight-semibold);
@@ -231,10 +245,11 @@ body.homepage {
 }
 
 .cta-button:hover {
-    background: rgba(255,255,255,0.3);
-    border-color: rgba(255,255,255,0.5);
+    background: var(--primary);
+    border-color: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    box-shadow: var(--shadow-md);
+    color: var(--text-on-primary);
 }
 
 /* ===== CTA BUTTON LINK ===== */
@@ -262,23 +277,25 @@ body.homepage {
     gap: var(--space-5);
     margin: var(--space-10) 0;
     padding: var(--space-8);
-    background: var(--primary-light);
+    background: var(--bg-accent);
     border-radius: var(--radius-xl);
     backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid var(--border-accent);
 }
 
 .stat-item {
     text-align: center;
-    color: var(--text-inverse);
+    color: var(--text-primary);
     padding: var(--space-4);
     border-radius: var(--radius-lg);
     transition: all var(--transition-normal);
+    background: rgba(255, 255, 255, 0.3);
 }
 
 .stat-item:hover {
-    background: rgba(255,255,255,0.1);
+    background: var(--bg-secondary);
     transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
 }
 
 .stat-number {
@@ -287,6 +304,7 @@ body.homepage {
     display: block;
     line-height: 1;
     margin-bottom: var(--space-2);
+    color: var(--primary);
 }
 
 .stat-label {
@@ -295,14 +313,15 @@ body.homepage {
     text-transform: uppercase;
     letter-spacing: 1px;
     font-weight: var(--font-weight-medium);
+    color: var(--text-secondary);
 }
 
 /* ===== FOOTER INFO ===== */
 .footer-info {
     margin-top: var(--space-10);
     padding-top: var(--space-8);
-    border-top: 1px solid rgba(255,255,255,0.2);
-    color: var(--primary-light);
+    border-top: 1px solid var(--border-light);
+    color: var(--text-muted);
     font-size: var(--font-size-sm);
     font-weight: var(--font-weight-normal);
 }
@@ -483,7 +502,7 @@ body.homepage {
     }
 
     .stats-section {
-        background: var(--primary-light);
+        background: white;
         color: black;
         border: 1px solid var(--border-medium);
     }

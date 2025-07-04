@@ -1,5 +1,5 @@
 /* ===== AS400 MANAGEMENT SYSTEM - COMMON CSS ===== */
-/* Modern, unified theme system */
+/* Modern, unified theme system with new color palette */
 
 /* ===== CSS RESET & FOUNDATION ===== */
 *,
@@ -10,75 +10,87 @@
     box-sizing: border-box;
 }
 
-/* ===== CSS CUSTOM PROPERTIES (DESIGN SYSTEM) ===== */
+/* ===== CSS CUSTOM PROPERTIES (NEW DESIGN SYSTEM) ===== */
 :root {
-    /* === PRIMARY COLORS === */
-    --primary-hue: 233;
-    --primary-saturation: 77%;
-    --primary-lightness: 66%;
-    --primary: hsl(var(--primary-hue), var(--primary-saturation), var(--primary-lightness));
-    --primary-light: hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) + 10%));
-    --primary-dark: hsl(var(--primary-hue), var(--primary-saturation), calc(var(--primary-lightness) - 10%));
-    --primary-alpha: hsla(var(--primary-hue), var(--primary-saturation), var(--primary-lightness), 0.1);
+    /* === NEW COLOR PALETTE === */
+    --color-ice-blue: #ECF9FF;      /* rgb(236, 249, 255) */
+    --color-cream: #FFFBEB;         /* rgb(255, 251, 235) */
+    --color-peach: #FFE7CC;         /* rgb(255, 231, 204) */
+    --color-orange: #F8CBA6;        /* rgb(248, 203, 166) */
+    --color-white: #FFFFFF;         /* rgb(255, 255, 255) */
+
+    /* === PRIMARY COLORS (Based on palette) === */
+    --primary: var(--color-orange);
+    --primary-light: #FDD88A;       /* Lighter version of orange */
+    --primary-dark: #E6B087;        /* Darker version of orange */
+    --primary-alpha: rgba(248, 203, 166, 0.1);
 
     /* === SECONDARY COLORS === */
-    --secondary-hue: 264;
-    --secondary-saturation: 58%;
-    --secondary-lightness: 57%;
-    --secondary: hsl(var(--secondary-hue), var(--secondary-saturation), var(--secondary-lightness));
-    --secondary-light: hsl(var(--secondary-hue), var(--secondary-saturation), calc(var(--secondary-lightness) + 10%));
-    --secondary-dark: hsl(var(--secondary-hue), var(--secondary-saturation), calc(var(--secondary-lightness) - 10%));
+    --secondary: var(--color-peach);
+    --secondary-light: #FFF0D9;     /* Lighter peach */
+    --secondary-dark: #FFDFB8;      /* Darker peach */
+    --secondary-alpha: rgba(255, 231, 204, 0.2);
 
     /* === ACCENT COLORS === */
-    --accent: hsl(199, 89%, 48%);
-    --accent-light: hsl(199, 89%, 58%);
-    --accent-dark: hsl(199, 89%, 38%);
+    --accent: var(--color-ice-blue);
+    --accent-light: #F4FCFF;        /* Lighter ice blue */
+    --accent-dark: #D8F4FF;         /* Darker ice blue */
+    --accent-alpha: rgba(236, 249, 255, 0.3);
 
-    /* === SEMANTIC COLORS === */
-    --success: hsl(134, 61%, 41%);
-    --success-light: hsl(134, 41%, 88%);
-    --success-dark: hsl(134, 61%, 31%);
+    /* === SEMANTIC COLORS (Adapted to palette softness) === */
+    --success: #81C784;             /* Soft green */
+    --success-light: #E8F5E8;       /* Very light green */
+    --success-dark: #66BB6A;        /* Darker soft green */
+    --success-alpha: rgba(129, 199, 132, 0.1);
 
-    --error: hsl(354, 70%, 54%);
-    --error-light: hsl(354, 70%, 94%);
-    --error-dark: hsl(354, 70%, 44%);
+    --error: #E57373;               /* Soft red */
+    --error-light: #FFEBEE;         /* Very light red */
+    --error-dark: #F44336;          /* Darker soft red */
+    --error-alpha: rgba(229, 115, 115, 0.1);
 
-    --warning: hsl(45, 93%, 47%);
-    --warning-light: hsl(45, 93%, 94%);
-    --warning-dark: hsl(45, 93%, 37%);
+    --warning: #FFB74D;             /* Soft orange (warmer) */
+    --warning-light: #FFF8E1;       /* Very light orange */
+    --warning-dark: #FF9800;        /* Darker orange */
+    --warning-alpha: rgba(255, 183, 77, 0.1);
 
-    --info: hsl(199, 89%, 48%);
-    --info-light: hsl(199, 89%, 94%);
-    --info-dark: hsl(199, 89%, 38%);
+    --info: #64B5F6;                /* Soft blue */
+    --info-light: #E3F2FD;          /* Very light blue */
+    --info-dark: #2196F3;           /* Darker blue */
+    --info-alpha: rgba(100, 181, 246, 0.1);
 
-    /* === NEUTRAL COLORS === */
-    --gray-50: hsl(210, 20%, 98%);
-    --gray-100: hsl(210, 16%, 93%);
-    --gray-200: hsl(210, 13%, 88%);
-    --gray-300: hsl(210, 12%, 78%);
-    --gray-400: hsl(210, 9%, 60%);
-    --gray-500: hsl(210, 8%, 46%);
-    --gray-600: hsl(210, 7%, 36%);
-    --gray-700: hsl(210, 9%, 26%);
-    --gray-800: hsl(210, 10%, 16%);
-    --gray-900: hsl(210, 11%, 10%);
+    /* === NEUTRAL COLORS (Soft grays) === */
+    --gray-50: #FAFAFA;
+    --gray-100: #F5F5F5;
+    --gray-200: #EEEEEE;
+    --gray-300: #E0E0E0;
+    --gray-400: #BDBDBD;
+    --gray-500: #9E9E9E;
+    --gray-600: #757575;
+    --gray-700: #616161;
+    --gray-800: #424242;
+    --gray-900: #212121;
 
     /* === BACKGROUND COLORS === */
-    --bg-primary: var(--gray-50);
-    --bg-secondary: #ffffff;
-    --bg-tertiary: var(--gray-100);
+    --bg-primary: var(--color-ice-blue);
+    --bg-secondary: var(--color-white);
+    --bg-tertiary: var(--color-cream);
     --bg-overlay: rgba(255, 255, 255, 0.95);
+    --bg-card: var(--color-cream);
+    --bg-accent: var(--color-peach);
 
     /* === TEXT COLORS === */
-    --text-primary: var(--gray-900);
-    --text-secondary: var(--gray-700);
+    --text-primary: var(--gray-800);
+    --text-secondary: var(--gray-600);
     --text-muted: var(--gray-500);
-    --text-inverse: #ffffff;
+    --text-inverse: var(--color-white);
+    --text-on-primary: var(--gray-800);
+    --text-on-accent: var(--gray-700);
 
     /* === BORDER COLORS === */
-    --border-light: var(--gray-200);
-    --border-medium: var(--gray-300);
+    --border-light: rgba(224, 224, 224, 0.6);
+    --border-medium: rgba(189, 189, 189, 0.8);
     --border-strong: var(--gray-400);
+    --border-accent: rgba(248, 203, 166, 0.4);
 
     /* === SPACING SYSTEM (8px base) === */
     --space-1: 0.25rem;   /* 4px */
@@ -124,11 +136,11 @@
     --radius-2xl: 1rem;     /* 16px */
     --radius-full: 9999px;
 
-    /* === SHADOWS === */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    /* === SHADOWS (Softer to match palette) === */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
 
     /* === TRANSITIONS === */
     --transition-fast: 150ms ease-in-out;
@@ -171,7 +183,7 @@ body {
 /* ===== HEADER SYSTEM ===== */
 .header {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     padding: var(--space-8) 0;
     margin-bottom: var(--space-8);
     border-radius: var(--radius-lg);
@@ -187,7 +199,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(45deg, rgba(255,255,255,0.05) 0%, transparent 50%, rgba(255,255,255,0.02) 100%);
     pointer-events: none;
 }
 
@@ -196,7 +208,7 @@ body {
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-3);
-    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
 .header-subtitle {
@@ -249,13 +261,13 @@ body {
     padding: var(--space-3) var(--space-5);
     text-decoration: none;
     color: var(--text-primary);
-    border: 0px solid var(--border-medium);
+    border: 2px solid var(--border-medium);
     border-radius: var(--radius-full);
     font-weight: var(--font-weight-medium);
     transition: all var(--transition-normal);
     position: relative;
     overflow: hidden;
-    backgroud-color: gainsboro;
+    background-color: var(--bg-tertiary);
 }
 
 .nav-link::before {
@@ -277,7 +289,7 @@ body {
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     border-color: var(--primary);
     transform: translateY(-2px);
     box-shadow: var(--shadow-md);
@@ -320,7 +332,7 @@ body {
 
 .btn-primary {
     background: var(--primary);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
 }
 
 .btn-primary:hover {
@@ -330,12 +342,12 @@ body {
 }
 
 .btn-secondary {
-    background: var(--gray-500);
-    color: var(--text-inverse);
+    background: var(--secondary);
+    color: var(--text-on-accent);
 }
 
 .btn-secondary:hover {
-    background: var(--gray-600);
+    background: var(--secondary-dark);
     transform: translateY(-1px);
     box-shadow: var(--shadow-md);
 }
@@ -404,12 +416,14 @@ body {
     box-shadow: 0 0 0 3px var(--primary-alpha);
 }
 
-.form-group input:invalid {
+.form-group input:invalid:not(:placeholder-shown) {
     border-color: var(--error);
+    background-color: var(--error-alpha);
 }
 
 .form-group input:valid:not(:placeholder-shown) {
     border-color: var(--success);
+    background-color: var(--success-alpha);
 }
 
 .form-row {
@@ -442,7 +456,7 @@ table {
 
 th {
     background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     padding: var(--space-4);
     text-align: left;
     font-weight: var(--font-weight-semibold);
@@ -458,7 +472,7 @@ td {
 }
 
 tr:hover {
-    background-color: var(--primary-alpha);
+    background-color: var(--bg-accent);
 }
 
 tr:last-child td {
@@ -515,7 +529,7 @@ tr:last-child td {
 
 .action-link:hover {
     background: var(--primary);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     transform: translateY(-1px);
 }
 

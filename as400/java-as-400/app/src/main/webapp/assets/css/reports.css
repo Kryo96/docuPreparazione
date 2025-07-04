@@ -3,27 +3,20 @@
 
 /* ===== REPORTS MODULE VARIABLES ===== */
 :root {
-    /* Reports-specific color palette */
-    --reports-primary: hsl(24, 100%, 50%);       /* Vibrant orange */
-    --reports-primary-light: hsl(24, 100%, 60%);
-    --reports-primary-dark: hsl(24, 100%, 40%);
-    --reports-primary-alpha: hsla(24, 100%, 50%, 0.1);
+    /* Reports-specific color palette using new colors */
+    --reports-primary: var(--primary);            /* Orange */
+    --reports-secondary: var(--secondary);        /* Peach */
+    --reports-tertiary: var(--accent);            /* Ice blue */
+    --reports-gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    --reports-accent-gradient: linear-gradient(135deg, var(--secondary) 0%, var(--accent) 100%);
 
-    --reports-secondary: hsl(316, 73%, 52%);     /* Magenta/Pink */
-    --reports-secondary-light: hsl(316, 73%, 62%);
-    --reports-secondary-dark: hsl(316, 73%, 42%);
-
-    --reports-accent: hsl(45, 93%, 47%);         /* Golden yellow */
-    --reports-analytics: hsl(271, 91%, 65%);     /* Purple for analytics */
-    --reports-chart: hsl(199, 89%, 48%);         /* Chart blue */
-
-    /* Data visualization colors */
-    --chart-color-1: hsl(220, 83%, 53%);        /* Blue */
-    --chart-color-2: hsl(142, 71%, 45%);        /* Green */
-    --chart-color-3: hsl(24, 100%, 50%);        /* Orange */
-    --chart-color-4: hsl(316, 73%, 52%);        /* Magenta */
-    --chart-color-5: hsl(271, 91%, 65%);        /* Purple */
-    --chart-color-6: hsl(45, 93%, 47%);         /* Yellow */
+    /* Data visualization colors using palette variations */
+    --chart-color-1: var(--primary);              /* Orange */
+    --chart-color-2: var(--secondary);            /* Peach */
+    --chart-color-3: var(--accent);               /* Ice blue */
+    --chart-color-4: var(--color-cream);          /* Cream */
+    --chart-color-5: var(--success);              /* Soft green */
+    --chart-color-6: var(--info);                 /* Soft blue */
 }
 
 /* ===== REPORT HEADER SYSTEM ===== */
@@ -31,7 +24,7 @@
     text-align: center;
     margin-bottom: var(--space-10);
     padding: var(--space-8);
-    background: linear-gradient(135deg, var(--reports-primary-alpha) 0%, var(--bg-secondary) 100%);
+    background: linear-gradient(135deg, var(--reports-tertiary) 0%, var(--bg-secondary) 100%);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-light);
     position: relative;
@@ -44,7 +37,7 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
+    background: var(--reports-gradient);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
@@ -53,7 +46,7 @@
     font-size: var(--font-size-3xl);
     font-weight: var(--font-weight-bold);
     margin-bottom: var(--space-3);
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
+    background: var(--reports-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -94,8 +87,8 @@
 }
 
 .metric-card {
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--reports-gradient);
+    color: var(--text-on-primary);
     padding: var(--space-8);
     border-radius: var(--radius-2xl);
     text-align: center;
@@ -119,19 +112,22 @@
 
 .metric-card:hover {
     transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    box-shadow: var(--shadow-xl);
 }
 
 .metric-card:nth-child(2) {
-    background: linear-gradient(135deg, var(--chart-color-1) 0%, var(--chart-color-2) 100%);
+    background: var(--reports-accent-gradient);
+    color: var(--text-on-accent);
 }
 
 .metric-card:nth-child(3) {
-    background: linear-gradient(135deg, var(--chart-color-2) 0%, var(--chart-color-3) 100%);
+    background: linear-gradient(135deg, var(--chart-color-3) 0%, var(--chart-color-4) 100%);
+    color: var(--text-on-accent);
 }
 
 .metric-card:nth-child(4) {
-    background: linear-gradient(135deg, var(--chart-color-4) 0%, var(--chart-color-5) 100%);
+    background: linear-gradient(135deg, var(--chart-color-5) 0%, var(--chart-color-6) 100%);
+    color: var(--text-inverse);
 }
 
 .metric-card h3 {
@@ -164,17 +160,6 @@
     border: 1px solid var(--border-light);
     box-shadow: var(--shadow-lg);
     position: relative;
-}
-
-.dashboard-section::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, var(--reports-primary-alpha) 0%, transparent 100%);
-    border-radius: 0 var(--radius-xl) 0 var(--radius-xl);
 }
 
 .dashboard-section h3 {
@@ -238,14 +223,14 @@
 }
 
 .bar-fill {
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
+    background: var(--reports-gradient);
     height: 100%;
     border-radius: var(--radius-2xl);
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding-right: var(--space-3);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     font-weight: var(--font-weight-semibold);
     font-size: var(--font-size-sm);
     min-width: 80px;
@@ -253,15 +238,17 @@
 }
 
 .bar-fill:nth-child(2n) {
-    background: linear-gradient(135deg, var(--chart-color-1) 0%, var(--chart-color-2) 100%);
+    background: var(--reports-accent-gradient);
+    color: var(--text-on-accent);
 }
 
 .bar-fill:nth-child(3n) {
-    background: linear-gradient(135deg, var(--chart-color-3) 0%, var(--chart-color-4) 100%);
+    background: linear-gradient(135deg, var(--chart-color-5) 0%, var(--chart-color-6) 100%);
+    color: var(--text-inverse);
 }
 
 .bar-percentage {
-    color: var(--text-inverse);
+    color: inherit;
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-sm);
 }
@@ -276,8 +263,8 @@
 }
 
 .stat-card {
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--reports-gradient);
+    color: var(--text-on-primary);
     padding: var(--space-6);
     border-radius: var(--radius-xl);
     text-align: center;
@@ -356,7 +343,7 @@
 
 .location-count {
     background: var(--reports-primary);
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-full);
     font-size: var(--font-size-sm);
@@ -372,7 +359,7 @@
 }
 
 .location-fill {
-    background: linear-gradient(90deg, var(--reports-primary), var(--reports-secondary));
+    background: var(--reports-gradient);
     height: 100%;
     border-radius: var(--radius-lg);
     transition: width var(--transition-slow);
@@ -407,7 +394,7 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
+    background: var(--reports-gradient);
     transition: left var(--transition-normal);
     z-index: -1;
 }
@@ -417,7 +404,7 @@
 }
 
 .quick-action-card:hover {
-    color: var(--text-inverse);
+    color: var(--text-on-primary);
     border-color: var(--reports-primary);
     transform: translateY(-4px);
     box-shadow: var(--shadow-xl);
@@ -464,7 +451,7 @@
     text-align: center;
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
-    background: linear-gradient(135deg, var(--reports-primary) 0%, var(--reports-secondary) 100%);
+    background: var(--reports-gradient);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -588,6 +575,7 @@
     opacity: 0.8;
     min-width: 48px;
     text-align: center;
+    color: var(--reports-primary);
 }
 
 .insight-content h4 {

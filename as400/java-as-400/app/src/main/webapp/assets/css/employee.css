@@ -3,9 +3,12 @@
 
 /* ===== EMPLOYEE MODULE VARIABLES ===== */
 :root {
-    /* Employee-specific color overrides if needed in future */
+    /* Employee-specific color overrides using new palette */
+    --employee-primary: var(--primary);
+    --employee-secondary: var(--secondary);
     --employee-accent: var(--accent);
     --employee-highlight: var(--primary-alpha);
+    --employee-gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
 }
 
 /* ===== PAGE HEADER ENHANCEMENTS ===== */
@@ -17,6 +20,16 @@
     padding-bottom: var(--space-4);
     border-bottom: 2px solid var(--border-light);
     position: relative;
+}
+
+.page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 60px;
+    height: 2px;
+    background: var(--employee-gradient);
 }
 
 .page-header h2 {
@@ -53,12 +66,13 @@
     left: 0;
     right: 0;
     height: 4px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: var(--employee-gradient);
 }
 
 .employee-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--shadow-xl);
+    border-color: var(--employee-primary);
 }
 
 /* ===== EMPLOYEE HEADER WITHIN CARDS ===== */
@@ -79,8 +93,8 @@
 }
 
 .employee-id {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--employee-gradient);
+    color: var(--text-on-primary);
     padding: var(--space-2) var(--space-4);
     border-radius: var(--radius-full);
     font-size: var(--font-size-sm);
@@ -106,11 +120,29 @@
     border-radius: var(--radius-lg);
     border: 1px solid var(--border-light);
     transition: all var(--transition-fast);
+    position: relative;
+}
+
+.info-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--employee-primary);
+    border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
 }
 
 .info-item:hover {
-    background: var(--primary-alpha);
-    border-color: var(--primary);
+    background: var(--employee-highlight);
+    border-color: var(--employee-primary);
+}
+
+.info-item:hover::before {
+    opacity: 1;
 }
 
 .info-label {
@@ -185,7 +217,7 @@
     left: 0;
     right: 0;
     height: 3px;
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: var(--employee-gradient);
     border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
@@ -222,8 +254,8 @@
 }
 
 .department-badge {
-    background: var(--primary);
-    color: var(--text-inverse);
+    background: var(--employee-primary);
+    color: var(--text-on-primary);
     padding: var(--space-1) var(--space-3);
     border-radius: var(--radius-full);
     font-size: var(--font-size-xs);
@@ -291,8 +323,8 @@
 }
 
 .stat-card-employee {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-    color: var(--text-inverse);
+    background: var(--employee-gradient);
+    color: var(--text-on-primary);
     padding: var(--space-6);
     border-radius: var(--radius-xl);
     text-align: center;
@@ -341,11 +373,11 @@
 
 /* ===== EMPLOYEE TABLE ENHANCEMENTS ===== */
 .employee-table th {
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: var(--employee-gradient);
 }
 
 .employee-row:hover {
-    background-color: var(--primary-alpha);
+    background-color: var(--employee-highlight);
     transform: scale(1.01);
     transition: all var(--transition-fast);
 }
@@ -359,11 +391,24 @@
     box-shadow: var(--shadow-md);
     margin-bottom: var(--space-4);
     transition: all var(--transition-normal);
+    position: relative;
+}
+
+.employee-card-mobile::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--employee-gradient);
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .employee-card-mobile:hover {
     box-shadow: var(--shadow-lg);
     transform: translateY(-2px);
+    border-color: var(--employee-primary);
 }
 
 .card-header {
@@ -415,19 +460,19 @@
 
 /* ===== FORM VALIDATION ENHANCEMENTS ===== */
 .form-group input[readonly] {
-    background-color: var(--gray-100);
+    background-color: var(--bg-tertiary);
     cursor: not-allowed;
     opacity: 0.7;
 }
 
 .form-group input:invalid:not(:placeholder-shown) {
     border-color: var(--error);
-    background-color: rgba(220, 53, 69, 0.05);
+    background-color: var(--error-alpha);
 }
 
 .form-group input:valid:not(:placeholder-shown) {
     border-color: var(--success);
-    background-color: rgba(40, 167, 69, 0.05);
+    background-color: var(--success-alpha);
 }
 
 /* ===== RESPONSIVE ADJUSTMENTS ===== */
