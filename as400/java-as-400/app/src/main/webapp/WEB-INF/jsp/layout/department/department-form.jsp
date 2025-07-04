@@ -22,7 +22,7 @@
 
     <!-- Basic Information Section -->
     <div class="form-section">
-        <h3>🏢 Basic Information</h3>
+        <h3>Basic Information</h3>
         
         <div class="form-row">
             <div class="form-group">

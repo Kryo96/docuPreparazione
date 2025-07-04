@@ -293,7 +293,7 @@
     }
 
     .stat-card.highlight {
-        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        background: var (--primary-color);
         color: white;
         border-color: #28a745;
     }
@@ -370,7 +370,7 @@
     }
 
     .range-fill {
-        background: linear-gradient(90deg, #28a745, #20c997);
+        background: var (--primary-color);
         height: 100%;
         border-radius: 3px;
     }
@@ -430,7 +430,7 @@
     }
 
     .bar-fill {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var (--primary-color);
         height: 30px;
         border-radius: 6px;
         display: flex;
@@ -466,7 +466,7 @@
     }
 
     .comparison-fill {
-        background: linear-gradient(90deg, #28a745, #20c997);
+        background: var (--primary-color);
         height: 100%;
         border-radius: 4px;
     }

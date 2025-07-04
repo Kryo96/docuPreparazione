@@ -24,7 +24,7 @@
     text-align: center;
     margin-bottom: var(--space-10);
     padding: var(--space-8);
-    background: linear-gradient(135deg, var(--reports-tertiary) 0%, var(--bg-secondary) 100%);
+    background: var(--primary-color);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-light);
     position: relative;
@@ -87,7 +87,7 @@
 }
 
 .metric-card {
-    background: var(--reports-gradient);
+    background: var(--reports-accent-gradient);
     color: var(--text-on-primary);
     padding: var(--space-8);
     border-radius: var(--radius-2xl);
@@ -99,35 +99,19 @@
     transform: translateY(0);
 }
 
-.metric-card::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
-    animation: float 6s ease-in-out infinite;
-}
-
-.metric-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: var(--shadow-xl);
-}
-
 .metric-card:nth-child(2) {
     background: var(--reports-accent-gradient);
-    color: var(--text-on-accent);
+    color: var(--text-on-primary);
 }
 
 .metric-card:nth-child(3) {
-    background: linear-gradient(135deg, var(--chart-color-3) 0%, var(--chart-color-4) 100%);
-    color: var(--text-on-accent);
+    background: var(--reports-accent-gradient);
+    color: var(--text-on-primary);
 }
 
 .metric-card:nth-child(4) {
-    background: linear-gradient(135deg, var(--chart-color-5) 0%, var(--chart-color-6) 100%);
-    color: var(--text-inverse);
+    background: var(--reports-accent-gradient);
+    color: var(--text-on-primary);
 }
 
 .metric-card h3 {
@@ -149,6 +133,11 @@
 .metric-card small {
     opacity: 0.8;
     font-size: var(--font-size-sm);
+}
+
+.metric-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: var(--shadow-xl);
 }
 
 /* ===== DASHBOARD SECTIONS ===== */
@@ -243,7 +232,7 @@
 }
 
 .bar-fill:nth-child(3n) {
-    background: linear-gradient(135deg, var(--chart-color-5) 0%, var(--chart-color-6) 100%);
+    background: var(--primary-color);
     color: var(--text-inverse);
 }
 
@@ -281,7 +270,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+    background: var(--primary-color);
     transform: translateX(-100%);
     transition: transform var(--transition-slow);
 }

@@ -491,7 +491,7 @@
     }
 
     .bar-fill {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var (--primary-color);
         height: 100%;
         border-radius: 12px;
         display: flex;

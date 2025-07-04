@@ -225,7 +225,7 @@
 
 .hierarchy-node.parent {
     border-left-color: var(--department-primary);
-    background: linear-gradient(90deg, var(--secondary-alpha) 0%, var(--bg-secondary) 10%);
+    background: var(--primary-color);
 }
 
 .hierarchy-node.child {
@@ -351,16 +351,6 @@
     border: 1px solid var(--department-primary);
     margin-top: var(--space-4);
     position: relative;
-}
-
-.info-box::before {
-    content: '💡';
-    position: absolute;
-    top: -10px;
-    left: var(--space-4);
-    background: var(--bg-secondary);
-    padding: 0 var(--space-2);
-    font-size: var(--font-size-lg);
 }
 
 .info-box h4 {

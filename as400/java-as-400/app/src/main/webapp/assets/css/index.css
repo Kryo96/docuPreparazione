@@ -1,24 +1,16 @@
-/* ===== MODULE CARD VARIANTS ===== */
-.module-card.employees {
-    background: var(--module-employees);
-    color: var(--module-text-employees);
-    border: 2px solid var(--primary);
-}
-
-.module-card.departments {
-    background: var(/* ===== INDEX/HOMEPAGE MODULE - SPECIFIC CSS ===== */
+/* ===== INDEX/HOMEPAGE MODULE - SPECIFIC CSS ===== */
 /* Extends common.css with homepage-specific components */
 
 /* ===== HOMEPAGE VARIABLES ===== */
 :root {
-    /* Homepage-specific gradients using new palette */
-    --homepage-gradient: linear-gradient(135deg, var(--color-ice-blue) 0%, var(--color-cream) 100%);
-
+    /* Homepage-specific colors using new palette */
+    --homepage-background: var(--color-ice-blue);
+    
     /* Module-specific colors */
-    --module-employees: linear-gradient(135deg, var(--color-orange) 0%, var(--color-peach) 100%);
-    --module-departments: linear-gradient(135deg, var(--color-peach) 0%, var(--color-cream) 100%);
-    --module-reports: linear-gradient(135deg, var(--color-cream) 0%, var(--color-ice-blue) 100%);
-
+    --module-employees: var(--color-orange);
+    --module-departments: var(--color-peach);
+    --module-reports: var(--color-cream);
+    
     /* Module text colors */
     --module-text-employees: var(--text-on-primary);
     --module-text-departments: var(--text-on-accent);
@@ -27,7 +19,7 @@
 
 /* ===== HOMEPAGE BODY OVERRIDE ===== */
 body.homepage {
-    background: var(--homepage-gradient);
+    background: var(--homepage-background);
     min-height: 100vh;
     display: flex;
     align-items: center;
@@ -63,7 +55,7 @@ body.homepage {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, var(--accent-alpha) 0%, transparent 50%, var(--secondary-alpha) 100%);
+    background: var(--accent-alpha);
     pointer-events: none;
 }
 
@@ -73,7 +65,7 @@ body.homepage {
     font-weight: var(--font-weight-bold);
     color: var(--text-primary);
     margin-bottom: var(--space-5);
-    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    background: var(--primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -122,7 +114,7 @@ body.homepage {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%);
+    background: rgba(255,255,255,0.1);
     opacity: 0;
     transition: opacity var(--transition-normal);
 }
@@ -141,19 +133,19 @@ body.homepage {
 .module-card.employees {
     background: var(--module-employees);
     color: var(--module-text-employees);
-    border: 2px solid var(--primary);
+    border: 2px solid var(--secondary);
 }
 
 .module-card.departments {
     background: var(--module-departments);
     color: var(--module-text-departments);
-    border: 2px solid var(--secondary);
+    border: 2px solid var(--primary);
 }
 
 .module-card.reports {
     background: var(--module-reports);
     color: var(--module-text-reports);
-    border: 2px solid var(--accent-dark);
+    border: 2px solid var(--primary);
 }
 
 /* ===== MODULE CARD CONTENT ===== */
@@ -171,7 +163,7 @@ body.homepage {
     margin-bottom: var(--space-4);
     line-height: var(--line-height-tight);
     text-align: center;
-    min-height: calc(var(--font-size-2xl) * var(--line-height-tight) * 2); /* Spazio per max 2 righe */
+    min-height: calc(var(--font-size-2xl) * var(--line-height-tight) * 2);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -185,7 +177,7 @@ body.homepage {
     font-weight: var(--font-weight-normal);
     text-align: center;
     flex-grow: 1;
-    min-height: calc(var(--font-size-lg) * var(--line-height-relaxed) * 3); /* Spazio per max 3 righe */
+    min-height: calc(var(--font-size-lg) * var(--line-height-relaxed) * 3);
     display: flex;
     align-items: flex-start;
 }
@@ -200,7 +192,7 @@ body.homepage {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    min-height: calc(var(--font-size-base) * var(--line-height-normal) * 4 + var(--space-2) * 8); /* Spazio per 4 elementi fisso */
+    min-height: calc(var(--font-size-base) * var(--line-height-normal) * 4 + var(--space-2) * 8);
 }
 
 .module-features li {
@@ -237,7 +229,7 @@ body.homepage {
     align-items: center;
     justify-content: center;
     transition: all var(--transition-normal);
-    margin-top: auto; /* Questo spinge il bottone in fondo */
+    margin-top: auto;
     font-size: var(--font-size-base);
     backdrop-filter: blur(5px);
     text-align: center;
@@ -347,7 +339,6 @@ body.homepage {
 
     .module-card {
         padding: var(--space-8) var(--space-6);
-        /* Su mobile rimuoviamo le altezze fisse per permettere contenuto naturale */
         min-height: auto;
     }
 

@@ -488,7 +488,7 @@
     }
 
     .location-fill {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var (--primary-color);
         height: 100%;
         border-radius: 4px;
     }
@@ -543,17 +543,17 @@
 
     .performer-card.rank-1 {
         border-color: #ffd700;
-        background: linear-gradient(135deg, #fff9c4, #ffffff);
+        background: var (--primary-color);
     }
 
     .performer-card.rank-2 {
         border-color: #c0c0c0;
-        background: linear-gradient(135deg, #f5f5f5, #ffffff);
+        background: var (--primary-color);
     }
 
     .performer-card.rank-3 {
         border-color: #cd7f32;
-        background: linear-gradient(135deg, #f4e4bc, #ffffff);
+        background: var (--primary-color);
     }
 
     .rank-badge {
@@ -688,15 +688,15 @@
     }
 
     .score-circle.high {
-        background: linear-gradient(135deg, #27ae60, #2ecc71);
+        background: var (--primary-color);
     }
 
     .score-circle.medium {
-        background: linear-gradient(135deg, #f39c12, #e67e22);
+        background: var (--primary-color);
     }
 
     .score-circle.low {
-        background: linear-gradient(135deg, #e74c3c, #c0392b);
+        background: var (--primary-color);
     }
 
     .metric-description {

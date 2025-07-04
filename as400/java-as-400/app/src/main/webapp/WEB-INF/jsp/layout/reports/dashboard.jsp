@@ -205,7 +205,7 @@
     }
 
     .location-progress {
-        background: linear-gradient(90deg, #667eea, #764ba2);
+        background: var (--primary-color);
         height: 100%;
         border-radius: 4px;
         transition: width 0.3s ease;
