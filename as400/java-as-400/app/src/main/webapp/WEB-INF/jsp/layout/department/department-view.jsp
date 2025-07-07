@@ -134,7 +134,7 @@
         <div class="alert alert-error">
             <h3>Department Not Found</h3>
             <p>The requested department could not be found in the system.</p>
-            <a href="${pageContext.request.contextPath}/departments?action=list" class="btn">🏢 Back to Department List</a>
+            <a href="${pageContext.request.contextPath}/departments?action=list" class="btn">Back to Department List</a>
         </div>
     </c:otherwise>
 </c:choose>

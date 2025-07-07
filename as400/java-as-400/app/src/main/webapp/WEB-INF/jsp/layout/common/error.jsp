@@ -83,7 +83,7 @@
 </head>
 <body>
     <div class="error-container">
-        <div class="error-icon">⚠️</div>
+        <div class="error-icon"></div>
         <h1 class="error-title">Oops! Something went wrong</h1>
 
         <div class="error-message">
@@ -100,9 +100,9 @@
         </div>
 
         <div class="error-actions">
-            <a href="${pageContext.request.contextPath}/reports" class="btn">🏠 Go to Dashboard</a>
+            <a href="${pageContext.request.contextPath}/reports" class="btn">Go to Dashboard</a>
             <a href="javascript:history.back()" class="btn btn-secondary">← Go Back</a>
-            <a href="${pageContext.request.contextPath}/reports?type=summary" class="btn btn-secondary">📋 Department Summary</a>
+            <a href="${pageContext.request.contextPath}/reports?type=summary" class="btn btn-secondary">Department Summary</a>
         </div>
     </div>
 </body>

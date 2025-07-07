@@ -153,6 +153,7 @@ public class DepartmentEmployeeReportServlet extends HttpServlet {
         logger.info("Preparing employee data");
         try {
             List<Map<String, Object>> employees = reportService.getEmployeesWithDepartmentInfo();
+            logger.debug(employees.toString());
             logger.debug("Employee data retrieved: {} items", employees.size());
             req.setAttribute("employees", employees);
             req.setAttribute("pageTitle", "Employee List with Department Info");

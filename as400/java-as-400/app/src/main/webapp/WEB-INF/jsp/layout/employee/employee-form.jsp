@@ -11,7 +11,7 @@
         </c:choose>
     </h2>
     <div class="btn-group">
-        <a href="${cancelUrl}" class="btn btn-secondary">Cancel</a>
+        <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">Cancel</a>
     </div>
 </div>
 
@@ -191,7 +191,7 @@
                 <c:otherwise>Update Employee</c:otherwise>
             </c:choose>
         </button>
-        <a href="${cancelUrl}" class="btn btn-secondary">Cancel</a>
+        <a href="${pageContext.request.contextPath}/${cancelUrl}" class="btn btn-secondary">Cancel</a>
     </div>
 </form>
 

@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <div class="report-header">
     <h2>Employee List Report</h2>
@@ -48,17 +49,17 @@
 
         <!-- Filter and Search -->
         <div class="filters-section">
-            <h3>🔍 Filter & Search</h3>
+            <h3>Filter & Search</h3>
             <div class="filter-row">
                 <div class="filter-group">
                     <label for="deptFilter">Department:</label>
                     <select id="deptFilter" onchange="filterEmployees()">
                         <option value="">All Departments</option>
-                        <c:set var="departments" value="${[]}" />
+                        <c:set var="seenDepts" value="${[]}" />
                         <c:forEach items="${employees}" var="emp">
-                            <c:if test="${emp.WORKDEPT != null && !departments.contains(emp.WORKDEPT)}">
-                                <c:set var="departments" value="${departments.add(emp.WORKDEPT)}" />
-                                <option value="${emp.WORKDEPT}">${emp.WORKDEPT}</option>
+                            <c:if test="${emp.DEPTNAME != null && !fn:contains(seenDepts, emp.DEPTNAME)}">
+                                <c:set var="seenDepts" value="${seenDepts}${emp.DEPTNAME}|" />
+                                <option value="${emp.DEPTNAME}">${emp.DEPTNAME}</option>
                             </c:if>
                         </c:forEach>
                     </select>
@@ -69,8 +70,8 @@
                         <option value="">All Jobs</option>
                         <c:set var="jobs" value="${[]}" />
                         <c:forEach items="${employees}" var="emp">
-                            <c:if test="${emp.JOB != null && !jobs.contains(emp.JOB)}">
-                                <c:set var="jobs" value="${jobs.add(emp.JOB)}" />
+                            <c:if test="${emp.JOB != null && !fn:contains(jobs, emp.JOB)}">
+                                <c:set var="jobs" value="${jobs}${emp.JOB}" />
                                 <option value="${emp.JOB}">${emp.JOB}</option>
                             </c:if>
                         </c:forEach>
@@ -101,7 +102,7 @@
                 <tbody>
                     <c:forEach items="${employees}" var="emp">
                         <tr class="employee-row" 
-                            data-dept="${emp.WORKDEPT}" 
+                            data-dept="${emp.DEPTNAME}"
                             data-job="${emp.JOB}" 
                             data-name="${emp.FIRSTNME} ${emp.LASTNAME}">
                             <td class="employee-info">
