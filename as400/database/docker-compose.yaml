@@ -1,6 +1,7 @@
 services:
   db2:
     image: ibmcom/db2:11.5.7.0
+    platform: linux/amd64
     container_name: db2server
     restart: unless-stopped
     ports:
