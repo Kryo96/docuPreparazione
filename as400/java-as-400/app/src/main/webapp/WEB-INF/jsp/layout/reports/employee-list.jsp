@@ -118,8 +118,8 @@
                                 </div>
                             </td>
                             <td>
-                                <c:if test="${emp.WORKDEPT != null}">
-                                    <span class="dept-badge">${emp.WORKDEPT}</span>
+                                <c:if test="${emp.DEPTNAME != null}">
+                                    <span class="dept-badge">${emp.DEPTNAME}</span>
                                 </c:if>
                             </td>
                             <td class="job-title">${emp.JOB}</td>
@@ -166,7 +166,7 @@
         <div class="employee-cards mobile-only">
             <c:forEach items="${employees}" var="emp">
                 <div class="employee-card-mobile" 
-                     data-dept="${emp.WORKDEPT}" 
+                     data-dept="${emp.DEPTNAME}"
                      data-job="${emp.JOB}" 
                      data-name="${emp.FIRSTNME} ${emp.LASTNAME}">
                     <div class="card-header">
@@ -177,8 +177,8 @@
                         <div class="card-row">
                             <span class="label">Department:</span>
                             <span class="value">
-                                <c:if test="${emp.WORKDEPT != null}">
-                                    <span class="dept-badge">${emp.WORKDEPT}</span>
+                                <c:if test="${emp.DEPTNAME != null}">
+                                    <span class="dept-badge">${emp.DEPTNAME}</span>
                                 </c:if>
                             </span>
                         </div>
