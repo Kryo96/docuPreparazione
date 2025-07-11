@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<module name="com.ibm.db2" xmlns="urn:jboss:module:1.9">
+<module name="com.ibm.as400" xmlns="urn:jboss:module:1.3">
     <resources>
-        <resource-root path="jcc-11.5.0.0.jar"/>
+        <resource-root path="jt400-11.0.jar"/>
     </resources>
     <dependencies>
         <module name="javax.api"/>
         <module name="javax.transaction.api"/>
+        <module name="java.logging"/>
         <module name="sun.jdk"/>
     </dependencies>
 </module>

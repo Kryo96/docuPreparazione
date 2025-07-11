@@ -18,8 +18,6 @@ import org.slf4j.LoggerFactory;
 public class DataSourceConfig {
 
         private static final Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
-
-        // Determina quale database usare
         private static final String ENVIRONMENT = System.getProperty("app.env", "development");
 
         @Produces

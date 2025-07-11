@@ -62,7 +62,12 @@ Aggiungi nella sezione `<drivers>` del file `standalone.xml`:
 ```xml
 <subsystem xmlns="urn:jboss:domain:datasources:6.0">
     <datasources>
-        <!-- I tuoi datasource qui -->
+        <!-- Datasource AS400 -->
+        <datasource jndi-name="java:jboss/datasources/productionJT" pool-name="productionJT" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
+            <connection-url>jdbc:as400://ibmtest;prompt=false;translate binary=true</connection-url>
+            <driver>jt400</driver>
+            <security user-name="ibm" password="ibm"/>
+        </datasource>
     </datasources>
     <drivers>
         <!-- Driver DB2 -->
@@ -89,8 +94,8 @@ $WILDFLY_HOME/bin/standalone.sh
 
 Dovresti vedere nei log:
 ```
-INFO  [org.jboss.as.connector.subsystems.datasources] Deployed JDBC driver: db2
-INFO  [org.jboss.as.connector.subsystems.datasources] Deployed JDBC driver: as400
+INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 44) WFLYJCA0004: Deploying JDBC-compliant driver class com.ibm.db2.jcc.DB2Driver (version 4.26)
+INFO  [org.jboss.as.connector.subsystems.datasources] (ServerService Thread Pool -- 44) WFLYJCA0004: Deploying JDBC-compliant driver class com.ibm.as400.access.AS400JDBCDriver (version 13.1)
 ```
 
 ## 5. Test delle Connessioni

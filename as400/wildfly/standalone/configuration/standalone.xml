@@ -135,12 +135,12 @@
                     <driver>h2</driver>
                     <security user-name="sa" password="sa"/>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/ibmlegacy" pool-name="ibmlegacypool" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
+                <datasource jndi-name="java:jboss/datasources/productionJT" pool-name="productionJT" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
                     <connection-url>jdbc:as400://ibmtest;prompt=false;translate binary=true</connection-url>
                     <driver>jt400</driver>
                     <security user-name="ibm" password="ibm"/>
                 </datasource>
-                <datasource jndi-name="java:jboss/datasources/MyOrderDB" pool-name="MyOrderDB" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
+                <datasource jndi-name="java:jboss/datasources/developmentDB2" pool-name="developmentDB2" enabled="true" use-java-context="true" statistics-enabled="${wildfly.datasources.statistics-enabled:${wildfly.statistics-enabled:false}}">
                     <connection-url>jdbc:db2://localhost:50000/SAMPLE</connection-url>
                     <driver>db2</driver>
                     <pool>
@@ -163,7 +163,7 @@
                     <driver name="h2" module="com.h2database.h2">
                         <xa-datasource-class>org.h2.jdbcx.JdbcDataSource</xa-datasource-class>
                     </driver>
-                    <driver name="jt400" module="com.ibmlegacy.jt400">
+                    <driver name="jt400" module="com.ibm.as400">
                         <driver-class>com.ibm.as400.access.AS400JDBCDriver</driver-class>
                     </driver>
                 </drivers>

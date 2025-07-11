@@ -5,10 +5,9 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.example.exception.TransactionException;
 import org.example.service.SyncService;
-
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Path("/sync")
@@ -16,7 +15,7 @@ import java.util.logging.Logger;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class SyncEndpoint {
-    private static final Logger LOGGER = Logger.getLogger(SyncEndpoint.class.getName());
+    private static final Logger logger = LoggerFactory.getLogger(SyncEndpoint.class);
 
     @Inject
     private SyncService syncService;
@@ -24,6 +23,16 @@ public class SyncEndpoint {
     @POST
     @Path("/customer/{id}")
     public Response syncCustomer(@PathParam("id") String salesforceId) {
+        logger.info("SONO QUI");
+        return Response.ok()
+                .entity("{\"status\":\"success\",\"message\":\"Operativo\"}")
+                .build();
+    }
+
+    @GET
+    @Path("/customer/{id}")
+    public Response getCustomer(@PathParam("id") String salesforceId) {
+        logger.info("SONO QUI");
         return Response.ok()
                 .entity("{\"status\":\"success\",\"message\":\"Operativo\"}")
                 .build();
