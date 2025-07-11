@@ -7,10 +7,8 @@
 
 pluginManagement {
     plugins {
-        id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
-        id("com.github.ben-manes.versions") version "0.51.0"
-        id("mx.com.inftel.wildfly") version "1.0.2"
         id("war")
+        id("org.gradle.toolchains.foojay-resolver-convention").version("0.10.0")
 
         application
         java
@@ -25,7 +23,6 @@ pluginManagement {
 dependencyResolutionManagement {
     repositories {
         mavenCentral()
-        google()
     }
 }
 
