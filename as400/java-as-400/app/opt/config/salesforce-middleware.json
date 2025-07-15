@@ -1,0 +1,290 @@
+{
+  "serverNames": [
+    "localhost",
+    "middleware.agrimontana.it",
+    "vsid01"
+  ],
+
+  "as400Connection": {
+    "driver": "com.ibm.db2.jcc.DB2Driver",
+    "url": "jdbc:db2://localhost:50000/SAMPLE",
+    "username": "db2inst1",
+    "password": "test",
+    "fieldMapper": "it.agrimontana.salesforce.config.AS400FieldMapper",
+    "minConnections": 5,
+    "maxConnections": 20,
+    "connectionTimeout": 30000,
+    "idleTimeout": 600000,
+    "maxLifetime": 1800000,
+    "autoCommit": true,
+    "properties": "translate binary=true;ccsid=1144"
+  },
+
+  "salesforceConnections": [
+    {
+      "name": "PRODUCTION",
+      "loginUrl": "https://login.salesforce.com",
+      "clientId": "3MVG9...",
+      "clientSecret": "encrypted:AES:...",
+      "username": "integration@agrimontana.it",
+      "password": "encrypted:AES:...",
+      "securityToken": "encrypted:AES:...",
+      "apiVersion": "59.0",
+      "connectionTimeout": 60000,
+      "readTimeout": 120000,
+      "compression": true,
+      "traceMessage": false
+    },
+    {
+      "name": "SANDBOX",
+      "loginUrl": "https://test.salesforce.com",
+      "clientId": "3MVG9...",
+      "clientSecret": "encrypted:AES:...",
+      "username": "integration@agrimontana.it.sandbox",
+      "password": "encrypted:AES:...",
+      "securityToken": "encrypted:AES:...",
+      "apiVersion": "59.0",
+      "connectionTimeout": 60000,
+      "readTimeout": 120000,
+      "compression": true,
+      "traceMessage": true,
+      "prettyPrintXml": true
+    }
+  ],
+
+  "syncMappings": [
+    {
+      "name": "AccountSync",
+      "description": "Sincronizzazione clienti AS400 -> Salesforce Account",
+      "as400Table": "CLIENTI",
+      "as400Schema": "AGM80DAT",
+      "as400KeyField": "CODCLI",
+      "salesforceObject": "Account",
+      "salesforceKeyField": "Id",
+      "salesforceExternalIdField": "AS400_Code__c",
+      "syncDirection": "BIDIRECTIONAL",
+      "syncMode": "UPSERT",
+      "realTime": false,
+      "batchSize": 200,
+      "schedule": "0 0 2 * * ?",
+      "enabled": true,
+      "fieldMappings": [
+        {
+          "as400Field": "RAGSOC",
+          "salesforceField": "Name",
+          "dataType": "String",
+          "required": true,
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "CODCLI",
+          "salesforceField": "AS400_Code__c",
+          "dataType": "String",
+          "required": true,
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "PIVA",
+          "salesforceField": "VAT_Number__c",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "INDIRI",
+          "salesforceField": "BillingStreet",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "CAP",
+          "salesforceField": "BillingPostalCode",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "LOCALI",
+          "salesforceField": "BillingCity",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "PROV",
+          "salesforceField": "BillingState",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "NAZIONE",
+          "salesforceField": "BillingCountry",
+          "dataType": "String",
+          "transformation": "COUNTRY_CODE"
+        },
+        {
+          "as400Field": "TELEFONO",
+          "salesforceField": "Phone",
+          "dataType": "String",
+          "transformation": "PHONE_FORMAT"
+        },
+        {
+          "as400Field": "EMAIL",
+          "salesforceField": "Email__c",
+          "dataType": "String",
+          "transformation": "LOWERCASE"
+        },
+        {
+          "as400Field": "DTULTMOD",
+          "salesforceField": "Last_Modified_AS400__c",
+          "dataType": "DateTime"
+        }
+      ],
+      "filters": {
+        "ATTIVO": "S",
+        "TIPOCLI": "C"
+      },
+      "transformations": [
+        {
+          "name": "COUNTRY_CODE",
+          "type": "LOOKUP",
+          "parameters": {
+            "I": "IT",
+            "F": "FR",
+            "D": "DE",
+            "E": "ES"
+          }
+        },
+        {
+          "name": "PHONE_FORMAT",
+          "type": "CUSTOM",
+          "parameters": {
+            "class": "it.agrimontana.salesforce.transform.PhoneFormatter"
+          }
+        }
+      ],
+      "conflictResolution": "LAST_MODIFIED_WINS",
+      "errorHandling": "LOG_AND_CONTINUE",
+      "notificationEmail": "admin@agrimontana.it"
+    },
+    {
+      "name": "ProductSync",
+      "description": "Sincronizzazione articoli AS400 -> Salesforce Product2",
+      "as400Table": "ARTICOLI",
+      "as400Schema": "AGM80DAT",
+      "as400KeyField": "CODART",
+      "salesforceObject": "Product2",
+      "salesforceKeyField": "Id",
+      "salesforceExternalIdField": "ProductCode",
+      "syncDirection": "AS400_TO_SALESFORCE",
+      "syncMode": "UPSERT",
+      "realTime": false,
+      "batchSize": 200,
+      "schedule": "0 30 2 * * ?",
+      "enabled": true,
+      "fieldMappings": [
+        {
+          "as400Field": "CODART",
+          "salesforceField": "ProductCode",
+          "dataType": "String",
+          "required": true,
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "DESCRI",
+          "salesforceField": "Name",
+          "dataType": "String",
+          "required": true,
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "DESCEST",
+          "salesforceField": "Description",
+          "dataType": "String",
+          "transformation": "TRIM"
+        },
+        {
+          "as400Field": "ATTIVO",
+          "salesforceField": "IsActive",
+          "dataType": "Boolean"
+        },
+        {
+          "as400Field": "PREZZO",
+          "salesforceField": "Standard_Price__c",
+          "dataType": "Decimal"
+        }
+      ],
+      "filters": {
+        "TIPOPROD": "V"
+      },
+      "conflictResolution": "AS400_WINS",
+      "errorHandling": "LOG_AND_CONTINUE"
+    }
+  ],
+
+  "params": [
+    {
+      "name": "ENVIRONMENT",
+      "value": "DEVELOPMENT",
+      "description": "Environment: DEVELOPMENT, TEST, PRODUCTION"
+    },
+    {
+      "name": "LOG_LEVEL",
+      "value": "INFO",
+      "description": "Logging level: DEBUG, INFO, WARN, ERROR"
+    },
+    {
+      "name": "MAIL_SMTP_HOST",
+      "value": "smtp.agrimontana.it",
+      "description": "SMTP server for notifications"
+    },
+    {
+      "name": "MAIL_SMTP_PORT",
+      "value": "587",
+      "description": "SMTP port"
+    },
+    {
+      "name": "MAIL_FROM",
+      "value": "salesforce-middleware@agrimontana.it",
+      "description": "From address for notifications"
+    },
+    {
+      "name": "MAIL_USERNAME",
+      "value": "salesforce-middleware@agrimontana.it",
+      "description": "SMTP username"
+    },
+    {
+      "name": "MAIL_PASSWORD",
+      "value": "encrypted:AES:...",
+      "description": "SMTP password",
+      "encrypted": true
+    },
+    {
+      "name": "SYNC_RETRY_ATTEMPTS",
+      "value": "3",
+      "description": "Number of retry attempts for failed syncs"
+    },
+    {
+      "name": "SYNC_RETRY_DELAY",
+      "value": "5000",
+      "description": "Delay between retry attempts in milliseconds"
+    },
+    {
+      "name": "BULK_API_ENABLED",
+      "value": "true",
+      "description": "Enable Salesforce Bulk API for large data volumes"
+    },
+    {
+      "name": "BULK_API_THRESHOLD",
+      "value": "10000",
+      "description": "Record count threshold to switch to Bulk API"
+    },
+    {
+      "name": "MONITORING_ENABLED",
+      "value": "true",
+      "description": "Enable metrics and monitoring"
+    },
+    {
+      "name": "MONITORING_PORT",
+      "value": "9090",
+      "description": "Port for metrics endpoint"
+    }
+  ]
+}

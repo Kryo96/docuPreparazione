@@ -14,20 +14,37 @@ version= "1.0.0"
 
 dependencies {
     // Jakarta EE API
-    providedCompile("jakarta.platform:jakarta.jakartaee-api:9.1.0")
+    providedCompile("jakarta.platform:jakarta.jakartaee-api:10.0.0")
+
+    compileOnly("org.projectlombok:lombok:1.18.30")
+    annotationProcessor("org.projectlombok:lombok:1.18.30")
 
     // Driver JDBC - provided
     providedCompile("net.sf.jt400:jt400:11.0")
     providedCompile("com.ibm.db2:jcc:11.5.0.0")
 
-    // Salesforce SDK
-    implementation("com.force.api:force-wsc:57.0.0")
-    implementation("com.force.api:force-partner-api:57.0.0")
+    // JSON Processing
+    implementation("org.json:json:20230618")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("com.jayway.jsonpath:json-path:2.8.0")
+
+    // Salesforce
+    implementation("com.force.api:force-wsc:59.0.0")
+    implementation("com.force.api:force-partner-api:59.0.0")
 
     // Logging
     implementation("org.slf4j:slf4j-api:2.0.7")
-    implementation("ch.qos.logback:logback-classic:1.4.8")
-    implementation("ch.qos.logback:logback-core:1.4.8")
+    implementation("ch.qos.logback:logback-classic:1.4.11")
+
+    // Google Guava
+    implementation("com.google.guava:guava:32.1.2-jre")
+
+    // Database
+    implementation("com.zaxxer:HikariCP:5.0.1")
+
+    // Validation
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
+    implementation("org.glassfish:jakarta.el:4.0.2")
 
     // Testing
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
