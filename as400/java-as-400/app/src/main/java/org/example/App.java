@@ -3,8 +3,10 @@ package org.example;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zaxxer.hikari.HikariDataSource;
 import org.example.config.ConfigFile;
-import org.example.config.HikariPoolConnections;
+import org.example.config.model.SalesforceConnectionDescriptor;
+import org.example.config.pools.HikariPoolConnections;
 import org.example.config.model.AS400ConnectionDescriptor;
+import org.example.config.pools.SalesforcePoolConnections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,15 +21,16 @@ public class App {
 
     public static void main(String[] args) {
         try {
+
             // 1. Carica la configurazione
             ConfigFile config = loadConfig();
             AS400ConnectionDescriptor dbConfig = config.getAs400Connection();
+            SalesforceConnectionDescriptor descriptor = config.getSalesforceConnection();
 
-            // 2. Crea il datasource
-            HikariDataSource dataSource = dbConfig.createDataSource();
+            HikariPoolConnections<AS400ConnectionDescriptor> pool = new HikariPoolConnections<AS400ConnectionDescriptor>(dbConfig.createDataSource(), dbConfig);
+            SalesforcePoolConnections salesforcePool = new SalesforcePoolConnections(config.getSalesforceConnection());
 
-            // 3. Crea il wrapper del pool
-            HikariPoolConnections pool = new HikariPoolConnections(dataSource, dbConfig);
+            salesforcePool.getDescriptor().createConnectorConfig();
 
             // 4. Esegui test
             runDatabaseTest(pool);

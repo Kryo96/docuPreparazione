@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Configurazione per la connessione AS400
  */
 @Data
-public class AS400ConnectionDescriptor {
+public class AS400ConnectionDescriptor extends HikariConfig{
 
     private static final Logger log = LoggerFactory.getLogger(AS400ConnectionDescriptor.class);
     @JsonProperty("driver")
